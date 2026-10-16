@@ -24,6 +24,15 @@ self.onmessage=async({data})=>{
    if(parent)py.FS.mkdirTree(parent);
    py.FS.writeFile(name,value);
   }
+  // Graph and model lessons import more than pandas; fetch only what this code imports.
+  if(/\b(matplotlib|seaborn|sklearn|scipy)\b/.test(data.source)){
+   postMessage({type:'status',text:'그래프·모델 도구를 준비하고 있어요…'});
+   await py.loadPackagesFromImports(data.source);
+   if(/\bseaborn\b/.test(data.source)){
+    await py.loadPackage('micropip');
+    await py.runPythonAsync("import importlib.util, micropip\nif importlib.util.find_spec('seaborn') is None:\n    await micropip.install('seaborn')");
+   }
+  }
   py.FS.writeFile('main.py',data.source);
   py.FS.writeFile('rich_runner.py',data.runner);
   postMessage({type:'running',text:'코드를 실행하고 있어요…'});

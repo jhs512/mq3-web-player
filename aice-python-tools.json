@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "id": "aice-python-tools",
+  "revision": "v1.0.0",
+  "title": "분석 코드를 읽고 이어 쓰기",
+  "description": "시험 코드는 함수에 인자를 넣고 돌려받은 값을 써요. 그 모양과 오류 읽기를 작은 실험으로 익혀요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://docs.python.org/3/library/functions.html",
+    "https://docs.python.org/3/library/stdtypes.html#string-methods"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "round-digits",
+      "title": "함수에 값을 넣어 불러요",
+      "goal": "round는 숫자를 반올림해 돌려주는 함수예요.\n함수 이름 뒤 괄호에 넣는 값을 인자라고 해요.\n인자가 둘이면 쉼표로 나눠요. `round(값, 자리 수)` 순서예요.\n\n먼저 실행해서 정수로 반올림된 평균을 보세요.\nround 괄호 안 average 뒤에 `, 1`을 넣으세요.\n다시 실행해서 소수 첫째 자리까지 나오는지 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 고객 세 명의 이용 시간(분)이에요.\nminutes = [12, 16, 9]\n# 합계를 개수로 나눠 평균을 구해요.\naverage = sum(minutes) / len(minutes)\n# round가 돌려준 값을 화면에 보여 줘요.\nprint(round(average))\n",
+      "solution": "# 고객 세 명의 이용 시간(분)이에요.\nminutes = [12, 16, 9]\n# 합계를 개수로 나눠 평균을 구해요.\naverage = sum(minutes) / len(minutes)\n# round가 돌려준 값을 화면에 보여 줘요.\nprint(round(average, 1))\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`print(round(average, 1))`처럼 적어요."
+      ],
+      "goal_html": "<p>round는 숫자를 반올림해 돌려주는 함수예요.<br>함수 이름 뒤 괄호에 넣는 값을 인자라고 해요.<br>인자가 둘이면 쉼표로 나눠요. <code>round(값, 자리 수)</code> 순서예요.</p><p>먼저 실행해서 정수로 반올림된 평균을 보세요.<br>round 괄호 안 average 뒤에 <code>, 1</code>을 넣으세요.<br>다시 실행해서 소수 첫째 자리까지 나오는지 비교해요.</p>"
+    },
+    {
+      "id": "named-argument",
+      "title": "이름 붙은 인자로 방향을 바꿔요",
+      "goal": "sorted는 목록을 작은 값부터 정렬한 새 목록을 돌려줘요.\n`reverse=True`처럼 이름=값 모양으로 넣는 인자도 있어요.\n`test_size=0.2`도 같은 모양이에요. 모델을 만드는 수업에서 만나요.\n\n먼저 실행해서 정렬 순서와 첫 값을 보세요.\nsorted 괄호 안 visits 뒤에 `, reverse=True`를 넣으세요.\n큰 값부터 정렬되고 첫 값이 바뀌는지 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 매장 네 곳의 방문 수예요.\nvisits = [42, 17, 58, 33]\n# 정렬한 새 목록을 ranked에 받아요.\nranked = sorted(visits)\n# 정렬한 목록과 그 첫 값을 확인해요.\nprint(ranked)\nprint(ranked[0])\n",
+      "solution": "# 매장 네 곳의 방문 수예요.\nvisits = [42, 17, 58, 33]\n# 정렬한 새 목록을 ranked에 받아요.\nranked = sorted(visits, reverse=True)\n# 정렬한 목록과 그 첫 값을 확인해요.\nprint(ranked)\nprint(ranked[0])\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`sorted(visits, reverse=True)`로 바꿔요."
+      ],
+      "goal_html": "<p>sorted는 목록을 작은 값부터 정렬한 새 목록을 돌려줘요.<br><code>reverse=True</code>처럼 이름=값 모양으로 넣는 인자도 있어요.<br><code>test_size=0.2</code>도 같은 모양이에요. 모델을 만드는 수업에서 만나요.</p><p>먼저 실행해서 정렬 순서와 첫 값을 보세요.<br>sorted 괄호 안 visits 뒤에 <code>, reverse=True</code>를 넣으세요.<br>큰 값부터 정렬되고 첫 값이 바뀌는지 비교해요.</p>"
+    },
+    {
+      "id": "return-value",
+      "title": "직접 만든 함수가 값을 돌려줘요",
+      "goal": "`def 이름(받을 값):`으로 함수를 직접 만들어요. 안쪽 줄은 네 칸 들여 써요.\n`return 값`은 그 값을 함수를 부른 줄로 돌려줘요. `result = to_hours(total)`이면 result에 담기죠.\nreturn이 없으면 값이 없다는 뜻의 None을 돌려줘요.\n\n먼저 실행해서 result에 무엇이 담겼는지 보세요.\n돌려줄 자리 주석 아래에 `return hours`를 hours 줄처럼 네 칸 들여 넣으세요.\n안 들여 쓰면 함수 밖의 return이라는 SyntaxError가 나요.\n다시 실행해서 시간 값이 나오는지 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 분을 시간으로 바꾸는 함수를 만들어요.\ndef to_hours(minutes):\n    # 받은 분을 60으로 나눠요.\n    hours = minutes / 60\n    # 계산한 값을 돌려줄 자리예요.\n\n# 이번 달 전체 이용 시간(분)이에요.\ntotal = 150\n# 함수에 total을 넣고 돌려준 값을 받아요.\nresult = to_hours(total)\nprint(result)\n",
+      "solution": "# 분을 시간으로 바꾸는 함수를 만들어요.\ndef to_hours(minutes):\n    # 받은 분을 60으로 나눠요.\n    hours = minutes / 60\n    # 계산한 값을 돌려줄 자리예요.\n    return hours\n\n# 이번 달 전체 이용 시간(분)이에요.\ntotal = 150\n# 함수에 total을 넣고 돌려준 값을 받아요.\nresult = to_hours(total)\nprint(result)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`return hours`를 hours 줄과 같은 깊이로 들여 써요."
+      ],
+      "goal_html": "<p><code>def 이름(받을 값):</code>으로 함수를 직접 만들어요. 안쪽 줄은 네 칸 들여 써요.<br><code>return 값</code>은 그 값을 함수를 부른 줄로 돌려줘요. <code>result = to_hours(total)</code>이면 result에 담기죠.<br>return이 없으면 값이 없다는 뜻의 None을 돌려줘요.</p><p>먼저 실행해서 result에 무엇이 담겼는지 보세요.<br>돌려줄 자리 주석 아래에 <code>return hours</code>를 hours 줄처럼 네 칸 들여 넣으세요.<br>안 들여 쓰면 함수 밖의 return이라는 SyntaxError가 나요.<br>다시 실행해서 시간 값이 나오는지 비교해요.</p>"
+    },
+    {
+      "id": "import-module",
+      "title": "모듈을 불러온 뒤에 써요",
+      "goal": "math는 계산 함수를 모아 둔 모듈이에요. `math.sqrt`는 제곱근을 구해요.\n모듈은 `import math`로 먼저 불러와야 쓸 수 있어요.\n오류가 나면 마지막 줄의 오류 이름과 설명부터 읽어요.\n\n먼저 실행해서 마지막 줄의 NameError를 읽어 보세요.\n`is not defined`는 그 이름을 모른다는 뜻이에요. 뒤 물음은 import를 잊었냐는 말이고요.\n맨 위 주석 바로 아래 빈 줄에 `import math`를 적으세요.\n다시 실행해서 한 변의 길이를 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 쓸 모듈은 맨 위에서 불러와요.\n\n# 정사각형 매장의 넓이(제곱미터)예요.\narea = 49\n# 넓이의 제곱근이 한 변의 길이예요.\nside = math.sqrt(area)\nprint(side)\n",
+      "solution": "# 쓸 모듈은 맨 위에서 불러와요.\nimport math\n\n# 정사각형 매장의 넓이(제곱미터)예요.\narea = 49\n# 넓이의 제곱근이 한 변의 길이예요.\nside = math.sqrt(area)\nprint(side)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "첫 주석 바로 아래 빈 줄에 `import math`를 적어요."
+      ],
+      "goal_html": "<p>math는 계산 함수를 모아 둔 모듈이에요. <code>math.sqrt</code>는 제곱근을 구해요.<br>모듈은 <code>import math</code>로 먼저 불러와야 쓸 수 있어요.<br>오류가 나면 마지막 줄의 오류 이름과 설명부터 읽어요.</p><p>먼저 실행해서 마지막 줄의 NameError를 읽어 보세요.<br><code>is not defined</code>는 그 이름을 모른다는 뜻이에요. 뒤 물음은 import를 잊었냐는 말이고요.<br>맨 위 주석 바로 아래 빈 줄에 <code>import math</code>를 적으세요.<br>다시 실행해서 한 변의 길이를 확인해요.</p>"
+    },
+    {
+      "id": "import-alias",
+      "title": "별명을 붙였으면 별명으로 불러요",
+      "goal": "`import statistics as st`는 모듈에 st라는 별명을 붙여요.\n그다음부터는 `st.median`처럼 별명으로 불러요.\n`import pandas as pd` 뒤에 `pd.read_csv`를 쓴 것과 같아요.\n\n먼저 실행해서 NameError가 어떤 이름을 말하는지 보세요.\nimport를 권하는 안내가 붙어도 import는 더 넣지 마세요.\n`statistics.median`을 별명을 쓴 모양으로 고치세요.\n다시 실행해서 크기순 가운데 값인 중앙값을 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 통계 모듈을 불러오고 st라는 별명을 붙여요.\nimport statistics as st\n\n# 주문 금액이에요. 하나만 유난히 커요.\norders = [12000, 9000, 15000, 98000, 11000]\n# 크기순으로 놓았을 때 가운데 값을 구해요.\nmiddle = statistics.median(orders)\nprint(middle)\n",
+      "solution": "# 통계 모듈을 불러오고 st라는 별명을 붙여요.\nimport statistics as st\n\n# 주문 금액이에요. 하나만 유난히 커요.\norders = [12000, 9000, 15000, 98000, 11000]\n# 크기순으로 놓았을 때 가운데 값을 구해요.\nmiddle = st.median(orders)\nprint(middle)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`st.median(orders)`로 고쳐요."
+      ],
+      "goal_html": "<p><code>import statistics as st</code>는 모듈에 st라는 별명을 붙여요.<br>그다음부터는 <code>st.median</code>처럼 별명으로 불러요.<br><code>import pandas as pd</code> 뒤에 <code>pd.read_csv</code>를 쓴 것과 같아요.</p><p>먼저 실행해서 NameError가 어떤 이름을 말하는지 보세요.<br>import를 권하는 안내가 붙어도 import는 더 넣지 마세요.<br><code>statistics.median</code>을 별명을 쓴 모양으로 고치세요.<br>다시 실행해서 크기순 가운데 값인 중앙값을 확인해요.</p>"
+    },
+    {
+      "id": "type-error",
+      "title": "오류의 마지막 줄을 읽어요",
+      "goal": "글자와 숫자를 +로 바로 이으면 TypeError가 나요.\n오류의 마지막 줄에 오류 이름과 이유가 나와요.\n`str(값)`은 값을 글자로 바꿔 돌려줘요.\n\n먼저 실행해서 마지막 줄의 TypeError를 읽어 보세요.\n이유에 나온 str은 글자, int는 정수예요. 글자엔 글자만 이을 수 있다는 말이죠.\nmessage 줄의 visits를 `str(visits)`로 감싸세요.\n다시 실행해서 안내 문장을 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 이번 주 방문 수예요.\nvisits = 37\n# 안내 문장에 방문 수를 이어 붙여요.\nmessage = \"이번 주 방문 \" + visits + \"회\"\nprint(message)\n",
+      "solution": "# 이번 주 방문 수예요.\nvisits = 37\n# 안내 문장에 방문 수를 이어 붙여요.\nmessage = \"이번 주 방문 \" + str(visits) + \"회\"\nprint(message)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`\"이번 주 방문 \" + str(visits) + \"회\"`처럼 적어요."
+      ],
+      "goal_html": "<p>글자와 숫자를 +로 바로 이으면 TypeError가 나요.<br>오류의 마지막 줄에 오류 이름과 이유가 나와요.<br><code>str(값)</code>은 값을 글자로 바꿔 돌려줘요.</p><p>먼저 실행해서 마지막 줄의 TypeError를 읽어 보세요.<br>이유에 나온 str은 글자, int는 정수예요. 글자엔 글자만 이을 수 있다는 말이죠.<br>message 줄의 visits를 <code>str(visits)</code>로 감싸세요.<br>다시 실행해서 안내 문장을 확인해요.</p>"
+    },
+    {
+      "id": "string-methods",
+      "title": "글자를 정리하는 메서드",
+      "goal": "값 뒤에 점을 찍고 부르는 함수를 메서드라고 해요.\n`strip()`은 앞뒤 공백을 지우고 `lower()`는 소문자로 바꿔요. 괄호가 빈 건 넣을 값이 없어서예요.\n둘 다 새 글자를 돌려줘요. 그래서 이어서 부를 수 있어요.\n\n먼저 실행해서 공백은 사라졌지만 대문자가 남은 걸 보세요.\n`strip()` 뒤에 `.lower()`를 이어 붙이세요.\n다시 실행해서 대괄호 안의 글자를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 손으로 입력한 접속 경로예요. 공백과 대문자가 섞였어요.\nchannel = \" Web \"\n# 정리한 새 글자를 clean에 담아요.\nclean = channel.strip()\n# 대괄호로 감싸면 남은 공백이 눈에 보여요.\nprint(\"[\" + clean + \"]\")\n",
+      "solution": "# 손으로 입력한 접속 경로예요. 공백과 대문자가 섞였어요.\nchannel = \" Web \"\n# 정리한 새 글자를 clean에 담아요.\nclean = channel.strip().lower()\n# 대괄호로 감싸면 남은 공백이 눈에 보여요.\nprint(\"[\" + clean + \"]\")\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`clean = channel.strip().lower()`로 바꿔요."
+      ],
+      "goal_html": "<p>값 뒤에 점을 찍고 부르는 함수를 메서드라고 해요.<br><code>strip()</code>은 앞뒤 공백을 지우고 <code>lower()</code>는 소문자로 바꿔요. 괄호가 빈 건 넣을 값이 없어서예요.<br>둘 다 새 글자를 돌려줘요. 그래서 이어서 부를 수 있어요.</p><p>먼저 실행해서 공백은 사라졌지만 대문자가 남은 걸 보세요.<br><code>strip()</code> 뒤에 <code>.lower()</code>를 이어 붙이세요.<br>다시 실행해서 대괄호 안의 글자를 비교해요.</p>"
+    },
+    {
+      "id": "comma-number",
+      "title": "쉼표가 든 글자를 숫자로 바꿔요",
+      "goal": "`int`는 쉼표가 섞인 글자를 못 바꿔서 ValueError를 내요.\n`replace(\",\", \"\")`는 모든 쉼표를 빈 글자로 바꾼 새 글자를 돌려줘요.\n쉼표를 지운 글자는 `int`로 바꿀 수 있어요.\n\n먼저 실행해서 마지막 줄의 ValueError를 읽어 보세요.\n`invalid literal`은 int가 못 바꾸는 글자라는 뜻이에요. 맨 끝에 그 글자가 보여요.\nint 괄호 안을 `price_text.replace(\",\", \"\")`로 바꾸세요.\n다시 실행해서 세 개를 산 금액을 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 표에서 복사한 가격이에요. 천 단위 쉼표가 있어요.\nprice_text = \"1,200\"\n# 글자를 정수로 바꿔 계산에 써요.\nprice = int(price_text)\n# 세 개를 산 금액이에요.\nprint(price * 3)\n",
+      "solution": "# 표에서 복사한 가격이에요. 천 단위 쉼표가 있어요.\nprice_text = \"1,200\"\n# 글자를 정수로 바꿔 계산에 써요.\nprice = int(price_text.replace(\",\", \"\"))\n# 세 개를 산 금액이에요.\nprint(price * 3)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "`int(price_text.replace(\",\", \"\"))`처럼 감싸요."
+      ],
+      "goal_html": "<p><code>int</code>는 쉼표가 섞인 글자를 못 바꿔서 ValueError를 내요.<br><code>replace(&quot;,&quot;, &quot;&quot;)</code>는 모든 쉼표를 빈 글자로 바꾼 새 글자를 돌려줘요.<br>쉼표를 지운 글자는 <code>int</code>로 바꿀 수 있어요.</p><p>먼저 실행해서 마지막 줄의 ValueError를 읽어 보세요.<br><code>invalid literal</code>은 int가 못 바꾸는 글자라는 뜻이에요. 맨 끝에 그 글자가 보여요.<br>int 괄호 안을 <code>price_text.replace(&quot;,&quot;, &quot;&quot;)</code>로 바꾸세요.<br>다시 실행해서 세 개를 산 금액을 확인해요.</p>"
+    },
+    {
+      "id": "argument-order",
+      "title": "도전 · 인자 순서를 맞춰요",
+      "goal": "`round(값, 자리 수)`처럼 인자는 넣은 순서대로 짝지어요.\n직접 만든 함수도 def 줄의 순서대로 값을 받아요.\n\n방문 한 번당 이용 시간이 너무 작게 나와요.\n함수가 무엇을 무엇으로 나누는지 읽어 보세요.\n함수는 그대로 두고 원인을 찾아 고치세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 방문 한 번당 이용 시간(분)을 구하는 함수예요.\ndef per_visit(minutes, visits):\n    # 첫째 인자를 둘째 인자로 나눠 돌려줘요.\n    return minutes / visits\n\n# 한 고객의 전체 이용 시간과 방문 수예요.\nminutes = 90\nvisits = 6\n# 두 값을 넣고 돌려준 값을 받아요.\nresult = per_visit(visits, minutes)\nprint(result)\n",
+      "solution": "# 방문 한 번당 이용 시간(분)을 구하는 함수예요.\ndef per_visit(minutes, visits):\n    # 첫째 인자를 둘째 인자로 나눠 돌려줘요.\n    return minutes / visits\n\n# 한 고객의 전체 이용 시간과 방문 수예요.\nminutes = 90\nvisits = 6\n# 두 값을 넣고 돌려준 값을 받아요.\nresult = per_visit(minutes, visits)\nprint(result)\n",
+      "files": {},
+      "required": false,
+      "hints": [
+        "def 줄의 괄호 순서와 부르는 줄의 순서를 비교해요.",
+        "부르는 줄의 두 인자를 def 줄과 같은 순서로 바꿔 적어요."
+      ],
+      "goal_html": "<p><code>round(값, 자리 수)</code>처럼 인자는 넣은 순서대로 짝지어요.<br>직접 만든 함수도 def 줄의 순서대로 값을 받아요.</p><p>방문 한 번당 이용 시간이 너무 작게 나와요.<br>함수가 무엇을 무엇으로 나누는지 읽어 보세요.<br>함수는 그대로 두고 원인을 찾아 고치세요.</p>"
+    },
+    {
+      "id": "clean-function",
+      "title": "도전 · 정리 함수가 값을 돌려주게",
+      "goal": "앞에서 배운 쉼표 정리를 함수로 묶었어요.\n오류에 나오는 NoneType은 None 값의 종류 이름이에요.\n`unsupported operand`는 +로 계산할 수 없는 값이라는 뜻이에요.\n\n첫 달과 마지막 달의 매출을 더하려고 해요.\n오류가 난 줄과 원인이 있는 줄이 달라요.\n마지막 줄을 읽고 원인을 찾아 고치세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 쉼표가 섞인 금액 글자를 정수로 바꾸는 함수예요.\ndef to_number(text):\n    # 쉼표를 지운 뒤 정수로 바꿔요.\n    number = int(text.replace(\",\", \"\"))\n\n# 월별 매출 글자예요.\nsales = [\"1,200\", \"950\", \"3,400\"]\n# 첫 달과 마지막 달 매출을 더해요.\ntotal = to_number(sales[0]) + to_number(sales[-1])\nprint(total)\n",
+      "solution": "# 쉼표가 섞인 금액 글자를 정수로 바꾸는 함수예요.\ndef to_number(text):\n    # 쉼표를 지운 뒤 정수로 바꿔요.\n    number = int(text.replace(\",\", \"\"))\n    return number\n\n# 월별 매출 글자예요.\nsales = [\"1,200\", \"950\", \"3,400\"]\n# 첫 달과 마지막 달 매출을 더해요.\ntotal = to_number(sales[0]) + to_number(sales[-1])\nprint(total)\n",
+      "files": {},
+      "required": false,
+      "hints": [
+        "None은 함수가 돌려준 값이 없을 때 나와요.",
+        "to_number 안에서 number를 돌려줘요."
+      ],
+      "goal_html": "<p>앞에서 배운 쉼표 정리를 함수로 묶었어요.<br>오류에 나오는 NoneType은 None 값의 종류 이름이에요.<br><code>unsupported operand</code>는 +로 계산할 수 없는 값이라는 뜻이에요.</p><p>첫 달과 마지막 달의 매출을 더하려고 해요.<br>오류가 난 줄과 원인이 있는 줄이 달라요.<br>마지막 줄을 읽고 원인을 찾아 고치세요.</p>"
+    }
+  ]
+}

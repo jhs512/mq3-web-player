@@ -13,5 +13,20 @@
     "id": "aice-data-first",
     "title": "처음 만나는 코드와 데이터 표",
     "path": "lesson.json"
+  },
+  {
+    "id": "aice-python-tools",
+    "title": "분석 코드를 읽고 이어 쓰기",
+    "path": "aice-python-tools.json"
+  },
+  {
+    "id": "aice-data-types",
+    "title": "CSV를 읽고 자료형 점검하기",
+    "path": "aice-data-types.json"
+  },
+  {
+    "id": "aice-row-conditions",
+    "title": "조건으로 원하는 기록 고르기",
+    "path": "aice-row-conditions.json"
   }
 ]

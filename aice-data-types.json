@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "id": "aice-data-types",
+  "revision": "v1.0.0",
+  "title": "CSV를 읽고 자료형 점검하기",
+  "description": "CSV를 읽고 숫자로 읽히지 않은 열을 찾아 고쳐요. 저장한 파일도 다시 읽어 확인해요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://aice.study/certi/examGuide"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "file-path",
+      "title": "파일이 있는 폴더까지 적어요",
+      "goal": "CSV는 쉼표로 칸을 나눈 글자 파일이에요.\n`pd.read_csv`는 CSV 파일을 읽어 표로 만들어요.\n괄호 안에 적는 파일 위치를 경로라고 해요. 경로는 main.py가 있는 폴더에서 시작해요.\n\n자, 먼저 코드 실행을 누르세요. 오류의 마지막 줄에서 찾지 못한 파일 이름을 읽어요.\n자료는 data 폴더 안에 있어요. 폴더와 파일 이름은 /로 이어요.\n경로를 `'data/orders.csv'`로 바꾸고 다시 실행하세요.\n파일 내용은 문제 아래 「함께 제공한 파일」에서 볼 수 있어요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 주문 자료예요. 실제 고객 자료가 아니에요.\n# 괄호 안의 경로에서 CSV 파일을 찾아 읽어요.\ndf = pd.read_csv('orders.csv')\n# 표의 크기와 앞의 세 행을 확인해요.\nprint(df.shape)\nresult = df.head(3)\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 주문 자료예요. 실제 고객 자료가 아니에요.\n# 괄호 안의 경로에서 CSV 파일을 찾아 읽어요.\ndf = pd.read_csv('data/orders.csv')\n# 표의 크기와 앞의 세 행을 확인해요.\nprint(df.shape)\nresult = df.head(3)\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "`pd.read_csv('data/orders.csv')`로 바꿔요. 확장자 .csv도 적어요."
+      ],
+      "goal_html": "<p>CSV는 쉼표로 칸을 나눈 글자 파일이에요.<br><code>pd.read_csv</code>는 CSV 파일을 읽어 표로 만들어요.<br>괄호 안에 적는 파일 위치를 경로라고 해요. 경로는 main.py가 있는 폴더에서 시작해요.</p><p>자, 먼저 코드 실행을 누르세요. 오류의 마지막 줄에서 찾지 못한 파일 이름을 읽어요.<br>자료는 data 폴더 안에 있어요. 폴더와 파일 이름은 /로 이어요.<br>경로를 <code>&#x27;data/orders.csv&#x27;</code>로 바꾸고 다시 실행하세요.<br>파일 내용은 문제 아래 「함께 제공한 파일」에서 볼 수 있어요.</p>"
+    },
+    {
+      "id": "dtypes",
+      "title": "숫자처럼 보여도 글자일 수 있어요",
+      "goal": "값의 종류를 자료형이라고 해요. 정수는 int64, 소수는 float64, 글자는 str이에요.\npandas는 열마다 자료형을 하나 정해요. 숫자가 아닌 값이 한 칸만 섞여도 그 열은 str이 돼요.\n`df.dtypes`는 열마다 그 자료형을 보여 줘요.\n\n먼저 실행해서 표의 값을 보세요.\nresult 줄의 `df.head(3)`을 `df.dtypes`로 바꾸세요.\n숫자처럼 보이는데 str인 열을 찾아보세요. 처음 본 표에서 그 열에 섞인 글자를 찾아요.\npandas 버전에 따라 str 대신 object로도 보여요. 맨 아래 dtype 줄은 목록 자체의 자료형이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 주문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 점검할 내용을 result에 담아요.\nresult = df.head(3)\n# 담은 값을 화면에 보여 줘요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 주문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 점검할 내용을 result에 담아요.\nresult = df.dtypes\n# 담은 값을 화면에 보여 줘요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "`result = df.dtypes`로 바꿔요. shape처럼 괄호는 붙이지 않아요."
+      ],
+      "goal_html": "<p>값의 종류를 자료형이라고 해요. 정수는 int64, 소수는 float64, 글자는 str이에요.<br>pandas는 열마다 자료형을 하나 정해요. 숫자가 아닌 값이 한 칸만 섞여도 그 열은 str이 돼요.<br><code>df.dtypes</code>는 열마다 그 자료형을 보여 줘요.</p><p>먼저 실행해서 표의 값을 보세요.<br>result 줄의 <code>df.head(3)</code>을 <code>df.dtypes</code>로 바꾸세요.<br>숫자처럼 보이는데 str인 열을 찾아보세요. 처음 본 표에서 그 열에 섞인 글자를 찾아요.<br>pandas 버전에 따라 str 대신 object로도 보여요. 맨 아래 dtype 줄은 목록 자체의 자료형이에요.</p>"
+    },
+    {
+      "id": "info",
+      "title": "빈칸이 아닌 값의 개수를 세어요",
+      "goal": "`df.info()`는 표의 요약을 한 번에 보여 줘요.\n`RangeIndex` 줄의 entries 앞 숫자가 행 수예요. 열마다 자료형과 Non-Null Count도 나와요.\nNon-Null Count는 빈칸이 아닌 값의 개수예요.\n\n먼저 실행해서 minutes의 값과 자료형 목록을 보세요.\n`print(df.dtypes)` 줄을 `df.info()`로 바꾸세요.\nminutes의 Non-Null Count를 행 수와 비교해요.\nNaN과 모름 중 어느 쪽이 빈칸으로 세어졌는지 확인하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 주문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# minutes 열의 값을 모두 봐요. NaN은 빈칸이에요.\nprint(df['minutes'])\n# 열의 정보를 화면에 보여 줘요.\nprint(df.dtypes)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 주문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# minutes 열의 값을 모두 봐요. NaN은 빈칸이에요.\nprint(df['minutes'])\n# 열의 정보를 화면에 보여 줘요.\ndf.info()\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "info는 괄호를 붙여야 실행돼요. 스스로 출력하니 `df.info()` 한 줄이면 돼요."
+      ],
+      "goal_html": "<p><code>df.info()</code>는 표의 요약을 한 번에 보여 줘요.<br><code>RangeIndex</code> 줄의 entries 앞 숫자가 행 수예요. 열마다 자료형과 Non-Null Count도 나와요.<br>Non-Null Count는 빈칸이 아닌 값의 개수예요.</p><p>먼저 실행해서 minutes의 값과 자료형 목록을 보세요.<br><code>print(df.dtypes)</code> 줄을 <code>df.info()</code>로 바꾸세요.<br>minutes의 Non-Null Count를 행 수와 비교해요.<br>NaN과 모름 중 어느 쪽이 빈칸으로 세어졌는지 확인하세요.</p>"
+    },
+    {
+      "id": "thousands",
+      "title": "쉼표 섞인 가격을 숫자로 읽어요",
+      "goal": "`sum()`은 열의 값을 모두 더해요.\n글자 열이면 더하지 않고 글자를 이어 붙여요.\n`thousands=','`는 쉼표를 천 단위 표시로 읽게 해요.\n\n먼저 실행해서 합계가 어떻게 나오는지 보세요.\n가격 글자가 사이 없이 붙어 나와요. 첫 가격부터 끊어 읽어 보세요.\nread_csv의 경로 뒤에 `, thousands=','`를 넣으세요.\n다시 실행해서 두 합계를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 파일에는 \"1,200\"처럼 따옴표로 감싸 한 칸으로 둬요.\n# 읽는 규칙은 경로 뒤에 이름 붙은 인자로 더해요.\ndf = pd.read_csv('data/orders.csv')\n# price 열의 값을 모두 더해요.\nresult = df['price'].sum()\n# 합계를 확인해요. 글자 열이면 값이 이어 붙어요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 파일에는 \"1,200\"처럼 따옴표로 감싸 한 칸으로 둬요.\n# 읽는 규칙은 경로 뒤에 이름 붙은 인자로 더해요.\ndf = pd.read_csv('data/orders.csv', thousands=',')\n# price 열의 값을 모두 더해요.\nresult = df['price'].sum()\n# 합계를 확인해요. 글자 열이면 값이 이어 붙어요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "`pd.read_csv('data/orders.csv', thousands=',')`로 읽어요."
+      ],
+      "goal_html": "<p><code>sum()</code>은 열의 값을 모두 더해요.<br>글자 열이면 더하지 않고 글자를 이어 붙여요.<br><code>thousands=&#x27;,&#x27;</code>는 쉼표를 천 단위 표시로 읽게 해요.</p><p>먼저 실행해서 합계가 어떻게 나오는지 보세요.<br>가격 글자가 사이 없이 붙어 나와요. 첫 가격부터 끊어 읽어 보세요.<br>read_csv의 경로 뒤에 <code>, thousands=&#x27;,&#x27;</code>를 넣으세요.<br>다시 실행해서 두 합계를 비교해요.</p>"
+    },
+    {
+      "id": "to-numeric",
+      "title": "숫자가 아닌 값은 빈칸으로 바꿔요",
+      "goal": "`pd.to_numeric`은 열의 값을 숫자로 바꿔요.\n숫자로 못 읽는 값이 하나라도 있으면 오류가 나요.\n`errors='coerce'`는 그런 값을 NaN(빈칸)으로 바꿔요.\n\n먼저 실행해서 오류의 마지막 줄을 읽으세요. `Unable to parse string`은 숫자로 못 읽었다는 뜻이에요.\n`position` 뒤 숫자는 0부터 센 자리예요. 위에 출력된 값의 왼쪽 번호와 맞춰 보세요.\nto_numeric 괄호 끝에 `, errors='coerce'`를 넣으세요.\n다시 실행해서 NaN이 된 값과 맨 아래 dtype을 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# minutes에는 빈칸과 모름이 섞여 있어요.\ndf = pd.read_csv('data/orders.csv')\n# 바꾸기 전 값을 먼저 봐요. 왼쪽 번호는 0부터 세요.\nprint(df['minutes'])\n# minutes 열을 숫자로 바꿔 다시 담아요.\ndf['minutes'] = pd.to_numeric(df['minutes'])\n# 바꾼 열과 자료형을 확인해요. NaN이 섞인 숫자 열은 float64가 돼요.\nresult = df['minutes']\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# minutes에는 빈칸과 모름이 섞여 있어요.\ndf = pd.read_csv('data/orders.csv')\n# 바꾸기 전 값을 먼저 봐요. 왼쪽 번호는 0부터 세요.\nprint(df['minutes'])\n# minutes 열을 숫자로 바꿔 다시 담아요.\ndf['minutes'] = pd.to_numeric(df['minutes'], errors='coerce')\n# 바꾼 열과 자료형을 확인해요. NaN이 섞인 숫자 열은 float64가 돼요.\nresult = df['minutes']\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "`pd.to_numeric(df['minutes'], errors='coerce')`로 바꿔요."
+      ],
+      "goal_html": "<p><code>pd.to_numeric</code>은 열의 값을 숫자로 바꿔요.<br>숫자로 못 읽는 값이 하나라도 있으면 오류가 나요.<br><code>errors=&#x27;coerce&#x27;</code>는 그런 값을 NaN(빈칸)으로 바꿔요.</p><p>먼저 실행해서 오류의 마지막 줄을 읽으세요. <code>Unable to parse string</code>은 숫자로 못 읽었다는 뜻이에요.<br><code>position</code> 뒤 숫자는 0부터 센 자리예요. 위에 출력된 값의 왼쪽 번호와 맞춰 보세요.<br>to_numeric 괄호 끝에 <code>, errors=&#x27;coerce&#x27;</code>를 넣으세요.<br>다시 실행해서 NaN이 된 값과 맨 아래 dtype을 확인해요.</p>"
+    },
+    {
+      "id": "astype",
+      "title": "정리한 글자를 정수로 바꿔요",
+      "goal": "`.str`을 붙이면 열의 값마다 글자 메서드를 써요.\n개를 지워도 자료형은 여전히 글자예요.\n`astype(int)`는 열을 정수 자료형으로 바꿔요.\n\n먼저 실행해서 합계가 어떻게 나오는지 보세요.\n`replace('개', '')` 바로 뒤에 `.astype(int)`를 붙이세요.\n다시 실행해서 두 합계를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# quantity에는 2개처럼 개가 붙어 있어요.\ndf = pd.read_csv('data/orders.csv')\n# .str.replace로 값마다 개를 지우고 다시 담아요.\ndf['quantity'] = df['quantity'].str.replace('개', '')\n# 수량을 모두 더해 확인해요.\nresult = df['quantity'].sum()\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# quantity에는 2개처럼 개가 붙어 있어요.\ndf = pd.read_csv('data/orders.csv')\n# .str.replace로 값마다 개를 지우고 다시 담아요.\ndf['quantity'] = df['quantity'].str.replace('개', '').astype(int)\n# 수량을 모두 더해 확인해요.\nresult = df['quantity'].sum()\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "`df['quantity'].str.replace('개', '').astype(int)`처럼 이어 써요."
+      ],
+      "goal_html": "<p><code>.str</code>을 붙이면 열의 값마다 글자 메서드를 써요.<br>개를 지워도 자료형은 여전히 글자예요.<br><code>astype(int)</code>는 열을 정수 자료형으로 바꿔요.</p><p>먼저 실행해서 합계가 어떻게 나오는지 보세요.<br><code>replace(&#x27;개&#x27;, &#x27;&#x27;)</code> 바로 뒤에 <code>.astype(int)</code>를 붙이세요.<br>다시 실행해서 두 합계를 비교해요.</p>"
+    },
+    {
+      "id": "column-names",
+      "title": "열 이름의 공백을 지워요",
+      "goal": "`df.columns`는 표의 열 이름 목록이에요.\n이름 앞뒤에 공백이 붙으면 다른 이름이 돼요.\n`df.columns.str.strip()`은 모든 열 이름의 앞뒤 공백을 지워요.\n\n먼저 실행해서 열 이름 목록과 오류를 보세요. `KeyError`는 그런 이름의 열이 없다는 뜻이에요.\n목록의 따옴표 안을 보면 이름 앞뒤의 공백이 보여요.\n공백을 지우는 주석 아래에 `df.columns = df.columns.str.strip()`을 넣으세요.\n다시 실행해서 price 열과 맨 아래 새 목록을 보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 다른 지점에서 받은 주문 자료예요.\ndf = pd.read_csv('data/branch.csv')\n# 지우기 전의 열 이름 목록을 먼저 확인해요.\nprint(df.columns)\n# 이 아래에서 열 이름의 앞뒤 공백을 지워요.\n# 가격 열만 꺼내 확인해요.\nresult = df['price']\nprint(result)\n# 지운 뒤의 열 이름 목록도 확인해요.\nprint(df.columns)\n",
+      "solution": "import pandas as pd\n\n# 다른 지점에서 받은 주문 자료예요.\ndf = pd.read_csv('data/branch.csv')\n# 지우기 전의 열 이름 목록을 먼저 확인해요.\nprint(df.columns)\n# 이 아래에서 열 이름의 앞뒤 공백을 지워요.\ndf.columns = df.columns.str.strip()\n# 가격 열만 꺼내 확인해요.\nresult = df['price']\nprint(result)\n# 지운 뒤의 열 이름 목록도 확인해요.\nprint(df.columns)\n",
+      "files": {
+        "data/branch.csv": "order_id, channel , price,quantity\n007,web,1200,2\n012,app,800,1\n031,web,2500,3\n044,app,1050,1\n"
+      },
+      "required": true,
+      "hints": [
+        "주석 아래에 `df.columns = df.columns.str.strip()`을 넣어요. columns 뒤의 .str을 빼먹지 마세요."
+      ],
+      "goal_html": "<p><code>df.columns</code>는 표의 열 이름 목록이에요.<br>이름 앞뒤에 공백이 붙으면 다른 이름이 돼요.<br><code>df.columns.str.strip()</code>은 모든 열 이름의 앞뒤 공백을 지워요.</p><p>먼저 실행해서 열 이름 목록과 오류를 보세요. <code>KeyError</code>는 그런 이름의 열이 없다는 뜻이에요.<br>목록의 따옴표 안을 보면 이름 앞뒤의 공백이 보여요.<br>공백을 지우는 주석 아래에 <code>df.columns = df.columns.str.strip()</code>을 넣으세요.<br>다시 실행해서 price 열과 맨 아래 새 목록을 보세요.</p>"
+    },
+    {
+      "id": "save-csv",
+      "title": "저장한 파일을 다시 읽어 확인해요",
+      "goal": "`to_csv`는 표를 CSV 파일로 저장해요.\n표 왼쪽의 0, 1, 2는 행 번호(인덱스)예요. 따로 말하지 않으면 함께 저장돼요.\n`index=False`를 넣으면 행 번호는 빼고 저장해요.\n\n먼저 실행해서 다시 읽은 표의 크기와 첫 열을 보세요.\nUnnamed: 0은 이름 없이 저장된 행 번호 열이에요.\nto_csv의 파일 이름 뒤에 `, index=False`를 넣으세요.\n다시 실행해서 열 수와 첫 열을 비교해요. 다시 읽는 줄은 그대로 두세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 쉼표 숫자를 숫자로 읽어요.\ndf = pd.read_csv('data/orders.csv', thousands=',')\n# 정해진 이름 result.csv로 저장해요.\ndf.to_csv('result.csv')\n# 저장한 파일을 다시 읽어요.\nsaved = pd.read_csv('result.csv')\n# 다시 읽은 표의 크기와 앞부분을 확인해요.\nprint(saved.shape)\nprint(saved.head(3))\n",
+      "solution": "import pandas as pd\n\n# 쉼표 숫자를 숫자로 읽어요.\ndf = pd.read_csv('data/orders.csv', thousands=',')\n# 정해진 이름 result.csv로 저장해요.\ndf.to_csv('result.csv', index=False)\n# 저장한 파일을 다시 읽어요.\nsaved = pd.read_csv('result.csv')\n# 다시 읽은 표의 크기와 앞부분을 확인해요.\nprint(saved.shape)\nprint(saved.head(3))\n",
+      "files": {
+        "data/orders.csv": "order_id,channel,price,quantity,minutes\n007,web,\"1,200\",2개,15\n012,app,800,1개,모름\n031,web,\"2,500\",3개,\n044,app,\"1,050\",1개,20\n105,web,950,4개,8\n120,app,\"3,000\",2개,모름\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.to_csv('result.csv', index=False)`로 저장해요."
+      ],
+      "goal_html": "<p><code>to_csv</code>는 표를 CSV 파일로 저장해요.<br>표 왼쪽의 0, 1, 2는 행 번호(인덱스)예요. 따로 말하지 않으면 함께 저장돼요.<br><code>index=False</code>를 넣으면 행 번호는 빼고 저장해요.</p><p>먼저 실행해서 다시 읽은 표의 크기와 첫 열을 보세요.<br>Unnamed: 0은 이름 없이 저장된 행 번호 열이에요.<br>to_csv의 파일 이름 뒤에 <code>, index=False</code>를 넣으세요.<br>다시 실행해서 열 수와 첫 열을 비교해요. 다시 읽는 줄은 그대로 두세요.</p>"
+    },
+    {
+      "id": "price-total",
+      "title": "도전 · 쉼표와 문의가 섞인 가격 합계",
+      "goal": "쉼표 지우기, coerce, 합계를 조합해요.\n숫자가 아닌 값이 섞이면 열 전체가 글자로 남아요.\n\n먼저 실행해서 NaN이 된 가격을 보세요. 이번 자료는 prices.csv예요.\nNaN이 된 행의 원래 값은 「함께 제공한 파일」에서 찾아요.\n쉼표가 있는 가격도 합계에 넣으세요. 문의처럼 숫자가 아닌 값만 NaN으로 두세요.\n제출 전에 쉼표 가격이 숫자로 나오는지 확인하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 앞 문제와 다른 자료예요. 가격에 쉼표, 문의, 빈칸이 섞였어요.\ndf = pd.read_csv('data/prices.csv')\n# 숫자로 못 읽는 값은 NaN으로 바꿔 다시 담아요.\ndf['price'] = pd.to_numeric(df['price'], errors='coerce')\n# 바뀐 가격을 먼저 확인해요.\nprint(df['price'])\n# 합계는 NaN을 빼고 더해요.\nresult = df['price'].sum()\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 앞 문제와 다른 자료예요. 가격에 쉼표, 문의, 빈칸이 섞였어요.\ndf = pd.read_csv('data/prices.csv')\n# 숫자로 못 읽는 값은 NaN으로 바꿔 다시 담아요.\ndf['price'] = pd.to_numeric(df['price'].str.replace(',', ''), errors='coerce')\n# 바뀐 가격을 먼저 확인해요.\nprint(df['price'])\n# 합계는 NaN을 빼고 더해요.\nresult = df['price'].sum()\nprint(result)\n",
+      "files": {
+        "data/prices.csv": "order_id,channel,price\n007,web,\"1,200\"\n012,app,문의\n031,web,\"2,500\"\n044,app,950\n105,web,\n120,app,\"3,000\"\n"
+      },
+      "required": false,
+      "hints": [
+        "문의가 섞인 열에서는 `thousands=','`도 쉼표를 못 지워요.",
+        "to_numeric 괄호 안의 `df['price']` 바로 뒤에 `.str.replace(',', '')`를 붙여요."
+      ],
+      "goal_html": "<p>쉼표 지우기, coerce, 합계를 조합해요.<br>숫자가 아닌 값이 섞이면 열 전체가 글자로 남아요.</p><p>먼저 실행해서 NaN이 된 가격을 보세요. 이번 자료는 prices.csv예요.<br>NaN이 된 행의 원래 값은 「함께 제공한 파일」에서 찾아요.<br>쉼표가 있는 가격도 합계에 넣으세요. 문의처럼 숫자가 아닌 값만 NaN으로 두세요.<br>제출 전에 쉼표 가격이 숫자로 나오는지 확인하세요.</p>"
+    },
+    {
+      "id": "code-roundtrip",
+      "title": "도전 · 다시 읽어도 007을 지켜요",
+      "goal": "주문 번호 007은 계산하지 않는 코드예요. 숫자로 읽으면 앞자리 0이 사라져요.\n`dtype={'order_id': str}`은 그 열을 글자로 읽게 해요.\n읽을 때 넣는 인자라 열을 보는 `df.dtypes`와 달리 s가 없어요.\n\n준비 코드는 codes.csv를 읽어 저장하고 다시 읽어요.\n다시 읽은 주문 번호도 앞자리 0을 지키게 하세요.\n다른 열의 자료형은 바꾸지 마세요.\n고칠 줄은 직접 찾아보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# dtype으로 order_id 열을 글자로 읽어요.\ndf = pd.read_csv('data/codes.csv', dtype={'order_id': str})\n# 두 열만 골라 행 번호 없이 저장해요.\ndf[['order_id', 'quantity']].to_csv('result.csv', index=False)\n# 저장한 파일을 다시 읽어요.\nsaved = pd.read_csv('result.csv')\n# 다시 읽은 주문 번호를 확인해요.\nresult = saved['order_id']\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# dtype으로 order_id 열을 글자로 읽어요.\ndf = pd.read_csv('data/codes.csv', dtype={'order_id': str})\n# 두 열만 골라 행 번호 없이 저장해요.\ndf[['order_id', 'quantity']].to_csv('result.csv', index=False)\n# 저장한 파일을 다시 읽어요.\nsaved = pd.read_csv('result.csv', dtype={'order_id': str})\n# 다시 읽은 주문 번호를 확인해요.\nresult = saved['order_id']\nprint(result)\n",
+      "files": {
+        "data/codes.csv": "order_id,channel,quantity\n007,web,2\n012,app,1\n031,web,3\n105,app,4\n"
+      },
+      "required": false,
+      "hints": [
+        "저장한 파일에는 007이 그대로 있어요. 다시 읽는 줄을 보세요.",
+        "다시 읽는 read_csv에도 `dtype={'order_id': str}`을 넣어요."
+      ],
+      "goal_html": "<p>주문 번호 007은 계산하지 않는 코드예요. 숫자로 읽으면 앞자리 0이 사라져요.<br><code>dtype={&#x27;order_id&#x27;: str}</code>은 그 열을 글자로 읽게 해요.<br>읽을 때 넣는 인자라 열을 보는 <code>df.dtypes</code>와 달리 s가 없어요.</p><p>준비 코드는 codes.csv를 읽어 저장하고 다시 읽어요.<br>다시 읽은 주문 번호도 앞자리 0을 지키게 하세요.<br>다른 열의 자료형은 바꾸지 마세요.<br>고칠 줄은 직접 찾아보세요.</p>"
+    }
+  ]
+}

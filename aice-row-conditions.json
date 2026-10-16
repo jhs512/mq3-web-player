@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "id": "aice-row-conditions",
+  "revision": "v1.0.0",
+  "title": "조건으로 원하는 기록 고르기",
+  "description": "조건에 맞는 기록만 표에서 골라요. 경계값과 두 조건을 작은 실험으로 익혀요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "compare-rows",
+      "title": "비교 결과로 행을 골라요",
+      "goal": "열을 숫자와 비교하면 행마다 True나 False가 하나씩 나와요.\n행마다 값이 하나씩 줄지은 것을 Series라고 해요. 열 하나를 꺼낸 것도 Series예요.\n이 결과를 `df[ ]` 안에 넣으면 True인 행만 남아요.\n\n먼저 실행해서 True와 False를 보세요.\n맨 위 크기는 숫자가 하나예요. Series에는 열 수 없이 행 수만 있거든요.\n비교식 전체를 `df[ ]`로 감싸 result에 담고 다시 실행하세요.\n표 왼쪽 번호와 True 자리를 맞춰 봐요. 크기의 앞 숫자(행 수)가 몇으로 줄었는지도 보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 비교할 기준 방문 횟수예요.\nlimit = 4\n# visits 값이 limit보다 큰지 행마다 비교해요.\nresult = df['visits'] > limit\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 비교할 기준 방문 횟수예요.\nlimit = 4\n# visits 값이 limit보다 큰지 행마다 비교해요.\nresult = df[df['visits'] > limit]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "`result = df[df['visits'] > limit]`로 바꿔요."
+      ],
+      "goal_html": "<p>열을 숫자와 비교하면 행마다 True나 False가 하나씩 나와요.<br>행마다 값이 하나씩 줄지은 것을 Series라고 해요. 열 하나를 꺼낸 것도 Series예요.<br>이 결과를 <code>df[ ]</code> 안에 넣으면 True인 행만 남아요.</p><p>먼저 실행해서 True와 False를 보세요.<br>맨 위 크기는 숫자가 하나예요. Series에는 열 수 없이 행 수만 있거든요.<br>비교식 전체를 <code>df[ ]</code>로 감싸 result에 담고 다시 실행하세요.<br>표 왼쪽 번호와 True 자리를 맞춰 봐요. 크기의 앞 숫자(행 수)가 몇으로 줄었는지도 보세요.</p>"
+    },
+    {
+      "id": "boundary-include",
+      "title": "기준과 같은 값도 넣을까요?",
+      "goal": "`>`는 기준보다 큰 값만 True예요. 초과라고 해요.\n`>=`는 기준과 같은 값도 True예요. 이상이라고 해요.\n기준과 딱 같은 값을 경계값이라고 불러요.\n\n방문 횟수가 limit 이상인 기록을 골라요.\n먼저 실행해서 남은 행을 확인하세요.\n`>`를 `>=`로 바꾸고 다시 실행하세요.\nvisits가 limit과 같은 행을 찾아보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 이 기준 이상인 기록을 고르려고 해요.\nlimit = 4\n# 비교 결과가 True인 행만 남겨요.\nresult = df[df['visits'] > limit]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 이 기준 이상인 기록을 고르려고 해요.\nlimit = 4\n# 비교 결과가 True인 행만 남겨요.\nresult = df[df['visits'] >= limit]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "이상은 기준값도 포함해요. `>=`를 써요."
+      ],
+      "goal_html": "<p><code>&gt;</code>는 기준보다 큰 값만 True예요. 초과라고 해요.<br><code>&gt;=</code>는 기준과 같은 값도 True예요. 이상이라고 해요.<br>기준과 딱 같은 값을 경계값이라고 불러요.</p><p>방문 횟수가 limit 이상인 기록을 골라요.<br>먼저 실행해서 남은 행을 확인하세요.<br><code>&gt;</code>를 <code>&gt;=</code>로 바꾸고 다시 실행하세요.<br>visits가 limit과 같은 행을 찾아보세요.</p>"
+    },
+    {
+      "id": "text-match",
+      "title": "글자는 대소문자까지 같아야 해요",
+      "goal": "`==`는 두 값이 같은지 비교해요.\n글자는 대소문자까지 똑같아야 True예요.\n`=` 하나는 값을 저장하는 기호라 비교에 못 써요.\n\nchannel이 소문자 app인 기록을 골라요.\n먼저 실행해서 어떤 행이 나오는지 보세요.\n'App'을 'app'으로 바꾸고 다시 실행하세요.\nApp으로 적힌 행이 어떻게 됐는지 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 접속 경로가 같은지 행마다 비교해요.\n# 비교할 글자는 따옴표로 감싸요.\nresult = df[df['channel'] == 'App']\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 접속 경로가 같은지 행마다 비교해요.\n# 비교할 글자는 따옴표로 감싸요.\nresult = df[df['channel'] == 'app']\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "따옴표 안을 소문자 app으로 바꿔요."
+      ],
+      "goal_html": "<p><code>==</code>는 두 값이 같은지 비교해요.<br>글자는 대소문자까지 똑같아야 True예요.<br><code>=</code> 하나는 값을 저장하는 기호라 비교에 못 써요.</p><p>channel이 소문자 app인 기록을 골라요.<br>먼저 실행해서 어떤 행이 나오는지 보세요.<br>&#x27;App&#x27;을 &#x27;app&#x27;으로 바꾸고 다시 실행하세요.<br>App으로 적힌 행이 어떻게 됐는지 비교해요.</p>"
+    },
+    {
+      "id": "both-and",
+      "title": "두 조건은 and 대신 &로 묶어요",
+      "goal": "and는 True나 False 값 하나끼리 묶는 말이에요.\n비교 결과처럼 행마다 값이 있으면 `&`를 써요.\n`&`는 두 조건이 모두 True인 행만 True예요.\n\n방문이 limit 이상이고 구매한 기록을 골라요.\n먼저 실행해서 오류의 마지막 줄을 읽으세요. Series의 참·거짓을 하나로 못 정한다(ambiguous)는 뜻이에요.\n뒤에 권하는 `a.any()`, `a.all()`은 여기서 쓰지 않아요.\n`and`를 `&`로 바꾸고 다시 실행하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# bought가 1이면 구매한 기록이에요.\n# 두 조건을 각각 괄호로 묶었어요.\nresult = df[(df['visits'] >= limit) and (df['bought'] == 1)]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# bought가 1이면 구매한 기록이에요.\n# 두 조건을 각각 괄호로 묶었어요.\nresult = df[(df['visits'] >= limit) & (df['bought'] == 1)]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "`and`만 `&`로 바꿔요. 괄호는 그대로 둬요."
+      ],
+      "goal_html": "<p>and는 True나 False 값 하나끼리 묶는 말이에요.<br>비교 결과처럼 행마다 값이 있으면 <code>&amp;</code>를 써요.<br><code>&amp;</code>는 두 조건이 모두 True인 행만 True예요.</p><p>방문이 limit 이상이고 구매한 기록을 골라요.<br>먼저 실행해서 오류의 마지막 줄을 읽으세요. Series의 참·거짓을 하나로 못 정한다(ambiguous)는 뜻이에요.<br>뒤에 권하는 <code>a.any()</code>, <code>a.all()</code>은 여기서 쓰지 않아요.<br><code>and</code>를 <code>&amp;</code>로 바꾸고 다시 실행하세요.</p>"
+    },
+    {
+      "id": "both-parens",
+      "title": "&를 쓸 때는 조건마다 괄호",
+      "goal": "Python은 `&`를 `>=`나 `==`보다 먼저 계산해요.\n괄호가 없으면 `mins & df['bought']`부터 계산해요. 그러면 남은 `>=`와 `==`가 한 비교로 이어져요.\n이어진 비교는 속에서 and로 묶여요. 그래서 조건마다 괄호로 순서를 정해요.\n\n이용 시간이 mins분 이상인데 구매하지 않은 기록이에요.\n먼저 실행해서 오류를 확인하세요. `&`를 썼는데도 and 때와 같은 ValueError예요.\n두 비교식을 각각 괄호로 묶고 다시 실행하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 이용 시간(분)이에요.\nmins = 18\n# bought가 0이면 구매하지 않은 기록이에요.\n# 두 조건을 &로 이어 함께 따져요.\nresult = df[df['minutes'] >= mins & df['bought'] == 0]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 이용 시간(분)이에요.\nmins = 18\n# bought가 0이면 구매하지 않은 기록이에요.\n# 두 조건을 &로 이어 함께 따져요.\nresult = df[(df['minutes'] >= mins) & (df['bought'] == 0)]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "`(df['minutes'] >= mins) & (df['bought'] == 0)` 모양이에요."
+      ],
+      "goal_html": "<p>Python은 <code>&amp;</code>를 <code>&gt;=</code>나 <code>==</code>보다 먼저 계산해요.<br>괄호가 없으면 <code>mins &amp; df[&#x27;bought&#x27;]</code>부터 계산해요. 그러면 남은 <code>&gt;=</code>와 <code>==</code>가 한 비교로 이어져요.<br>이어진 비교는 속에서 and로 묶여요. 그래서 조건마다 괄호로 순서를 정해요.</p><p>이용 시간이 mins분 이상인데 구매하지 않은 기록이에요.<br>먼저 실행해서 오류를 확인하세요. <code>&amp;</code>를 썼는데도 and 때와 같은 ValueError예요.<br>두 비교식을 각각 괄호로 묶고 다시 실행하세요.</p>"
+    },
+    {
+      "id": "either-or",
+      "title": "하나만 맞아도 고르려면 |",
+      "goal": "`|`는 두 조건 중 하나만 True여도 True예요.\n`&`처럼 조건마다 괄호로 묶어요.\n`|`는 Shift와 ₩(\\) 키를 함께 눌러 입력해요.\n\n방문이 limit 이상이거나 구매한 기록을 골라요.\n준비 코드는 두 조건이 다 맞는 기록만 골라요.\n`&`를 `|`로 바꾸고 다시 실행하세요.\n두 결과의 행 수를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# 조건마다 괄호로 묶고 기호로 이어요.\nresult = df[(df['visits'] >= limit) & (df['bought'] == 1)]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# 조건마다 괄호로 묶고 기호로 이어요.\nresult = df[(df['visits'] >= limit) | (df['bought'] == 1)]\n# 결과의 크기를 먼저 봐요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "가운데 `&` 하나만 `|`로 바꿔요."
+      ],
+      "goal_html": "<p><code>|</code>는 두 조건 중 하나만 True여도 True예요.<br><code>&amp;</code>처럼 조건마다 괄호로 묶어요.<br><code>|</code>는 Shift와 ₩(\\) 키를 함께 눌러 입력해요.</p><p>방문이 limit 이상이거나 구매한 기록을 골라요.<br>준비 코드는 두 조건이 다 맞는 기록만 골라요.<br><code>&amp;</code>를 <code>|</code>로 바꾸고 다시 실행하세요.<br>두 결과의 행 수를 비교해요.</p>"
+    },
+    {
+      "id": "loc-column",
+      "title": "loc로 행과 열을 함께 골라요",
+      "goal": "`df.loc[행, 열]`은 행과 열을 한 번에 골라요.\n쉼표 앞 행 자리에 조건을 넣어요.\n쉼표 뒤 열 자리에 열 이름을 넣어요.\n\n방문이 limit 이상인 기록의 이용 시간만 봐요.\n먼저 실행해서 모든 열이 나오는 걸 보세요.\n조건 뒤, 닫는 `]` 바로 앞에 `, 'minutes'`를 넣고 다시 실행하세요.\n열 하나만 고르면 결과가 Series로 나와요. 맨 아래 Name이 고른 열 이름이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# 쉼표 앞은 행 자리, 뒤는 열 자리예요.\nresult = df.loc[df['visits'] >= limit]\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# 쉼표 앞은 행 자리, 뒤는 열 자리예요.\nresult = df.loc[df['visits'] >= limit, 'minutes']\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.loc[df['visits'] >= limit, 'minutes']`로 바꿔요."
+      ],
+      "goal_html": "<p><code>df.loc[행, 열]</code>은 행과 열을 한 번에 골라요.<br>쉼표 앞 행 자리에 조건을 넣어요.<br>쉼표 뒤 열 자리에 열 이름을 넣어요.</p><p>방문이 limit 이상인 기록의 이용 시간만 봐요.<br>먼저 실행해서 모든 열이 나오는 걸 보세요.<br>조건 뒤, 닫는 <code>]</code> 바로 앞에 <code>, &#x27;minutes&#x27;</code>를 넣고 다시 실행하세요.<br>열 하나만 고르면 결과가 Series로 나와요. 맨 아래 Name이 고른 열 이름이에요.</p>"
+    },
+    {
+      "id": "iloc-first",
+      "title": "고른 표의 첫 행은 iloc[0]",
+      "goal": "표 왼쪽 번호(인덱스)는 행을 골라도 그대로 남아요.\n`loc[0]`은 인덱스가 0인 행을 찾아요.\n`iloc[0]`은 인덱스와 상관없이 첫 자리 행이에요.\n\n방문이 limit 이상인 기록 중 첫 기록을 꺼내요.\n먼저 실행해서 오류의 마지막 줄을 읽으세요. `KeyError: 0`은 인덱스가 0인 행이 없다는 뜻이에요.\n`loc`을 `iloc`으로 바꾸고 다시 실행하세요.\n행 하나를 꺼내면 열 이름이 왼쪽에 세로로 나와요. 맨 아래 Name이 그 행의 인덱스예요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# 조건에 맞는 기록만 골라 picked에 담아요.\npicked = df[df['visits'] >= limit]\n# 고른 표에서 첫 기록을 꺼내요.\nresult = picked.loc[0]\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 방문 횟수예요.\nlimit = 4\n# 조건에 맞는 기록만 골라 picked에 담아요.\npicked = df[df['visits'] >= limit]\n# 고른 표에서 첫 기록을 꺼내요.\nresult = picked.iloc[0]\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": true,
+      "hints": [
+        "`picked.iloc[0]`으로 바꿔요."
+      ],
+      "goal_html": "<p>표 왼쪽 번호(인덱스)는 행을 골라도 그대로 남아요.<br><code>loc[0]</code>은 인덱스가 0인 행을 찾아요.<br><code>iloc[0]</code>은 인덱스와 상관없이 첫 자리 행이에요.</p><p>방문이 limit 이상인 기록 중 첫 기록을 꺼내요.<br>먼저 실행해서 오류의 마지막 줄을 읽으세요. <code>KeyError: 0</code>은 인덱스가 0인 행이 없다는 뜻이에요.<br><code>loc</code>을 <code>iloc</code>으로 바꾸고 다시 실행하세요.<br>행 하나를 꺼내면 열 이름이 왼쪽에 세로로 나와요. 맨 아래 Name이 그 행의 인덱스예요.</p>"
+    },
+    {
+      "id": "range-count",
+      "title": "도전 · 범위 안의 app 기록 수",
+      "goal": "`<=`는 이하예요. 기준과 같은 값도 True예요.\n경계값, `&`, 괄호를 함께 써요.\n`shape[0]`이 표의 행 수였던 것도 떠올려요.\n\napp 기록 중 방문이 low 이상 high 이하인 기록 수를 구해요.\n지금 코드는 high 조건이 빠졌어요.\n표 대신 행 수를 result에 담으세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 범위의 아래 끝과 위 끝이에요. 둘 다 포함해요.\nlow = 2\nhigh = 4\n# 조건마다 괄호로 묶어 &로 이어요.\nresult = df[(df['channel'] == 'app') & (df['visits'] >= low)]\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 범위의 아래 끝과 위 끝이에요. 둘 다 포함해요.\nlow = 2\nhigh = 4\n# 조건마다 괄호로 묶어 &로 이어요.\nresult = df[(df['channel'] == 'app') & (df['visits'] >= low) & (df['visits'] <= high)].shape[0]\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": false,
+      "hints": [
+        "`(df['visits'] <= high)`를 `&`로 하나 더 이어요.",
+        "고른 표 뒤에 `.shape[0]`을 붙여요."
+      ],
+      "goal_html": "<p><code>&lt;=</code>는 이하예요. 기준과 같은 값도 True예요.<br>경계값, <code>&amp;</code>, 괄호를 함께 써요.<br><code>shape[0]</code>이 표의 행 수였던 것도 떠올려요.</p><p>app 기록 중 방문이 low 이상 high 이하인 기록 수를 구해요.<br>지금 코드는 high 조건이 빠졌어요.<br>표 대신 행 수를 result에 담으세요.</p>"
+    },
+    {
+      "id": "loc-two-conditions",
+      "title": "도전 · 두 조건으로 고른 기록의 한 열",
+      "goal": "`loc`의 행 자리에도 `&`로 묶은 조건을 넣어요.\n빈칸(NaN)은 `>=`로 비교하면 False가 나와요.\n\n구매했고 이용 시간이 mins분 이상인 기록을 골라요.\n그 기록들의 channel 열만 result에 담으세요.\n지금 코드에는 구매 조건만 있어요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 이용 시간(분)이에요.\nmins = 20\n# 행 자리에 조건, 열 자리에 열 이름을 넣었어요.\nresult = df.loc[df['bought'] == 1, 'channel']\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 방문 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/visits.csv')\n# 기준 이용 시간(분)이에요.\nmins = 20\n# 행 자리에 조건, 열 자리에 열 이름을 넣었어요.\nresult = df.loc[(df['bought'] == 1) & (df['minutes'] >= mins), 'channel']\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/visits.csv": "channel,visits,minutes,bought\nweb,1,8,0\napp,4,25,1\nweb,4,,1\nApp,5,30,1\napp,2,12,0\nweb,6,40,0\napp,3,20,1\nweb,3,15,1\napp,5,18,0\n"
+      },
+      "required": false,
+      "hints": [
+        "행 자리의 조건 뒤에 `&`로 조건을 하나 더 이어요.",
+        "조건마다 괄호로 묶고 이상은 `>=`를 써요."
+      ],
+      "goal_html": "<p><code>loc</code>의 행 자리에도 <code>&amp;</code>로 묶은 조건을 넣어요.<br>빈칸(NaN)은 <code>&gt;=</code>로 비교하면 False가 나와요.</p><p>구매했고 이용 시간이 mins분 이상인 기록을 골라요.<br>그 기록들의 channel 열만 result에 담으세요.<br>지금 코드에는 구매 조건만 있어요.</p>"
+    }
+  ]
+}
