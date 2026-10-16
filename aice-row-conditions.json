@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "aice-row-conditions",
-  "revision": "v1.0.0",
+  "revision": "v1.0.1",
   "title": "조건으로 원하는 기록 고르기",
   "description": "조건에 맞는 기록만 표에서 골라요. 경계값과 두 조건을 작은 실험으로 익혀요. 필수 문제 8개와 선택 도전 2개예요.",
   "sources": [

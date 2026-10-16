@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "aice-python-tools",
-  "revision": "v1.0.0",
+  "revision": "v1.0.1",
   "title": "분석 코드를 읽고 이어 쓰기",
   "description": "시험 코드는 함수에 인자를 넣고 돌려받은 값을 써요. 그 모양과 오류 읽기를 작은 실험으로 익혀요. 필수 문제 8개와 선택 도전 2개예요.",
   "sources": [

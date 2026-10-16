@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "aice-data-types",
-  "revision": "v1.0.0",
+  "revision": "v1.0.1",
   "title": "CSV를 읽고 자료형 점검하기",
   "description": "CSV를 읽고 숫자로 읽히지 않은 열을 찾아 고쳐요. 저장한 파일도 다시 읽어 확인해요. 필수 문제 8개와 선택 도전 2개예요.",
   "sources": [

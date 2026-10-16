@@ -28,5 +28,20 @@
     "id": "aice-row-conditions",
     "title": "조건으로 원하는 기록 고르기",
     "path": "aice-row-conditions.json"
+  },
+  {
+    "id": "aice-data-summary",
+    "title": "개수·분포·그룹별 비교",
+    "path": "aice-data-summary.json"
+  },
+  {
+    "id": "aice-visualization",
+    "title": "그래프로 분포와 관계 확인하기",
+    "path": "aice-visualization.json"
+  },
+  {
+    "id": "aice-data-quality",
+    "title": "빈칸·중복·이상치 진단하기",
+    "path": "aice-data-quality.json"
   }
 ]

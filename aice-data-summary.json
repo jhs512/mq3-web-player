@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "id": "aice-data-summary",
+  "revision": "v1.0.0",
+  "title": "개수·분포·그룹별 비교",
+  "description": "표를 숫자 몇 개로 요약해요. 개수와 분모를 구별하고 그룹끼리 비교해요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://pandas.pydata.org/docs/user_guide/basics.html#descriptive-statistics",
+    "https://pandas.pydata.org/docs/user_guide/groupby.html"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "describe-rows",
+      "title": "describe 표에서 중앙값 행을 꺼내요",
+      "goal": "`describe()`는 숫자 열마다 요약 값을 한 표로 보여 줘요.\n행 이름 count는 빈칸을 뺀 값의 개수, mean은 평균이에요.\n50%는 크기순으로 놓았을 때 가운데 값, 중앙값이에요.\n\n자, 먼저 실행해서 나온 열을 보세요. 글자 열인 branch와 channel은 빠져요.\namount의 count를 shape의 앞 숫자(전체 행 수)와 비교해 보세요.\nresult 줄 끝에 `.loc['50%']`를 붙이고 다시 실행하세요.\n열마다 중앙값만 남았는지 확인해요. 맨 아래 Name은 꺼낸 행의 이름 50%예요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 표의 크기예요. 앞 숫자가 전체 행 수예요.\nprint(df.shape)\n# 숫자 열마다 요약 값을 한 표로 만들어요.\n# 행 이름은 count, mean, std, min, 25%, 50%, 75%, max예요.\nresult = df.describe()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 표의 크기예요. 앞 숫자가 전체 행 수예요.\nprint(df.shape)\n# 숫자 열마다 요약 값을 한 표로 만들어요.\n# 행 이름은 count, mean, std, min, 25%, 50%, 75%, max예요.\nresult = df.describe().loc['50%']\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.describe().loc['50%']`로 바꿔요. 행은 loc으로 골라요."
+      ],
+      "goal_html": "<p><code>describe()</code>는 숫자 열마다 요약 값을 한 표로 보여 줘요.<br>행 이름 count는 빈칸을 뺀 값의 개수, mean은 평균이에요.<br>50%는 크기순으로 놓았을 때 가운데 값, 중앙값이에요.</p><p>자, 먼저 실행해서 나온 열을 보세요. 글자 열인 branch와 channel은 빠져요.<br>amount의 count를 shape의 앞 숫자(전체 행 수)와 비교해 보세요.<br>result 줄 끝에 <code>.loc[&#x27;50%&#x27;]</code>를 붙이고 다시 실행하세요.<br>열마다 중앙값만 남았는지 확인해요. 맨 아래 Name은 꺼낸 행의 이름 50%예요.</p>"
+    },
+    {
+      "id": "count-len",
+      "title": "값이 적힌 개수는 count로 세요",
+      "goal": "`len(df)`는 표의 행 수예요. 빈칸이 있는 행도 한 행으로 세요.\n열 하나에 len을 써도 빈칸까지 세요.\n`count()`는 열에서 빈칸(NaN)을 뺀 값의 개수예요.\n\n금액이 기록된 주문 수를 구해요. 먼저 실행해서 두 숫자를 비교하세요.\n`len(df['amount'])`를 `df['amount'].count()`로 바꾸세요.\n다시 실행해서 줄어든 수를 보세요.\n「함께 제공한 파일」에서 금액 칸이 빈 행(`,,`)을 세어 맞춰 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 전체 주문 수예요. 한 행이 주문 하나예요.\nprint(len(df))\n# 금액이 기록된 주문 수를 구하려고 해요.\nresult = len(df['amount'])\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 전체 주문 수예요. 한 행이 주문 하나예요.\nprint(len(df))\n# 금액이 기록된 주문 수를 구하려고 해요.\nresult = df['amount'].count()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`result = df['amount'].count()`로 바꿔요. 괄호까지 붙여요."
+      ],
+      "goal_html": "<p><code>len(df)</code>는 표의 행 수예요. 빈칸이 있는 행도 한 행으로 세요.<br>열 하나에 len을 써도 빈칸까지 세요.<br><code>count()</code>는 열에서 빈칸(NaN)을 뺀 값의 개수예요.</p><p>금액이 기록된 주문 수를 구해요. 먼저 실행해서 두 숫자를 비교하세요.<br><code>len(df[&#x27;amount&#x27;])</code>를 <code>df[&#x27;amount&#x27;].count()</code>로 바꾸세요.<br>다시 실행해서 줄어든 수를 보세요.<br>「함께 제공한 파일」에서 금액 칸이 빈 행(<code>,,</code>)을 세어 맞춰 봐요.</p>"
+    },
+    {
+      "id": "value-ratio",
+      "title": "범주마다 개수와 비율을 봐요",
+      "goal": "`value_counts()`는 값마다 몇 행인지 세어 많은 순서로 보여 줘요.\n`normalize=True`를 넣으면 개수 대신 0과 1 사이 비율이 나와요.\n비율을 모두 더하면 1이에요.\n\n지점마다 주문 비율을 구해요. 먼저 실행해서 지점별 주문 수를 보세요.\n숫자 위아래 줄은 결과에 붙은 이름표예요. 지점 이름과 숫자만 보면 돼요.\nvalue_counts 괄호 안에 `normalize=True`를 넣으세요.\n다시 실행해서 개수를 전체 주문 수로 나눈 값인지 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 전체 주문 수예요.\nprint(len(df))\n# 지점 열의 값마다 행을 세요. normalize=True면 비율이 나와요.\nresult = df['branch'].value_counts()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 전체 주문 수예요.\nprint(len(df))\n# 지점 열의 값마다 행을 세요. normalize=True면 비율이 나와요.\nresult = df['branch'].value_counts(normalize=True)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`df['branch'].value_counts(normalize=True)`로 바꿔요."
+      ],
+      "goal_html": "<p><code>value_counts()</code>는 값마다 몇 행인지 세어 많은 순서로 보여 줘요.<br><code>normalize=True</code>를 넣으면 개수 대신 0과 1 사이 비율이 나와요.<br>비율을 모두 더하면 1이에요.</p><p>지점마다 주문 비율을 구해요. 먼저 실행해서 지점별 주문 수를 보세요.<br>숫자 위아래 줄은 결과에 붙은 이름표예요. 지점 이름과 숫자만 보면 돼요.<br>value_counts 괄호 안에 <code>normalize=True</code>를 넣으세요.<br>다시 실행해서 개수를 전체 주문 수로 나눈 값인지 확인해요.</p>"
+    },
+    {
+      "id": "mean-median",
+      "title": "큰 값 하나에 끌려가는 평균",
+      "goal": "`mean()`은 평균, `median()`은 중앙값을 구해요. 둘 다 빈칸은 빼요.\n아주 큰 값이 하나 있으면 평균은 그쪽으로 끌려가요.\n중앙값은 가운데 자리 값이라 덜 흔들려요.\n\n보통 주문 한 건의 금액을 값 하나로 나타내요.\n먼저 실행해서 금액들과 평균을 비교하세요. 평균보다 작은 금액이 많죠?\n`mean()`을 `median()`으로 바꾸고 다시 실행하세요.\ndescribe의 50% 행에서 본 값과도 비교해 보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 금액을 모두 봐요. NaN은 빈칸이에요.\nprint(df['amount'])\n# 보통 주문 한 건의 금액을 값 하나로 나타내요.\nresult = df['amount'].mean()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 금액을 모두 봐요. NaN은 빈칸이에요.\nprint(df['amount'])\n# 보통 주문 한 건의 금액을 값 하나로 나타내요.\nresult = df['amount'].median()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`df['amount'].median()`으로 바꿔요. 괄호를 꼭 붙여요."
+      ],
+      "goal_html": "<p><code>mean()</code>은 평균, <code>median()</code>은 중앙값을 구해요. 둘 다 빈칸은 빼요.<br>아주 큰 값이 하나 있으면 평균은 그쪽으로 끌려가요.<br>중앙값은 가운데 자리 값이라 덜 흔들려요.</p><p>보통 주문 한 건의 금액을 값 하나로 나타내요.<br>먼저 실행해서 금액들과 평균을 비교하세요. 평균보다 작은 금액이 많죠?<br><code>mean()</code>을 <code>median()</code>으로 바꾸고 다시 실행하세요.<br>describe의 50% 행에서 본 값과도 비교해 보세요.</p>"
+    },
+    {
+      "id": "true-ratio",
+      "title": "True의 합은 개수, 평균은 비율",
+      "goal": "비교 결과의 True는 1, False는 0으로 계산해요.\n그래서 `sum()`은 True의 개수, `mean()`은 True의 비율이에요.\n비율의 분모는 비교한 전체 행 수예요. 빈칸은 비교하면 False예요.\n\n전체 주문 중 금액이 limit 이상인 비율을 구해요.\n먼저 실행해서 조건에 맞는 주문 수를 보세요.\n`above.sum()`을 `above.mean()`으로 바꾸세요.\n다시 실행해서 개수를 전체 행 수로 나눈 값인지 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 기준 금액이에요.\nlimit = 12000\n# 금액이 limit 이상인지 행마다 비교해요.\nabove = df['amount'] >= limit\n# True는 1, False는 0으로 계산해요.\nresult = above.sum()\n# 전체 행 수도 함께 봐요.\nprint(len(df))\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 기준 금액이에요.\nlimit = 12000\n# 금액이 limit 이상인지 행마다 비교해요.\nabove = df['amount'] >= limit\n# True는 1, False는 0으로 계산해요.\nresult = above.mean()\n# 전체 행 수도 함께 봐요.\nprint(len(df))\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`result = above.mean()`으로 바꿔요."
+      ],
+      "goal_html": "<p>비교 결과의 True는 1, False는 0으로 계산해요.<br>그래서 <code>sum()</code>은 True의 개수, <code>mean()</code>은 True의 비율이에요.<br>비율의 분모는 비교한 전체 행 수예요. 빈칸은 비교하면 False예요.</p><p>전체 주문 중 금액이 limit 이상인 비율을 구해요.<br>먼저 실행해서 조건에 맞는 주문 수를 보세요.<br><code>above.sum()</code>을 <code>above.mean()</code>으로 바꾸세요.<br>다시 실행해서 개수를 전체 행 수로 나눈 값인지 확인해요.</p>"
+    },
+    {
+      "id": "group-mean",
+      "title": "지점별 평균은 열을 골라서",
+      "goal": "`groupby('열')`은 그 열 값이 같은 행끼리 묶어요.\n뒤에 `mean()`을 붙이면 묶음마다 평균을 내요.\n글자 열은 평균을 못 내요. 그래서 계산할 열을 먼저 골라요.\n\n지점(branch)별 평균 금액을 구해요. 먼저 실행해서 오류의 마지막 줄을 읽으세요.\nstr 자료형은 mean 계산을 못 한다는 뜻이에요.\nbranch는 묶는 기준이라 계산에서 빠져요. 남은 글자 열은 channel이죠.\n`groupby('branch')` 바로 뒤에 `['amount']`를 넣고 다시 실행하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 지점이 같은 행끼리 묶어요.\n# 묶음마다 평균을 내려고 해요.\nresult = df.groupby('branch').mean()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 지점이 같은 행끼리 묶어요.\n# 묶음마다 평균을 내려고 해요.\nresult = df.groupby('branch')['amount'].mean()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.groupby('branch')['amount'].mean()`으로 바꿔요."
+      ],
+      "goal_html": "<p><code>groupby(&#x27;열&#x27;)</code>은 그 열 값이 같은 행끼리 묶어요.<br>뒤에 <code>mean()</code>을 붙이면 묶음마다 평균을 내요.<br>글자 열은 평균을 못 내요. 그래서 계산할 열을 먼저 골라요.</p><p>지점(branch)별 평균 금액을 구해요. 먼저 실행해서 오류의 마지막 줄을 읽으세요.<br>str 자료형은 mean 계산을 못 한다는 뜻이에요.<br>branch는 묶는 기준이라 계산에서 빠져요. 남은 글자 열은 channel이죠.<br><code>groupby(&#x27;branch&#x27;)</code> 바로 뒤에 <code>[&#x27;amount&#x27;]</code>를 넣고 다시 실행하세요.</p>"
+    },
+    {
+      "id": "group-size",
+      "title": "묶음의 행 수는 size로 세요",
+      "goal": "groupby 뒤 `count()`는 묶음마다 빈칸을 뺀 값의 개수예요.\n`size()`는 빈칸이 있어도 묶음의 행 수를 모두 세요.\ncount와 len의 차이와 같아요.\n\n지점별 주문 건수를 구해요. 금액이 빈 주문도 주문이에요.\n먼저 실행해서 지점별 개수를 보세요.\n`count()`를 `size()`로 바꾸고 다시 실행하세요.\n지점별 숫자를 더하면 전체 주문 수와 같아져요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 전체 주문 수예요.\nprint(len(df))\n# 지점이 같은 행끼리 묶고 amount 열을 골라요.\n# count는 빈칸을 빼고 세요. size는 빈칸까지 세요.\nresult = df.groupby('branch')['amount'].count()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 전체 주문 수예요.\nprint(len(df))\n# 지점이 같은 행끼리 묶고 amount 열을 골라요.\n# count는 빈칸을 빼고 세요. size는 빈칸까지 세요.\nresult = df.groupby('branch')['amount'].size()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.groupby('branch')['amount'].size()`로 바꿔요."
+      ],
+      "goal_html": "<p>groupby 뒤 <code>count()</code>는 묶음마다 빈칸을 뺀 값의 개수예요.<br><code>size()</code>는 빈칸이 있어도 묶음의 행 수를 모두 세요.<br>count와 len의 차이와 같아요.</p><p>지점별 주문 건수를 구해요. 금액이 빈 주문도 주문이에요.<br>먼저 실행해서 지점별 개수를 보세요.<br><code>count()</code>를 <code>size()</code>로 바꾸고 다시 실행하세요.<br>지점별 숫자를 더하면 전체 주문 수와 같아져요.</p>"
+    },
+    {
+      "id": "sort-top",
+      "title": "큰 순서로 정렬해 앞의 n개",
+      "goal": "`sort_values('열')`은 그 열 값으로 행을 정렬해요. 기본은 작은 값부터예요.\n`ascending=False`를 넣으면 큰 값부터 정렬해요.\n정렬한 표에 `head(n)`을 붙이면 앞의 n행만 남아요.\n\n금액이 큰 주문 n건을 골라요. 먼저 실행해서 어떤 주문이 남는지 보세요.\nsort_values 괄호 안 'amount' 뒤에 `, ascending=False`를 넣고 다시 실행하세요.\n마지막 행과 금액이 같은 주문을 「함께 제공한 파일」에서 찾아보세요.\nhead(n)은 같은 금액이 더 있어도 n행에서 잘라요. 확인만 하고 코드는 그대로 둬요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 남길 주문 수예요.\nn = 3\n# 금액 순서로 정렬한 뒤 앞의 n행을 남겨요.\nresult = df.sort_values('amount').head(n)\n# 남은 표의 크기예요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 남길 주문 수예요.\nn = 3\n# 금액 순서로 정렬한 뒤 앞의 n행을 남겨요.\nresult = df.sort_values('amount', ascending=False).head(n)\n# 남은 표의 크기예요. 앞 숫자가 행 수예요.\nprint(result.shape)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.sort_values('amount', ascending=False).head(n)` 모양이에요."
+      ],
+      "goal_html": "<p><code>sort_values(&#x27;열&#x27;)</code>은 그 열 값으로 행을 정렬해요. 기본은 작은 값부터예요.<br><code>ascending=False</code>를 넣으면 큰 값부터 정렬해요.<br>정렬한 표에 <code>head(n)</code>을 붙이면 앞의 n행만 남아요.</p><p>금액이 큰 주문 n건을 골라요. 먼저 실행해서 어떤 주문이 남는지 보세요.<br>sort_values 괄호 안 &#x27;amount&#x27; 뒤에 <code>, ascending=False</code>를 넣고 다시 실행하세요.<br>마지막 행과 금액이 같은 주문을 「함께 제공한 파일」에서 찾아보세요.<br>head(n)은 같은 금액이 더 있어도 n행에서 잘라요. 확인만 하고 코드는 그대로 둬요.</p>"
+    },
+    {
+      "id": "app-share",
+      "title": "도전 · app 주문 중 비율",
+      "goal": "행 고르기 `df[조건]`과 True의 평균을 함께 써요.\n비율은 무엇이 분모인지부터 정해요.\n\napp 주문 중에서 금액이 limit 이상인 주문의 비율을 구하세요.\n금액이 빈 app 주문도 분모에 들어가요.\n지금 코드는 전체 주문이 분모예요.\n고칠 줄은 직접 찾아보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 기준 금액이에요.\nlimit = 12000\n# 금액이 limit 이상인지 행마다 비교해요.\nabove = df['amount'] >= limit\n# True의 비율이에요. 분모는 비교한 행 수예요.\nresult = above.mean()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 기준 금액이에요.\nlimit = 12000\n# 금액이 limit 이상인지 행마다 비교해요.\nabove = df[df['channel'] == 'app']['amount'] >= limit\n# True의 비율이에요. 분모는 비교한 행 수예요.\nresult = above.mean()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": false,
+      "hints": [
+        "app 주문만 고르는 식은 `df[df['channel'] == 'app']`예요. 이 표에서 amount를 꺼내 비교해요.",
+        "above 줄을 `df[df['channel'] == 'app']['amount'] >= limit`로 바꿔요."
+      ],
+      "goal_html": "<p>행 고르기 <code>df[조건]</code>과 True의 평균을 함께 써요.<br>비율은 무엇이 분모인지부터 정해요.</p><p>app 주문 중에서 금액이 limit 이상인 주문의 비율을 구하세요.<br>금액이 빈 app 주문도 분모에 들어가요.<br>지금 코드는 전체 주문이 분모예요.<br>고칠 줄은 직접 찾아보세요.</p>"
+    },
+    {
+      "id": "app-rank",
+      "title": "도전 · app 주문으로 매긴 지점 순위",
+      "goal": "행 고르기, groupby, 정렬을 이어 써요.\ngroupby로 한 열을 계산한 결과는 Series예요. 정렬할 때 열 이름을 넣지 않아요.\n\napp 주문만으로 지점별 평균 금액을 구하세요.\n평균이 큰 지점부터 보이게 정렬하세요.\n고칠 줄은 직접 찾아보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 지점이 같은 행끼리 묶어 amount의 평균을 내요.\n# groupby 결과는 지점 이름 순서로 나와요.\nresult = df.groupby('branch')['amount'].mean()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 지점 주문 자료예요. 실제 자료가 아니에요.\ndf = pd.read_csv('data/orders.csv')\n# 지점이 같은 행끼리 묶어 amount의 평균을 내요.\n# groupby 결과는 지점 이름 순서로 나와요.\nresult = df[df['channel'] == 'app'].groupby('branch')['amount'].mean().sort_values(ascending=False)\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/orders.csv": "branch,channel,amount,items\nseoul,app,12000,2\nbusan,web,8000,1\nseoul,web,,3\ndaegu,app,15000,2\nbusan,app,9000,1\nseoul,app,98000,6\ndaegu,web,12000,2\nbusan,web,7000,1\ndaegu,app,,2\nseoul,web,11000,3\n"
+      },
+      "required": false,
+      "hints": [
+        "groupby 앞의 df 자리에 app 주문만 고른 표를 넣어요.",
+        "`mean()` 뒤에 `.sort_values(ascending=False)`를 붙여요."
+      ],
+      "goal_html": "<p>행 고르기, groupby, 정렬을 이어 써요.<br>groupby로 한 열을 계산한 결과는 Series예요. 정렬할 때 열 이름을 넣지 않아요.</p><p>app 주문만으로 지점별 평균 금액을 구하세요.<br>평균이 큰 지점부터 보이게 정렬하세요.<br>고칠 줄은 직접 찾아보세요.</p>"
+    }
+  ]
+}

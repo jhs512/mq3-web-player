@@ -1,7 +1,10 @@
 // Execution stays inside a disposable browser worker, never on the hosting server.
 const INDEX='https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
+// NanumGothic (SIL OFL 1.1), pinned to one google/fonts commit so the bytes never change.
+const KOREAN_FONT='https://cdn.jsdelivr.net/gh/google/fonts@16680f8688ffcd467d2eb2146a9ce0343404581d/ofl/nanumgothic/NanumGothic-Regular.ttf';
 let runtime;
 let pending;
+let fontReady=false;
 async function ready(){
  if(!pending)pending=(async()=>{
   postMessage({type:'status',text:'Python 실행 환경을 내려받고 있어요…'});
@@ -31,6 +34,15 @@ self.onmessage=async({data})=>{
    if(/\bseaborn\b/.test(data.source)){
     await py.loadPackage('micropip');
     await py.runPythonAsync("import importlib.util, micropip\nif importlib.util.find_spec('seaborn') is None:\n    await micropip.install('seaborn')");
+   }
+   // Korean axis labels need a Korean font; the runner picks NanumGothic once it is registered.
+   if(/\b(matplotlib|seaborn)\b/.test(data.source)&&!fontReady){
+    const font=await fetch(KOREAN_FONT);
+    if(font.ok){
+     py.FS.mkdirTree('/fonts');py.FS.writeFile('/fonts/NanumGothic-Regular.ttf',new Uint8Array(await font.arrayBuffer()));
+     await py.runPythonAsync("from matplotlib import font_manager\nfont_manager.fontManager.addfont('/fonts/NanumGothic-Regular.ttf')");
+     fontReady=true;
+    }
    }
   }
   py.FS.writeFile('main.py',data.source);

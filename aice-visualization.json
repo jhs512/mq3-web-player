@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "id": "aice-visualization",
+  "revision": "v1.0.0",
+  "title": "그래프로 분포와 관계 확인하기",
+  "description": "질문에 맞는 그래프를 골라 분포와 관계를 봐요. 축 이름과 제목도 읽히게 붙여요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://matplotlib.org/stable/api/pyplot_summary.html",
+    "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.boxplot.html",
+    "https://seaborn.pydata.org/generated/seaborn.heatmap.html"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "count-bar",
+      "title": "글자 열은 세어서 막대로 그려요",
+      "goal": "그래프는 matplotlib으로 그려요. `import matplotlib.pyplot as plt`로 불러와요.\n`표.plot(kind='bar')`는 표에 든 숫자를 막대 높이로 그려요.\n`plt.show()`는 그린 그림을 화면에 보여 줘요.\n\n자, 먼저 실행해서 오류의 마지막 줄을 읽으세요. 그릴 숫자가 없다는 뜻이에요.\nzone 열은 글자라서 막대 높이가 될 수 없어요.\n`df['zone']` 뒤에 `.value_counts()`를 붙여 구역별 건수를 세세요.\n다시 실행해서 출력된 건수와 막대 높이를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 구역별 건수를 counts에 담으려고 해요.\ncounts = df['zone']\n# 그릴 표를 먼저 화면에서 봐요.\nprint(counts)\n\n# counts의 숫자를 막대로 그려요.\ncounts.plot(kind='bar')\n# 그린 그림을 화면에 보여 줘요.\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 구역별 건수를 counts에 담으려고 해요.\ncounts = df['zone'].value_counts()\n# 그릴 표를 먼저 화면에서 봐요.\nprint(counts)\n\n# counts의 숫자를 막대로 그려요.\ncounts.plot(kind='bar')\n# 그린 그림을 화면에 보여 줘요.\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`counts = df['zone'].value_counts()`로 바꿔요."
+      ],
+      "goal_html": "<p>그래프는 matplotlib으로 그려요. <code>import matplotlib.pyplot as plt</code>로 불러와요.<br><code>표.plot(kind=&#x27;bar&#x27;)</code>는 표에 든 숫자를 막대 높이로 그려요.<br><code>plt.show()</code>는 그린 그림을 화면에 보여 줘요.</p><p>자, 먼저 실행해서 오류의 마지막 줄을 읽으세요. 그릴 숫자가 없다는 뜻이에요.<br>zone 열은 글자라서 막대 높이가 될 수 없어요.<br><code>df[&#x27;zone&#x27;]</code> 뒤에 <code>.value_counts()</code>를 붙여 구역별 건수를 세세요.<br>다시 실행해서 출력된 건수와 막대 높이를 비교해요.</p>"
+    },
+    {
+      "id": "ratio-label",
+      "title": "축 이름은 막대가 뭔지 알려 줘요",
+      "goal": "`plt.xlabel`은 가로축, `plt.ylabel`은 세로축에 이름을 붙여요.\n`plt.title`은 그래프 맨 위에 제목을 달아요.\n축 이름에는 막대가 무슨 값인지 적어요. 단위는 `'시간(분)'`처럼 괄호에 넣어요.\n\n먼저 실행해서 축 이름과 제목이 어디 붙는지 보세요.\n`value_counts()` 괄호 안에 `normalize=True`를 넣어 비율로 바꾸세요.\n세로축 이름 `'건수'`도 `'비율'`로 고치세요.\n다시 실행해서 막대 높이와 세로축 숫자를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 구역별로 세어 표로 만들어요. normalize=True면 비율이 나와요.\ncounts = df['zone'].value_counts()\n# 표를 보고 막대로 그려요.\nprint(counts)\ncounts.plot(kind='bar')\n\n# 축 이름과 제목은 그래프를 그린 다음에 붙여요.\nplt.xlabel('구역')\nplt.ylabel('건수')\n# 그래프 맨 위에 제목을 달아요.\nplt.title('구역별 배달')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 구역별로 세어 표로 만들어요. normalize=True면 비율이 나와요.\ncounts = df['zone'].value_counts(normalize=True)\n# 표를 보고 막대로 그려요.\nprint(counts)\ncounts.plot(kind='bar')\n\n# 축 이름과 제목은 그래프를 그린 다음에 붙여요.\nplt.xlabel('구역')\nplt.ylabel('비율')\n# 그래프 맨 위에 제목을 달아요.\nplt.title('구역별 배달')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`value_counts(normalize=True)`와 `plt.ylabel('비율')` 두 곳을 고쳐요."
+      ],
+      "goal_html": "<p><code>plt.xlabel</code>은 가로축, <code>plt.ylabel</code>은 세로축에 이름을 붙여요.<br><code>plt.title</code>은 그래프 맨 위에 제목을 달아요.<br>축 이름에는 막대가 무슨 값인지 적어요. 단위는 <code>&#x27;시간(분)&#x27;</code>처럼 괄호에 넣어요.</p><p>먼저 실행해서 축 이름과 제목이 어디 붙는지 보세요.<br><code>value_counts()</code> 괄호 안에 <code>normalize=True</code>를 넣어 비율로 바꾸세요.<br>세로축 이름 <code>&#x27;건수&#x27;</code>도 <code>&#x27;비율&#x27;</code>로 고치세요.<br>다시 실행해서 막대 높이와 세로축 숫자를 비교해요.</p>"
+    },
+    {
+      "id": "group-mean-bar",
+      "title": "막대 높이를 그룹 평균으로 바꿔요",
+      "goal": "`groupby`로 만든 그룹별 평균 표도 막대로 그릴 수 있어요.\n막대 높이와 순서는 언제나 표에 든 그대로예요.\n그래서 그래프를 바꾸려면 그릴 표를 바꿔요.\n\n질문은 구역별 평균 배달 시간이에요.\n먼저 실행해서 막대가 무엇을 그렸는지 보세요. 세로축 이름과 맞나요?\ntable 줄을 `df.groupby('zone')['minutes'].mean()`으로 바꾸세요.\n다시 실행해서 막대 순서와 높이를 출력 표와 비교해요. groupby 표는 구역 이름 순서예요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 질문: 구역마다 배달 시간은 평균 몇 분일까요?\ntable = df['zone'].value_counts()\nprint(table)\n# table의 숫자가 막대 높이가 돼요.\ntable.plot(kind='bar')\n\n# 축 이름에 단위까지 적었어요.\nplt.xlabel('구역')\nplt.ylabel('평균 시간(분)')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('구역별 평균 배달 시간')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 질문: 구역마다 배달 시간은 평균 몇 분일까요?\ntable = df.groupby('zone')['minutes'].mean()\nprint(table)\n# table의 숫자가 막대 높이가 돼요.\ntable.plot(kind='bar')\n\n# 축 이름에 단위까지 적었어요.\nplt.xlabel('구역')\nplt.ylabel('평균 시간(분)')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('구역별 평균 배달 시간')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`table = df.groupby('zone')['minutes'].mean()`로 바꿔요."
+      ],
+      "goal_html": "<p><code>groupby</code>로 만든 그룹별 평균 표도 막대로 그릴 수 있어요.<br>막대 높이와 순서는 언제나 표에 든 그대로예요.<br>그래서 그래프를 바꾸려면 그릴 표를 바꿔요.</p><p>질문은 구역별 평균 배달 시간이에요.<br>먼저 실행해서 막대가 무엇을 그렸는지 보세요. 세로축 이름과 맞나요?<br>table 줄을 <code>df.groupby(&#x27;zone&#x27;)[&#x27;minutes&#x27;].mean()</code>으로 바꾸세요.<br>다시 실행해서 막대 순서와 높이를 출력 표와 비교해요. groupby 표는 구역 이름 순서예요.</p>"
+    },
+    {
+      "id": "hist-bins",
+      "title": "히스토그램의 구간 수를 바꿔요",
+      "goal": "히스토그램은 숫자 범위를 구간으로 나눠요. 구간마다 개수를 막대로 그려요.\n`plt.hist(열, bins=3)`의 bins는 구간 수예요.\nplt.hist는 구간별 개수, 구간 경계, 막대 세 가지를 돌려줘요.\n\n먼저 실행해서 막대 수와 출력된 구간별 개수를 보세요.\n`bins=3`을 `bins=8`로 바꾸세요.\n다시 실행해서 분포(값이 몰리고 퍼진 모양)를 비교해요.\n비어 있는 구간도 찾아보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 배달 시간이 어떻게 퍼져 있는지 봐요.\n# 돌려준 세 값을 차례로 이름 셋에 나눠 받아요.\ncounts, edges, bars = plt.hist(df['minutes'], bins=3)\n# 구간마다 몇 건인지 글자로도 봐요.\n# 개수가 실수로 나와서 숫자 끝에 점(.)이 붙어요.\nprint(counts)\n\n# 가로축은 시간, 세로축은 건수예요.\nplt.xlabel('배달 시간(분)')\nplt.ylabel('건수')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('배달 시간 분포')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 배달 시간이 어떻게 퍼져 있는지 봐요.\n# 돌려준 세 값을 차례로 이름 셋에 나눠 받아요.\ncounts, edges, bars = plt.hist(df['minutes'], bins=8)\n# 구간마다 몇 건인지 글자로도 봐요.\n# 개수가 실수로 나와서 숫자 끝에 점(.)이 붙어요.\nprint(counts)\n\n# 가로축은 시간, 세로축은 건수예요.\nplt.xlabel('배달 시간(분)')\nplt.ylabel('건수')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('배달 시간 분포')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`bins=8`로 숫자만 바꿔요."
+      ],
+      "goal_html": "<p>히스토그램은 숫자 범위를 구간으로 나눠요. 구간마다 개수를 막대로 그려요.<br><code>plt.hist(열, bins=3)</code>의 bins는 구간 수예요.<br>plt.hist는 구간별 개수, 구간 경계, 막대 세 가지를 돌려줘요.</p><p>먼저 실행해서 막대 수와 출력된 구간별 개수를 보세요.<br><code>bins=3</code>을 <code>bins=8</code>로 바꾸세요.<br>다시 실행해서 분포(값이 몰리고 퍼진 모양)를 비교해요.<br>비어 있는 구간도 찾아보세요.</p>"
+    },
+    {
+      "id": "box-outlier",
+      "title": "상자그림에서 이상치 점을 찾아요",
+      "goal": "`df.boxplot(column='열 이름')`은 상자그림(boxplot)을 그려요.\n상자는 25%에서 75%까지, 가운데 선은 중앙값(50%)이에요.\n위아래 선(수염)보다 먼 값은 점으로 따로 찍혀요. 이상치 후보예요.\n\n먼저 실행해서 distance의 상자그림과 describe 표를 보세요.\ncol 값을 `'minutes'`로 바꾸세요.\n다시 실행해서 따로 찍힌 점을 찾으세요. describe의 max와 비교해요.\n상자 가운데 선은 50%와 비교해 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 상자그림으로 볼 열 이름이에요.\ncol = 'distance'\n# 그 열의 요약 숫자를 먼저 봐요.\nprint(df[col].describe())\n\n# column에 넣은 열로 상자그림을 그려요.\ndf.boxplot(column=col)\nplt.title('상자그림')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 상자그림으로 볼 열 이름이에요.\ncol = 'minutes'\n# 그 열의 요약 숫자를 먼저 봐요.\nprint(df[col].describe())\n\n# column에 넣은 열로 상자그림을 그려요.\ndf.boxplot(column=col)\nplt.title('상자그림')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`col = 'minutes'`로 바꿔요."
+      ],
+      "goal_html": "<p><code>df.boxplot(column=&#x27;열 이름&#x27;)</code>은 상자그림(boxplot)을 그려요.<br>상자는 25%에서 75%까지, 가운데 선은 중앙값(50%)이에요.<br>위아래 선(수염)보다 먼 값은 점으로 따로 찍혀요. 이상치 후보예요.</p><p>먼저 실행해서 distance의 상자그림과 describe 표를 보세요.<br>col 값을 <code>&#x27;minutes&#x27;</code>로 바꾸세요.<br>다시 실행해서 따로 찍힌 점을 찾으세요. describe의 max와 비교해요.<br>상자 가운데 선은 50%와 비교해 봐요.</p>"
+    },
+    {
+      "id": "scatter-xy",
+      "title": "산점도는 x, y 순서로 넣어요",
+      "goal": "산점도는 두 숫자 열의 관계를 점으로 보여 줘요.\n`plt.scatter(x, y)`의 첫째 값은 가로축, 둘째 값은 세로축이에요.\n영향을 주는 쪽을 보통 가로축에 둬요. 여기서는 거리예요.\n\n먼저 실행해서 오류의 마지막 줄을 읽으세요. y 값이 빠졌다는 뜻이에요.\n`df['distance']` 뒤에 `, df['minutes']`를 넣으세요.\n다시 실행해서 점들이 놓인 방향을 보세요. 혼자 먼 점도 찾아요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 거리가 멀수록 배달 시간도 길까요?\n# 가로축 값, 세로축 값 순서로 넣어요.\nplt.scatter(df['distance'])\n\n# 축 이름이 가로·세로 순서와 맞는지 봐요.\nplt.xlabel('거리(km)')\nplt.ylabel('시간(분)')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('거리와 배달 시간')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 거리가 멀수록 배달 시간도 길까요?\n# 가로축 값, 세로축 값 순서로 넣어요.\nplt.scatter(df['distance'], df['minutes'])\n\n# 축 이름이 가로·세로 순서와 맞는지 봐요.\nplt.xlabel('거리(km)')\nplt.ylabel('시간(분)')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('거리와 배달 시간')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`plt.scatter(df['distance'], df['minutes'])`로 바꿔요."
+      ],
+      "goal_html": "<p>산점도는 두 숫자 열의 관계를 점으로 보여 줘요.<br><code>plt.scatter(x, y)</code>의 첫째 값은 가로축, 둘째 값은 세로축이에요.<br>영향을 주는 쪽을 보통 가로축에 둬요. 여기서는 거리예요.</p><p>먼저 실행해서 오류의 마지막 줄을 읽으세요. y 값이 빠졌다는 뜻이에요.<br><code>df[&#x27;distance&#x27;]</code> 뒤에 <code>, df[&#x27;minutes&#x27;]</code>를 넣으세요.<br>다시 실행해서 점들이 놓인 방향을 보세요. 혼자 먼 점도 찾아요.</p>"
+    },
+    {
+      "id": "corr-columns",
+      "title": "상관계수는 숫자 열끼리 구해요",
+      "goal": "상관계수는 두 열이 함께 움직이는 정도예요. -1부터 1 사이 값이에요.\n1에 가까우면 함께 늘고, -1에 가까우면 반대로 움직여요. 0 근처면 직선 관계가 약해요.\n`표.corr()`는 열끼리의 상관계수를 표로 보여 줘요.\n\n먼저 실행해서 오류의 마지막 줄을 읽으세요. 글자를 숫자로 못 바꾼다는 뜻이에요.\n글자 열인 zone까지 계산하려고 해서 그래요. 다른 pandas 버전은 오류 없이 글자 열을 빼기도 해요.\n`df.corr()`를 `df[['distance', 'minutes', 'price']].corr()`로 바꾸세요.\ndistance와 minutes 칸을 앞 문제의 산점도와 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 숫자 열끼리 상관계수 표를 만들려고 해요.\ntable = df.corr()\n# 표 이름을 먼저 적고, 소수 둘째 자리까지 봐요.\nprint('상관계수 표')\nprint(table.round(2))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 숫자 열끼리 상관계수 표를 만들려고 해요.\ntable = df[['distance', 'minutes', 'price']].corr()\n# 표 이름을 먼저 적고, 소수 둘째 자리까지 봐요.\nprint('상관계수 표')\nprint(table.round(2))\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df[['distance', 'minutes', 'price']]`처럼 대괄호를 두 겹으로 써요."
+      ],
+      "goal_html": "<p>상관계수는 두 열이 함께 움직이는 정도예요. -1부터 1 사이 값이에요.<br>1에 가까우면 함께 늘고, -1에 가까우면 반대로 움직여요. 0 근처면 직선 관계가 약해요.<br><code>표.corr()</code>는 열끼리의 상관계수를 표로 보여 줘요.</p><p>먼저 실행해서 오류의 마지막 줄을 읽으세요. 글자를 숫자로 못 바꾼다는 뜻이에요.<br>글자 열인 zone까지 계산하려고 해서 그래요. 다른 pandas 버전은 오류 없이 글자 열을 빼기도 해요.<br><code>df.corr()</code>를 <code>df[[&#x27;distance&#x27;, &#x27;minutes&#x27;, &#x27;price&#x27;]].corr()</code>로 바꾸세요.<br>distance와 minutes 칸을 앞 문제의 산점도와 비교해요.</p>"
+    },
+    {
+      "id": "heatmap-corr",
+      "title": "히트맵에는 상관표를 넣어요",
+      "goal": "seaborn은 통계 그래프를 쉽게 그리는 도구예요.\n`sns.heatmap(표)`는 표의 숫자를 칸마다 색으로 칠해요.\n`annot=True`를 넣으면 칸 안에 숫자도 적어요.\n\n먼저 실행해서 칸이 몇 줄 생겼는지 보세요. 배달 기록 한 행이 한 줄이에요.\ntable 줄 끝에 `.corr()`를 붙여 상관표로 바꾸세요.\n다시 실행해서 칸 수와 색을 비교해요. 대각선 칸의 값도 보세요.\n대각선은 한 열이 자기 자신과 만나는 칸이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nimport matplotlib.pyplot as plt\n# 통계 그래프 도구를 sns라는 별명으로 불러와요.\nimport seaborn as sns\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 숫자 열 세 개로 그릴 표를 만들어요.\ntable = df[['distance', 'minutes', 'price']]\n# 표의 크기(행 수, 열 수)부터 봐요.\nprint(table.shape)\nprint(table.round(2))\n\n# table의 숫자를 칸마다 색으로 칠해요.\n# annot=True라서 칸 안에 숫자도 적혀요.\nsns.heatmap(table, annot=True)\nplt.title('상관 히트맵')\nplt.show()\n",
+      "solution": "import pandas as pd\nimport matplotlib.pyplot as plt\n# 통계 그래프 도구를 sns라는 별명으로 불러와요.\nimport seaborn as sns\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 숫자 열 세 개로 그릴 표를 만들어요.\ntable = df[['distance', 'minutes', 'price']].corr()\n# 표의 크기(행 수, 열 수)부터 봐요.\nprint(table.shape)\nprint(table.round(2))\n\n# table의 숫자를 칸마다 색으로 칠해요.\n# annot=True라서 칸 안에 숫자도 적혀요.\nsns.heatmap(table, annot=True)\nplt.title('상관 히트맵')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": true,
+      "hints": [
+        "`table = df[['distance', 'minutes', 'price']].corr()`로 바꿔요."
+      ],
+      "goal_html": "<p>seaborn은 통계 그래프를 쉽게 그리는 도구예요.<br><code>sns.heatmap(표)</code>는 표의 숫자를 칸마다 색으로 칠해요.<br><code>annot=True</code>를 넣으면 칸 안에 숫자도 적어요.</p><p>먼저 실행해서 칸이 몇 줄 생겼는지 보세요. 배달 기록 한 행이 한 줄이에요.<br>table 줄 끝에 <code>.corr()</code>를 붙여 상관표로 바꾸세요.<br>다시 실행해서 칸 수와 색을 비교해요. 대각선 칸의 값도 보세요.<br>대각선은 한 열이 자기 자신과 만나는 칸이에요.</p>"
+    },
+    {
+      "id": "box-by-zone",
+      "title": "도전 · 구역별 분포를 상자로 비교해요",
+      "goal": "`df.boxplot(column='minutes', by='zone')`은 구역마다 상자를 그려요.\n평균 막대는 퍼짐과 이상치를 숨겨요. 분포를 비교할 땐 상자그림을 써요.\n상자 가운데 선이 중앙값이었던 것도 떠올려요.\n\n질문은 구역마다 배달 시간이 어떻게 퍼져 있는지예요.\n평균 막대를 구역별 상자그림으로 바꾸세요.\n출력 표는 상자 가운데 선과 맞게 중앙값으로 바꾸세요.\n세로축 이름은 `'시간(분)'`으로 고쳐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 질문: 구역마다 배달 시간이 얼마나 퍼져 있을까요?\n# 늦은 배달이 어느 구역에 있는지도 보고 싶어요.\ntable = df.groupby('zone')['minutes'].mean()\nprint(table)\n# 질문에 맞는 그래프를 그려요.\ntable.plot(kind='bar')\n\n# 축 이름이 그린 값과 맞는지 봐요.\nplt.ylabel('평균 시간(분)')\nplt.title('구역별 배달 시간')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 질문: 구역마다 배달 시간이 얼마나 퍼져 있을까요?\n# 늦은 배달이 어느 구역에 있는지도 보고 싶어요.\ntable = df.groupby('zone')['minutes'].median()\nprint(table)\n# 질문에 맞는 그래프를 그려요.\ndf.boxplot(column='minutes', by='zone')\n\n# 축 이름이 그린 값과 맞는지 봐요.\nplt.ylabel('시간(분)')\nplt.title('구역별 배달 시간')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": false,
+      "hints": [
+        "그리는 줄을 `df.boxplot(column='minutes', by='zone')`로 바꿔요.",
+        "table은 `.median()`, 세로축 이름은 `'시간(분)'`이에요."
+      ],
+      "goal_html": "<p><code>df.boxplot(column=&#x27;minutes&#x27;, by=&#x27;zone&#x27;)</code>은 구역마다 상자를 그려요.<br>평균 막대는 퍼짐과 이상치를 숨겨요. 분포를 비교할 땐 상자그림을 써요.<br>상자 가운데 선이 중앙값이었던 것도 떠올려요.</p><p>질문은 구역마다 배달 시간이 어떻게 퍼져 있는지예요.<br>평균 막대를 구역별 상자그림으로 바꾸세요.<br>출력 표는 상자 가운데 선과 맞게 중앙값으로 바꾸세요.<br>세로축 이름은 <code>&#x27;시간(분)&#x27;</code>으로 고쳐요.</p>"
+    },
+    {
+      "id": "scatter-corr",
+      "title": "도전 · 관계를 그림과 숫자로 봐요",
+      "goal": "산점도는 `plt.scatter(x, y)` 순서로 넣었어요.\n두 열의 상관계수는 `df[['열1', '열2']].corr()`로 구했죠.\n그림과 숫자가 같은 두 열을 봐야 서로 맞춰 볼 수 있어요.\n\n질문은 거리가 멀수록 배달 시간도 긴지예요.\n지금 코드는 질문과 다른 열을 보고 있어요. 축 이름은 맞아요.\n표와 그림이 모두 거리와 시간을 보게 두 줄을 고치세요.\n점도 축 이름처럼 가로가 거리, 세로가 시간이어야 해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 질문: 거리가 멀수록 배달 시간도 길까요?\n# 비교할 두 열을 골라 상관계수를 봐요.\npair = df[['distance', 'price']]\nprint('상관계수 표')\nprint(pair.corr().round(2))\n\n# 같은 두 열을 점으로 찍어요.\nplt.scatter(df['price'], df['distance'])\nplt.xlabel('거리(km)')\nplt.ylabel('시간(분)')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('거리와 배달 시간')\nplt.show()\n",
+      "solution": "import pandas as pd\n# 그래프 도구를 plt라는 별명으로 불러와요.\nimport matplotlib.pyplot as plt\n\n# 직접 만든 배달 기록이에요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/delivery.csv')\n# zone은 구역, distance는 거리(km)예요.\n# minutes는 배달 시간(분), price는 주문 금액(원)이에요.\n\n# 질문: 거리가 멀수록 배달 시간도 길까요?\n# 비교할 두 열을 골라 상관계수를 봐요.\npair = df[['distance', 'minutes']]\nprint('상관계수 표')\nprint(pair.corr().round(2))\n\n# 같은 두 열을 점으로 찍어요.\nplt.scatter(df['distance'], df['minutes'])\nplt.xlabel('거리(km)')\nplt.ylabel('시간(분)')\n# 제목을 달고 그림을 보여 줘요.\nplt.title('거리와 배달 시간')\nplt.show()\n",
+      "files": {
+        "data/delivery.csv": "zone,distance,minutes,price\n북부,1.2,15,18000\n남부,3.5,31,22000\n북부,2.0,19,9000\n동부,4.1,36,15000\n남부,0.8,12,27000\n북부,2.6,24,12000\n남부,2.9,64,16000\n동부,3.0,28,31000\n북부,4.4,39,14000\n남부,2.2,21,25000\n북부,3.8,33,19000\n동부,1.0,14,11000\n"
+      },
+      "required": false,
+      "hints": [
+        "pair 줄의 `'price'`를 `'minutes'`로 바꿔요.",
+        "`plt.scatter(df['distance'], df['minutes'])` 순서로 넣어요."
+      ],
+      "goal_html": "<p>산점도는 <code>plt.scatter(x, y)</code> 순서로 넣었어요.<br>두 열의 상관계수는 <code>df[[&#x27;열1&#x27;, &#x27;열2&#x27;]].corr()</code>로 구했죠.<br>그림과 숫자가 같은 두 열을 봐야 서로 맞춰 볼 수 있어요.</p><p>질문은 거리가 멀수록 배달 시간도 긴지예요.<br>지금 코드는 질문과 다른 열을 보고 있어요. 축 이름은 맞아요.<br>표와 그림이 모두 거리와 시간을 보게 두 줄을 고치세요.<br>점도 축 이름처럼 가로가 거리, 세로가 시간이어야 해요.</p>"
+    }
+  ]
+}

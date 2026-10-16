@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "id": "aice-data-quality",
+  "revision": "v1.0.0",
+  "title": "빈칸·중복·이상치 진단하기",
+  "description": "빈칸·중복·이상치를 찾아 지우거나 채워요. 처리 전후 행 수를 늘 확인해요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "count-blanks",
+      "title": "열마다 빈칸이 몇 개일까요?",
+      "goal": "`isna()`는 칸마다 빈칸(NaN)이면 True를 돌려줘요.\nTrue는 1, False는 0으로 더해져요.\n그래서 `.sum()`을 붙이면 열마다 빈칸 수가 나와요.\n\n자, 먼저 실행해서 열마다 True가 몇 개인지 세어 보세요.\nresult 줄의 `df.isna()` 뒤에 `.sum()`을 붙이세요.\n다시 실행해서 열마다 나온 숫자가 센 개수와 맞는지 봐요.\n맨 위 행 수와 견주면 빈칸이 얼마나 많은지 보여요. 빈칸이 없는 열은 0이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 처리 전 행 수예요.\nprint(len(df))\n# isna()는 칸마다 빈칸이면 True, 값이 있으면 False예요.\n# 뒤에 sum()을 붙이면 열마다 True를 더해 빈칸 수가 돼요.\nresult = df.isna()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 처리 전 행 수예요.\nprint(len(df))\n# isna()는 칸마다 빈칸이면 True, 값이 있으면 False예요.\n# 뒤에 sum()을 붙이면 열마다 True를 더해 빈칸 수가 돼요.\nresult = df.isna().sum()\n# 결과를 화면에서 확인해요.\nprint(result)\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`result = df.isna().sum()`으로 바꿔요."
+      ],
+      "goal_html": "<p><code>isna()</code>는 칸마다 빈칸(NaN)이면 True를 돌려줘요.<br>True는 1, False는 0으로 더해져요.<br>그래서 <code>.sum()</code>을 붙이면 열마다 빈칸 수가 나와요.</p><p>자, 먼저 실행해서 열마다 True가 몇 개인지 세어 보세요.<br>result 줄의 <code>df.isna()</code> 뒤에 <code>.sum()</code>을 붙이세요.<br>다시 실행해서 열마다 나온 숫자가 센 개수와 맞는지 봐요.<br>맨 위 행 수와 견주면 빈칸이 얼마나 많은지 보여요. 빈칸이 없는 열은 0이에요.</p>"
+    },
+    {
+      "id": "drop-blank-rows",
+      "title": "한 열의 빈칸만 보고 지워요",
+      "goal": "`dropna()`는 빈칸이 하나라도 있는 행을 통째로 지워요.\n`subset=['열 이름']`을 넣으면 그 열의 빈칸만 따져요.\n지운 뒤에는 행 수를 다시 세서 얼마나 줄었는지 봐요.\n\n배달 시간이 빈 주문만 지우려고 해요. 지역 빈칸은 남겨요.\n먼저 실행해서 처리 전후 행 수를 보세요.\n`dropna()` 괄호 안에 `subset=['minutes']`를 넣으세요.\n다시 실행해서 행 수와 area 열에 남은 NaN을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 처리 전 행 수예요.\nprint(len(df))\n# 빈칸을 보고 행을 지운 새 표를 담아요.\n# 괄호가 비면 모든 열의 빈칸을 따져요.\nresult = df.dropna()\n# 처리 후 남은 표와 행 수를 확인해요.\nprint(result)\nprint(len(result))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 처리 전 행 수예요.\nprint(len(df))\n# 빈칸을 보고 행을 지운 새 표를 담아요.\n# 괄호가 비면 모든 열의 빈칸을 따져요.\nresult = df.dropna(subset=['minutes'])\n# 처리 후 남은 표와 행 수를 확인해요.\nprint(result)\nprint(len(result))\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.dropna(subset=['minutes'])`로 바꿔요."
+      ],
+      "goal_html": "<p><code>dropna()</code>는 빈칸이 하나라도 있는 행을 통째로 지워요.<br><code>subset=[&#x27;열 이름&#x27;]</code>을 넣으면 그 열의 빈칸만 따져요.<br>지운 뒤에는 행 수를 다시 세서 얼마나 줄었는지 봐요.</p><p>배달 시간이 빈 주문만 지우려고 해요. 지역 빈칸은 남겨요.<br>먼저 실행해서 처리 전후 행 수를 보세요.<br><code>dropna()</code> 괄호 안에 <code>subset=[&#x27;minutes&#x27;]</code>를 넣으세요.<br>다시 실행해서 행 수와 area 열에 남은 NaN을 비교해요.</p>"
+    },
+    {
+      "id": "fill-median",
+      "title": "숫자 빈칸은 중앙값으로 채워요",
+      "goal": "`fillna(값)`은 빈칸(NaN)에 그 값을 넣어요.\n0으로 채우면 없던 값을 0으로 꾸며서 평균이 내려가요.\n평균은 큰 값 하나에 끌려가니, 숫자 빈칸은 중앙값으로 많이 채워요.\n\n먼저 실행해서 0으로 채운 자리와 평균을 보세요.\nfillna 괄호 안의 0을 `df['minutes'].median()`으로 바꾸세요.\n다시 실행해서 채운 값과 평균을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 채우기 전 값을 봐요. NaN이 빈칸이에요.\nprint(df['minutes'])\n# 빈칸을 괄호 안 값으로 채워 열에 다시 담아요.\ndf['minutes'] = df['minutes'].fillna(0)\n# 채운 뒤의 열과 평균을 확인해요.\nresult = df['minutes']\nprint(result)\nprint(result.mean())\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 채우기 전 값을 봐요. NaN이 빈칸이에요.\nprint(df['minutes'])\n# 빈칸을 괄호 안 값으로 채워 열에 다시 담아요.\ndf['minutes'] = df['minutes'].fillna(df['minutes'].median())\n# 채운 뒤의 열과 평균을 확인해요.\nresult = df['minutes']\nprint(result)\nprint(result.mean())\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df['minutes'].fillna(df['minutes'].median())` 모양이에요."
+      ],
+      "goal_html": "<p><code>fillna(값)</code>은 빈칸(NaN)에 그 값을 넣어요.<br>0으로 채우면 없던 값을 0으로 꾸며서 평균이 내려가요.<br>평균은 큰 값 하나에 끌려가니, 숫자 빈칸은 중앙값으로 많이 채워요.</p><p>먼저 실행해서 0으로 채운 자리와 평균을 보세요.<br>fillna 괄호 안의 0을 <code>df[&#x27;minutes&#x27;].median()</code>으로 바꾸세요.<br>다시 실행해서 채운 값과 평균을 비교해요.</p>"
+    },
+    {
+      "id": "fill-mode",
+      "title": "글자 빈칸은 최빈값으로 채워요",
+      "goal": "글자 열은 평균을 못 구해요. 가장 많이 나온 값(최빈값)이나 '모름'으로 채워요.\n`mode()`는 최빈값을 목록(Series)으로 돌려줘요. 동률이면 여럿이거든요.\nfillna에 목록을 넣으면 인덱스가 같은 행끼리 짝지어 채워요.\n\n먼저 실행해서 area의 빈칸이 그대로인지 보세요.\n최빈값 목록은 인덱스 0뿐이에요. 0번 행은 빈칸이 아니라서 안 채워졌죠?\nfillna 괄호 안 `mode()` 바로 뒤에 `[0]`을 붙여 첫 값을 꺼내세요.\n다시 실행해서 남은 빈칸 수를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 가장 많이 나온 지역이에요. 왼쪽 0은 인덱스예요.\nprint(df['area'].mode())\n# area의 빈칸을 최빈값으로 채워 다시 담아요.\ndf['area'] = df['area'].fillna(df['area'].mode())\n# 채운 뒤의 지역 열을 확인해요.\nresult = df['area']\nprint(result)\n# area에 남은 빈칸 수예요.\nprint(result.isna().sum())\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 가장 많이 나온 지역이에요. 왼쪽 0은 인덱스예요.\nprint(df['area'].mode())\n# area의 빈칸을 최빈값으로 채워 다시 담아요.\ndf['area'] = df['area'].fillna(df['area'].mode()[0])\n# 채운 뒤의 지역 열을 확인해요.\nresult = df['area']\nprint(result)\n# area에 남은 빈칸 수예요.\nprint(result.isna().sum())\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df['area'].fillna(df['area'].mode()[0])`처럼 써요."
+      ],
+      "goal_html": "<p>글자 열은 평균을 못 구해요. 가장 많이 나온 값(최빈값)이나 &#x27;모름&#x27;으로 채워요.<br><code>mode()</code>는 최빈값을 목록(Series)으로 돌려줘요. 동률이면 여럿이거든요.<br>fillna에 목록을 넣으면 인덱스가 같은 행끼리 짝지어 채워요.</p><p>먼저 실행해서 area의 빈칸이 그대로인지 보세요.<br>최빈값 목록은 인덱스 0뿐이에요. 0번 행은 빈칸이 아니라서 안 채워졌죠?<br>fillna 괄호 안 <code>mode()</code> 바로 뒤에 <code>[0]</code>을 붙여 첫 값을 꺼내세요.<br>다시 실행해서 남은 빈칸 수를 비교해요.</p>"
+    },
+    {
+      "id": "drop-duplicates",
+      "title": "같은 주문이 두 번 들어갔어요",
+      "goal": "`duplicated()`는 모든 열 값이 같은 행이 위에 이미 있으면 True예요.\n처음 나온 행은 False라서 남아요.\n`drop_duplicates()`는 True인 행을 뺀 새 표를 돌려줘요. df 자체는 그대로예요.\n\n먼저 실행해서 True인 행과 처리 전후 행 수를 보세요.\n지웠는데 행 수가 그대로죠?\n`df.drop_duplicates()` 앞에 `df = `를 붙여 다시 담으세요.\n다시 실행해서 줄어든 행 수를 True 개수와 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 모든 열 값이 같은 행이 위에 이미 있으면 True예요.\nprint(df.duplicated())\n# True를 더하면 중복 행의 수예요.\nprint(df.duplicated().sum())\n# 처리 전 행 수예요.\nprint(len(df))\n# 중복 행을 지워요.\ndf.drop_duplicates()\n# 처리 후 행 수를 확인해요.\nprint(len(df))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 모든 열 값이 같은 행이 위에 이미 있으면 True예요.\nprint(df.duplicated())\n# True를 더하면 중복 행의 수예요.\nprint(df.duplicated().sum())\n# 처리 전 행 수예요.\nprint(len(df))\n# 중복 행을 지워요.\ndf = df.drop_duplicates()\n# 처리 후 행 수를 확인해요.\nprint(len(df))\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df = df.drop_duplicates()`로 바꿔요."
+      ],
+      "goal_html": "<p><code>duplicated()</code>는 모든 열 값이 같은 행이 위에 이미 있으면 True예요.<br>처음 나온 행은 False라서 남아요.<br><code>drop_duplicates()</code>는 True인 행을 뺀 새 표를 돌려줘요. df 자체는 그대로예요.</p><p>먼저 실행해서 True인 행과 처리 전후 행 수를 보세요.<br>지웠는데 행 수가 그대로죠?<br><code>df.drop_duplicates()</code> 앞에 <code>df = </code>를 붙여 다시 담으세요.<br>다시 실행해서 줄어든 행 수를 True 개수와 비교해요.</p>"
+    },
+    {
+      "id": "quartiles",
+      "title": "가운데 절반의 폭, IQR",
+      "goal": "`quantile(0.25)`는 작은 값부터 25% 자리의 값이에요. Q1이라고 해요.\n`quantile(0.75)`는 75% 자리의 값, Q3예요.\nQ3 - Q1을 사분위수 범위(IQR)라고 해요. 가운데 절반이 퍼진 폭이에요.\n\n먼저 실행해서 q1, q3, iqr을 보세요. iqr이 0이죠?\nq3 줄은 q1 줄을 복사해 만들었어요.\nq3 줄의 `0.25`를 `0.75`로 바꾸세요.\n다시 실행해서 describe의 25%, 75% 줄과 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 가격 분포를 요약해요. 25%와 75% 줄을 봐 두세요.\nprint(df['price'].describe())\n# 작은 값부터 25% 자리의 값(Q1)이에요.\nq1 = df['price'].quantile(0.25)\n# 75% 자리의 값(Q3)이에요.\nq3 = df['price'].quantile(0.25)\n# 가운데 절반이 퍼진 폭(IQR)이에요.\niqr = q3 - q1\nprint(q1, q3, iqr)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 가격 분포를 요약해요. 25%와 75% 줄을 봐 두세요.\nprint(df['price'].describe())\n# 작은 값부터 25% 자리의 값(Q1)이에요.\nq1 = df['price'].quantile(0.25)\n# 75% 자리의 값(Q3)이에요.\nq3 = df['price'].quantile(0.75)\n# 가운데 절반이 퍼진 폭(IQR)이에요.\niqr = q3 - q1\nprint(q1, q3, iqr)\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`q3 = df['price'].quantile(0.75)`로 바꿔요."
+      ],
+      "goal_html": "<p><code>quantile(0.25)</code>는 작은 값부터 25% 자리의 값이에요. Q1이라고 해요.<br><code>quantile(0.75)</code>는 75% 자리의 값, Q3예요.<br>Q3 - Q1을 사분위수 범위(IQR)라고 해요. 가운데 절반이 퍼진 폭이에요.</p><p>먼저 실행해서 q1, q3, iqr을 보세요. iqr이 0이죠?<br>q3 줄은 q1 줄을 복사해 만들었어요.<br>q3 줄의 <code>0.25</code>를 <code>0.75</code>로 바꾸세요.<br>다시 실행해서 describe의 25%, 75% 줄과 비교해요.</p>"
+    },
+    {
+      "id": "iqr-bounds",
+      "title": "경계 안의 행만 남겨요",
+      "goal": "아래 경계는 `q1 - 1.5 * iqr`, 위 경계는 `q3 + 1.5 * iqr`이에요.\n두 경계 밖의 값을 이상치로 봐요. 경계와 같은 값은 남겨요.\n상자그림에서 따로 찍힌 점도 같은 기준이에요.\n\n먼저 실행해서 두 경계와 처리 전후 행 수를 보세요.\n지금 조건은 위 경계만 따져요. 남은 가격을 low와 견줘 보세요.\nkept 줄의 조건을 `(df['price'] >= low) & (df['price'] <= high)`로 바꾸세요.\n다시 실행해서 남은 행 수를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# Q1, Q3, IQR을 구해요.\nq1 = df['price'].quantile(0.25)\nq3 = df['price'].quantile(0.75)\niqr = q3 - q1\n# IQR의 1.5배만큼 바깥에 경계를 둬요.\nlow = q1 - 1.5 * iqr\nhigh = q3 + 1.5 * iqr\nprint(low, high)\n# 처리 전 행 수예요.\nprint(len(df))\n# 경계 안의 행만 남겨요.\nkept = df[df['price'] <= high]\n# 처리 후 남은 표와 행 수를 확인해요.\nprint(kept)\nprint(len(kept))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# Q1, Q3, IQR을 구해요.\nq1 = df['price'].quantile(0.25)\nq3 = df['price'].quantile(0.75)\niqr = q3 - q1\n# IQR의 1.5배만큼 바깥에 경계를 둬요.\nlow = q1 - 1.5 * iqr\nhigh = q3 + 1.5 * iqr\nprint(low, high)\n# 처리 전 행 수예요.\nprint(len(df))\n# 경계 안의 행만 남겨요.\nkept = df[(df['price'] >= low) & (df['price'] <= high)]\n# 처리 후 남은 표와 행 수를 확인해요.\nprint(kept)\nprint(len(kept))\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "`kept = df[(df['price'] >= low) & (df['price'] <= high)]` 모양이에요."
+      ],
+      "goal_html": "<p>아래 경계는 <code>q1 - 1.5 * iqr</code>, 위 경계는 <code>q3 + 1.5 * iqr</code>이에요.<br>두 경계 밖의 값을 이상치로 봐요. 경계와 같은 값은 남겨요.<br>상자그림에서 따로 찍힌 점도 같은 기준이에요.</p><p>먼저 실행해서 두 경계와 처리 전후 행 수를 보세요.<br>지금 조건은 위 경계만 따져요. 남은 가격을 low와 견줘 보세요.<br>kept 줄의 조건을 <code>(df[&#x27;price&#x27;] &gt;= low) &amp; (df[&#x27;price&#x27;] &lt;= high)</code>로 바꾸세요.<br>다시 실행해서 남은 행 수를 비교해요.</p>"
+    },
+    {
+      "id": "clean-order",
+      "title": "중복부터 지우고 채워요",
+      "goal": "중복 행은 같은 주문이 두 번 들어간 거예요.\n지우기 전에 중앙값을 구하면 그 주문이 두 번 세어져요.\n그래서 지울 행을 먼저 지우고, 남은 값으로 채워요.\n\n먼저 실행해서 fill 값과 처리 후 표를 보세요.\n중복을 지우는 두 줄(주석 한 줄과 코드 한 줄)을 찾으세요.\n그 두 줄을 fill 위의 주석보다 위로 옮기세요.\n다시 실행해서 fill 값을 비교해요. 빈칸이던 A04, A07의 minutes도 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 배달 시간 빈칸에 넣을 중앙값이에요.\nfill = df['minutes'].median()\n# 빈칸을 그 값으로 채워 다시 담아요.\ndf['minutes'] = df['minutes'].fillna(fill)\n# 같은 주문이 두 번 들어간 행을 지워요.\ndf = df.drop_duplicates()\n# 처리 후 행 수와 표, 빈칸에 넣은 값을 확인해요.\nprint(len(df))\nprint(df)\nprint(fill)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 같은 주문이 두 번 들어간 행을 지워요.\ndf = df.drop_duplicates()\n# 배달 시간 빈칸에 넣을 중앙값이에요.\nfill = df['minutes'].median()\n# 빈칸을 그 값으로 채워 다시 담아요.\ndf['minutes'] = df['minutes'].fillna(fill)\n# 처리 후 행 수와 표, 빈칸에 넣은 값을 확인해요.\nprint(len(df))\nprint(df)\nprint(fill)\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": true,
+      "hints": [
+        "중복을 지우는 두 줄을 read_csv 줄 바로 아래로 옮겨요."
+      ],
+      "goal_html": "<p>중복 행은 같은 주문이 두 번 들어간 거예요.<br>지우기 전에 중앙값을 구하면 그 주문이 두 번 세어져요.<br>그래서 지울 행을 먼저 지우고, 남은 값으로 채워요.</p><p>먼저 실행해서 fill 값과 처리 후 표를 보세요.<br>중복을 지우는 두 줄(주석 한 줄과 코드 한 줄)을 찾으세요.<br>그 두 줄을 fill 위의 주석보다 위로 옮기세요.<br>다시 실행해서 fill 값을 비교해요. 빈칸이던 A04, A07의 minutes도 봐요.</p>"
+    },
+    {
+      "id": "clean-pipeline",
+      "title": "도전 · 정리한 뒤 행 수와 평균",
+      "goal": "중복 지우기, IQR 경계로 이상치 지우기, 중앙값 채우기를 조합해요.\n지울 행을 다 지운 뒤에 남은 값으로 채워요.\n경계는 중복을 지운 표로 다시 구해요. 앞 문제에서 지운 주문이 남을 수도 있어요.\n\n가격이 경계 밖인 주문을 지우는 줄이 빠졌어요.\n경계와 같은 값은 남겨요. 지운 표는 df에 다시 담아요.\n그 줄을 어디에 넣을지가 핵심이에요.\n처리 전후 행 수와 배달 시간 평균을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 처리 전 행 수예요.\nprint(len(df))\n# 같은 주문이 두 번 들어간 행을 지워요.\ndf = df.drop_duplicates()\n# 가격의 Q1, Q3, IQR이에요.\nq1 = df['price'].quantile(0.25)\nq3 = df['price'].quantile(0.75)\niqr = q3 - q1\n# 아래 경계와 위 경계예요.\nlow = q1 - 1.5 * iqr\nhigh = q3 + 1.5 * iqr\n# 배달 시간 빈칸을 남은 값의 중앙값으로 채워요.\ndf['minutes'] = df['minutes'].fillna(df['minutes'].median())\n# 처리 후 행 수와 배달 시간 평균이에요.\ncount = len(df)\nresult = df['minutes'].mean()\nprint(count, result)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 처리 전 행 수예요.\nprint(len(df))\n# 같은 주문이 두 번 들어간 행을 지워요.\ndf = df.drop_duplicates()\n# 가격의 Q1, Q3, IQR이에요.\nq1 = df['price'].quantile(0.25)\nq3 = df['price'].quantile(0.75)\niqr = q3 - q1\n# 아래 경계와 위 경계예요.\nlow = q1 - 1.5 * iqr\nhigh = q3 + 1.5 * iqr\n# 경계 밖의 행을 지워요.\ndf = df[(df['price'] >= low) & (df['price'] <= high)]\n# 배달 시간 빈칸을 남은 값의 중앙값으로 채워요.\ndf['minutes'] = df['minutes'].fillna(df['minutes'].median())\n# 처리 후 행 수와 배달 시간 평균이에요.\ncount = len(df)\nresult = df['minutes'].mean()\nprint(count, result)\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": false,
+      "hints": [
+        "경계로 지우는 줄은 빈칸을 채우는 줄보다 위에 넣어요. kept가 아니라 df에 담아요.",
+        "high 줄 바로 아래에 `df = df[(df['price'] >= low) & (df['price'] <= high)]`를 넣어요."
+      ],
+      "goal_html": "<p>중복 지우기, IQR 경계로 이상치 지우기, 중앙값 채우기를 조합해요.<br>지울 행을 다 지운 뒤에 남은 값으로 채워요.<br>경계는 중복을 지운 표로 다시 구해요. 앞 문제에서 지운 주문이 남을 수도 있어요.</p><p>가격이 경계 밖인 주문을 지우는 줄이 빠졌어요.<br>경계와 같은 값은 남겨요. 지운 표는 df에 다시 담아요.<br>그 줄을 어디에 넣을지가 핵심이에요.<br>처리 전후 행 수와 배달 시간 평균을 비교해요.</p>"
+    },
+    {
+      "id": "unknown-share",
+      "title": "도전 · 모르는 지역까지 넣은 비율",
+      "goal": "`value_counts(normalize=True)`는 빈칸을 빼고 비율을 내요.\n빈칸을 '모름'으로 채우면 분모에 들어가요.\n중복 행이 남으면 같은 주문이 두 번 세어져요.\n\n중복을 뺀 주문 중 지역별 비율을 구하세요.\n지역 빈칸은 '모름'으로 채워 함께 세요.\n준비 코드는 두 가지를 빠뜨렸어요. 고칠 곳은 직접 찾아보세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 지역별 주문 비율을 구해요.\nresult = df['area'].value_counts(normalize=True)\n# 맨 아래 Name의 proportion은 비율이라는 뜻이에요.\nprint(result)\n# 비율을 구한 표의 행 수를 확인해요.\nprint(len(df))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 배달 자료예요. 실제 주문 자료가 아니에요.\ndf = pd.read_csv('data/deliveries.csv')\n# 같은 주문이 두 번 들어간 행을 지워요.\ndf = df.drop_duplicates()\n# 모르는 지역은 '모름'으로 채워 다시 담아요.\ndf['area'] = df['area'].fillna('모름')\n# 지역별 주문 비율을 구해요.\nresult = df['area'].value_counts(normalize=True)\n# 맨 아래 Name의 proportion은 비율이라는 뜻이에요.\nprint(result)\n# 비율을 구한 표의 행 수를 확인해요.\nprint(len(df))\n",
+      "files": {
+        "data/deliveries.csv": "order_id,area,minutes,price\nA01,north,25,14000\nA02,south,31,22000\nA03,,18,17000\nA04,east,,12000\nA05,north,22,98000\nA06,east,140,19000\nA03,,18,17000\nA07,north,,1500\nA08,east,27,34000\nA09,south,20,21000\nA10,north,35,13000\nA09,south,20,21000\nA11,,29,25000\n"
+      },
+      "required": false,
+      "hints": [
+        "중복 지우기와 '모름' 채우기, 두 가지가 빠졌어요.",
+        "`df['area'] = df['area'].fillna('모름')`처럼 열에 다시 담아요."
+      ],
+      "goal_html": "<p><code>value_counts(normalize=True)</code>는 빈칸을 빼고 비율을 내요.<br>빈칸을 &#x27;모름&#x27;으로 채우면 분모에 들어가요.<br>중복 행이 남으면 같은 주문이 두 번 세어져요.</p><p>중복을 뺀 주문 중 지역별 비율을 구하세요.<br>지역 빈칸은 &#x27;모름&#x27;으로 채워 함께 세요.<br>준비 코드는 두 가지를 빠뜨렸어요. 고칠 곳은 직접 찾아보세요.</p>"
+    }
+  ]
+}
