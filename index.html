@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>에이스 · 처음 만나는 코드와 데이터 표</title>
+<link rel="stylesheet" href="style.css">
+<body>
+<main id="app">
+ <header><div><small>몰입 퀘스트 · 웹 체험</small><h1>처음 만나는 코드와 데이터 표</h1></div><span class="preview-note">진도는 기록하지 않아요</span></header>
+ <nav aria-label="문제 이동"><button id="prev">← 이전</button><select id="tasks" aria-label="문제 선택"></select><button id="next">다음 →</button></nav>
+ <section class="lesson">
+  <article class="problem-pane markdown" id="problem"></article>
+  <div class="split-handle split-col" role="separator" tabindex="0" aria-orientation="vertical" aria-label="문제와 코드 패널 크기 조절"></div>
+  <section class="coding-pane">
+   <section class="editor-pane"><div class="toolbar"><strong>main.py</strong><div><button id="reset">처음 코드</button><button id="stop" disabled>정지</button><button id="run" class="primary">코드 실행</button></div></div><div class="editor-wrap"><textarea data-code-editor="python" data-editor-reset="0" aria-label="Python 코드 편집기" spellcheck="false"></textarea></div></section>
+   <div class="split-handle split-row" role="separator" tabindex="0" aria-orientation="horizontal" aria-label="코드와 실행 결과 패널 크기 조절"></div>
+   <section class="result-pane" aria-label="실행 결과"><h2>실행 결과</h2><p id="status" role="status">코드 실행을 누르면 실행 환경을 준비해요.</p><div id="output"></div></section>
+  </section>
+ </section>
+ <footer><span id="position"></span><span>첫 실행은 환경을 내려받아 시간이 걸려요.</span><a href="https://github.com/jhs512/mq3-course-aice-associate" target="_blank" rel="noopener">과정 저장소 ↗</a></footer>
+</main>
+<script src="editor.bundle.js"></script><script src="split.js"></script><script type="module" src="app.js"></script>
+</body></html>
