@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "id": "aice-scaling",
+  "revision": "v1.0.0",
+  "title": "훈련 자료로만 변환 기준 익히기",
+  "description": "단위가 다른 숫자 열의 크기를 맞춰요. 기준은 훈련 자료로만 재고, 테스트 자료는 바꾸기만 해요. 필수 문제 7개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://scikit-learn.org/stable/modules/preprocessing.html",
+    "https://scikit-learn.org/stable/common_pitfalls.html"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "unit-gap",
+      "title": "열마다 숫자 크기가 달라요",
+      "goal": "좌석 수는 수십, 월세(천 원)는 수천이에요. 숫자가 큰 열은 모델 계산에서 더 크게 보일 수 있어요.\n그래서 크기를 맞춰요(스케일링). 표준편차(std)는 값이 평균에서 퍼진 폭이에요.\n평균을 빼고 표준편차로 나누면 단위가 사라져요. 이걸 표준화라고 해요.\n\n자, 먼저 실행해 보세요. 요약 표가 두 개 나와요.\n위 표는 X_train이에요. mean과 std 줄을 열끼리 견줘 보세요.\n아래 표는 평균을 뺀 result예요. mean은 0(-0.00도 0)인데 std는 그대로죠?\nresult 줄을 `(X_train - X_train.mean()) / X_train.std()`로 바꾸세요.\n다시 실행해서 아래 표의 std를 세 열끼리 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 훈련 자료의 행 수예요.\nprint(len(X_train))\n# 열마다 평균(mean)과 표준편차(std)를 봐요.\nprint(X_train.describe().round(1))\n# 열마다 자기 평균을 빼요. 가운데가 0으로 와요.\n# 퍼진 폭까지 맞추려면 표준편차로도 나눠요.\nresult = X_train - X_train.mean()\n# 바꾼 뒤의 요약을 소수 둘째 자리까지 봐요.\nprint(result.describe().round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 훈련 자료의 행 수예요.\nprint(len(X_train))\n# 열마다 평균(mean)과 표준편차(std)를 봐요.\nprint(X_train.describe().round(1))\n# 열마다 자기 평균을 빼요. 가운데가 0으로 와요.\n# 퍼진 폭까지 맞추려면 표준편차로도 나눠요.\nresult = (X_train - X_train.mean()) / X_train.std()\n# 바꾼 뒤의 요약을 소수 둘째 자리까지 봐요.\nprint(result.describe().round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "줄 전체를 `result = (X_train - X_train.mean()) / X_train.std()`로 바꿔요. 괄호가 있어야 뺄셈을 먼저 해요."
+      ],
+      "goal_html": "<p>좌석 수는 수십, 월세(천 원)는 수천이에요. 숫자가 큰 열은 모델 계산에서 더 크게 보일 수 있어요.<br>그래서 크기를 맞춰요(스케일링). 표준편차(std)는 값이 평균에서 퍼진 폭이에요.<br>평균을 빼고 표준편차로 나누면 단위가 사라져요. 이걸 표준화라고 해요.</p><p>자, 먼저 실행해 보세요. 요약 표가 두 개 나와요.<br>위 표는 X_train이에요. mean과 std 줄을 열끼리 견줘 보세요.<br>아래 표는 평균을 뺀 result예요. mean은 0(-0.00도 0)인데 std는 그대로죠?<br>result 줄을 <code>(X_train - X_train.mean()) / X_train.std()</code>로 바꾸세요.<br>다시 실행해서 아래 표의 std를 세 열끼리 비교해요.</p>"
+    },
+    {
+      "id": "standard-scaler",
+      "title": "StandardScaler로 표준화해요",
+      "goal": "`StandardScaler`는 표준화 도구예요. 열마다 평균을 빼고 표준편차로 나눠요.\n`fit`은 기준(평균·표준편차)을 재고, `transform`은 그 기준으로 값을 바꿔요.\n`fit_transform`은 둘을 한 번에 해요. 결과는 열 이름이 없는 배열이에요.\n\n`mean(axis=0)`은 행 방향으로 모아 열마다 평균을 내요. 먼저 실행해서 원래 단위의 평균과 표준편차를 보세요.\nX_train_s 줄을 `X_train_s = scaler.fit_transform(X_train)`으로 바꾸세요.\n다시 실행하면 [ ] 안에 값만 나와요. 순서는 seats, rent, visitors예요.\n평균이 0, 표준편차가 1인지 봐요. -0.은 0과 같아요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 표준화 도구(StandardScaler)를 만들어요.\nscaler = StandardScaler()\n# 지금은 원래 값을 그대로 담았어요.\nX_train_s = X_train\n# 열마다 평균과 표준편차예요. 소수 둘째 자리까지 봐요.\nprint(X_train_s.mean(axis=0).round(2))\nprint(X_train_s.std(axis=0).round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 표준화 도구(StandardScaler)를 만들어요.\nscaler = StandardScaler()\n# 훈련 자료로 기준을 재고(fit) 바로 바꿔요(transform).\nX_train_s = scaler.fit_transform(X_train)\n# 열마다 평균과 표준편차예요. 소수 둘째 자리까지 봐요.\nprint(X_train_s.mean(axis=0).round(2))\nprint(X_train_s.std(axis=0).round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "`X_train_s = scaler.fit_transform(X_train)`으로 바꿔요."
+      ],
+      "goal_html": "<p><code>StandardScaler</code>는 표준화 도구예요. 열마다 평균을 빼고 표준편차로 나눠요.<br><code>fit</code>은 기준(평균·표준편차)을 재고, <code>transform</code>은 그 기준으로 값을 바꿔요.<br><code>fit_transform</code>은 둘을 한 번에 해요. 결과는 열 이름이 없는 배열이에요.</p><p><code>mean(axis=0)</code>은 행 방향으로 모아 열마다 평균을 내요. 먼저 실행해서 원래 단위의 평균과 표준편차를 보세요.<br>X_train_s 줄을 <code>X_train_s = scaler.fit_transform(X_train)</code>으로 바꾸세요.<br>다시 실행하면 [ ] 안에 값만 나와요. 순서는 seats, rent, visitors예요.<br>평균이 0, 표준편차가 1인지 봐요. -0.은 0과 같아요.</p>"
+    },
+    {
+      "id": "transform-test",
+      "title": "테스트 자료는 transform만 해요",
+      "goal": "테스트 자료는 학습에 안 쓰고 남겨 둔 모의고사예요.\n그래서 기준은 훈련 자료로만 재요(fit). 테스트는 그 기준으로 바꾸기만 해요(transform).\n잰 평균은 `mean_`, 표준편차는 `scale_`에 남아요.\n\n먼저 실행해서 두 mean_과 X_test_s를 봐 두세요. 두 mean_이 다르죠?\nX_test_s 줄의 `fit_transform`을 `transform`으로 바꾸세요.\n다시 실행해서 두 mean_이 같은지 봐요. 열 순서는 seats, rent, visitors예요.\nX_test_s도 봐 둔 값과 견줘요. 이제 훈련 평균에서 떨어진 정도로 바뀌었어요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 표준화 도구를 만들어요.\nscaler = StandardScaler()\n# 훈련 자료로 기준을 재고 바로 바꿔요.\nX_train_s = scaler.fit_transform(X_train)\n# 훈련 자료로 잰 평균이에요. 소수 둘째 자리까지 봐요.\nprint(scaler.mean_.round(2))\n# 테스트 자료를 바꿔요.\nX_test_s = scaler.fit_transform(X_test)\n# 지금 scaler에 남은 기준 평균이에요.\nmean = scaler.mean_\nprint(mean.round(2))\n# 바꾼 테스트 자료예요.\nprint(X_test_s.round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 표준화 도구를 만들어요.\nscaler = StandardScaler()\n# 훈련 자료로 기준을 재고 바로 바꿔요.\nX_train_s = scaler.fit_transform(X_train)\n# 훈련 자료로 잰 평균이에요. 소수 둘째 자리까지 봐요.\nprint(scaler.mean_.round(2))\n# 테스트 자료를 바꿔요.\nX_test_s = scaler.transform(X_test)\n# 지금 scaler에 남은 기준 평균이에요.\nmean = scaler.mean_\nprint(mean.round(2))\n# 바꾼 테스트 자료예요.\nprint(X_test_s.round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "`X_test_s = scaler.transform(X_test)`로 바꿔요."
+      ],
+      "goal_html": "<p>테스트 자료는 학습에 안 쓰고 남겨 둔 모의고사예요.<br>그래서 기준은 훈련 자료로만 재요(fit). 테스트는 그 기준으로 바꾸기만 해요(transform).<br>잰 평균은 <code>mean_</code>, 표준편차는 <code>scale_</code>에 남아요.</p><p>먼저 실행해서 두 mean_과 X_test_s를 봐 두세요. 두 mean_이 다르죠?<br>X_test_s 줄의 <code>fit_transform</code>을 <code>transform</code>으로 바꾸세요.<br>다시 실행해서 두 mean_이 같은지 봐요. 열 순서는 seats, rent, visitors예요.<br>X_test_s도 봐 둔 값과 견줘요. 이제 훈련 평균에서 떨어진 정도로 바뀌었어요.</p>"
+    },
+    {
+      "id": "fit-after-split",
+      "title": "나누기 전에 fit하면 새요",
+      "goal": "나누기 전에 전체 X로 fit하면 테스트 값이 기준에 섞여요.\n테스트 정보가 학습 쪽으로 새는 거죠. 이걸 누수라고 해요.\n훈련 자료로만 fit하면 바꾼 훈련 자료의 열 평균은 딱 0이에요.\n\n먼저 실행해서 mean_과 열 평균을 보세요. 작아도 0이 아니죠? 기준에 테스트 값이 섞여서예요.\n`scaler.fit(X)` 줄과 바로 위 주석 줄을 지우세요.\ntrain_test_split 줄 아래에 `scaler.fit(X_train)`을 쓰세요.\n다시 실행해서 mean_과 열 평균을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 표준화 도구를 만들어요.\nscaler = StandardScaler()\n# 전체 X로 기준을 재요. 아직 나누기 전이에요.\nscaler.fit(X)\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 두 자료를 같은 기준으로 바꿔요.\nX_train_s = scaler.transform(X_train)\nX_test_s = scaler.transform(X_test)\n# 기준으로 쓴 평균이에요.\nmean = scaler.mean_\nprint(mean)\n# 바꾼 훈련 자료의 열 평균이에요.\nprint(X_train_s.mean(axis=0).round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 표준화 도구를 만들어요.\nscaler = StandardScaler()\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 나눈 뒤 훈련 자료로만 기준을 재요.\nscaler.fit(X_train)\n# 두 자료를 같은 기준으로 바꿔요.\nX_train_s = scaler.transform(X_train)\nX_test_s = scaler.transform(X_test)\n# 기준으로 쓴 평균이에요.\nmean = scaler.mean_\nprint(mean)\n# 바꾼 훈련 자료의 열 평균이에요.\nprint(X_train_s.mean(axis=0).round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "train_test_split 줄 바로 아래에 `scaler.fit(X_train)`을 두고, 위의 `scaler.fit(X)`는 지워요."
+      ],
+      "goal_html": "<p>나누기 전에 전체 X로 fit하면 테스트 값이 기준에 섞여요.<br>테스트 정보가 학습 쪽으로 새는 거죠. 이걸 누수라고 해요.<br>훈련 자료로만 fit하면 바꾼 훈련 자료의 열 평균은 딱 0이에요.</p><p>먼저 실행해서 mean_과 열 평균을 보세요. 작아도 0이 아니죠? 기준에 테스트 값이 섞여서예요.<br><code>scaler.fit(X)</code> 줄과 바로 위 주석 줄을 지우세요.<br>train_test_split 줄 아래에 <code>scaler.fit(X_train)</code>을 쓰세요.<br>다시 실행해서 mean_과 열 평균을 비교해요.</p>"
+    },
+    {
+      "id": "robust-scaler",
+      "title": "이상치에 덜 흔들리는 RobustScaler",
+      "goal": "평균과 표준편차는 아주 큰 값 하나에 크게 끌려가요.\n`RobustScaler`는 중앙값을 빼고 IQR로 나눠요. IQR은 Q3(75% 값) - Q1(25% 값)이에요.\n이상치를 없애진 않아요. 대신 보통 값들의 기준이 덜 흔들려요.\n\n먼저 실행해서 두 결과를 보세요. 지금은 둘 다 StandardScaler라 같아요. 보통 값들이 좁은 폭에 몰렸죠?\nscale_은 describe의 std보다 조금 작아요. describe는 (개수 - 1)로 나누거든요.\n`scaler = StandardScaler()`를 `scaler = RobustScaler()`로 바꾸세요.\n다시 실행해서 scale_을 describe의 75% - 25%와 견줘요.\n아래 결과에서 보통 값들은 넓게 펴지고, 이상치는 더 멀어졌죠?",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import RobustScaler, StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 방문자 수 열만 표로 골라요. 아주 큰 값이 하나 있어요.\nv_train = X_train[['visitors']]\n# 한 열짜리 표예요. (행 수, 열 수)로 나와요.\nprint(v_train.shape)\n# 50%가 중앙값이에요. 75%에서 25%를 빼면 IQR이에요.\nprint(v_train.describe().round(1))\n# 평균과 표준편차로 바꾼 결과예요.\nstandard = StandardScaler().fit_transform(v_train)\nprint(standard.round(2))\n# 견줄 도구예요. 지금은 위와 같은 StandardScaler예요.\nscaler = StandardScaler()\nother = scaler.fit_transform(v_train)\n# 이 도구가 나눈 값(scale_)과 바꾼 결과예요.\nscale = scaler.scale_\nprint(scale)\nprint(other.round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import RobustScaler, StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 방문자 수 열만 표로 골라요. 아주 큰 값이 하나 있어요.\nv_train = X_train[['visitors']]\n# 한 열짜리 표예요. (행 수, 열 수)로 나와요.\nprint(v_train.shape)\n# 50%가 중앙값이에요. 75%에서 25%를 빼면 IQR이에요.\nprint(v_train.describe().round(1))\n# 평균과 표준편차로 바꾼 결과예요.\nstandard = StandardScaler().fit_transform(v_train)\nprint(standard.round(2))\n# 견줄 도구예요. 중앙값과 IQR을 기준으로 써요.\nscaler = RobustScaler()\nother = scaler.fit_transform(v_train)\n# 이 도구가 나눈 값(scale_)과 바꾼 결과예요.\nscale = scaler.scale_\nprint(scale)\nprint(other.round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "`scaler = RobustScaler()`로 바꿔요."
+      ],
+      "goal_html": "<p>평균과 표준편차는 아주 큰 값 하나에 크게 끌려가요.<br><code>RobustScaler</code>는 중앙값을 빼고 IQR로 나눠요. IQR은 Q3(75% 값) - Q1(25% 값)이에요.<br>이상치를 없애진 않아요. 대신 보통 값들의 기준이 덜 흔들려요.</p><p>먼저 실행해서 두 결과를 보세요. 지금은 둘 다 StandardScaler라 같아요. 보통 값들이 좁은 폭에 몰렸죠?<br>scale_은 describe의 std보다 조금 작아요. describe는 (개수 - 1)로 나누거든요.<br><code>scaler = StandardScaler()</code>를 <code>scaler = RobustScaler()</code>로 바꾸세요.<br>다시 실행해서 scale_을 describe의 75% - 25%와 견줘요.<br>아래 결과에서 보통 값들은 넓게 펴지고, 이상치는 더 멀어졌죠?</p>"
+    },
+    {
+      "id": "minmax-range",
+      "title": "MinMaxScaler와 범위 밖 테스트 값",
+      "goal": "`MinMaxScaler`는 열마다 최솟값을 0, 최댓값을 1로 맞춰요.\n이 최솟값과 최댓값도 훈련 자료로 재요.\n그래서 훈련 범위 밖의 테스트 값은 0보다 작거나 1보다 커요. 틀린 게 아니에요.\n\n먼저 실행해서 low와 high를 보세요. 훈련 자료는 딱 0과 1이죠?\nlow와 high 줄의 `X_train_s`를 `X_test_s`로 바꾸세요. 두 줄이에요.\n다시 실행해서 0보다 작거나 1보다 큰 값을 찾아보세요. 훈련 범위 밖의 테스트 값이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import MinMaxScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 최솟값을 0, 최댓값을 1로 맞추는 도구예요.\nscaler = MinMaxScaler()\n# 훈련 자료로 기준을 재고 바로 바꿔요.\nX_train_s = scaler.fit_transform(X_train)\n# 훈련 자료에서 잰 최솟값(data_min_)과 최댓값(data_max_)이에요.\nprint(scaler.data_min_)\nprint(scaler.data_max_)\n# 테스트 자료는 훈련 기준으로 바꾸기만 해요.\nX_test_s = scaler.transform(X_test)\nprint(X_test_s.round(2))\n# 열마다 가장 작은 값과 가장 큰 값이에요.\nlow = X_train_s.min(axis=0)\nhigh = X_train_s.max(axis=0)\nprint(low.round(2))\nprint(high.round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import MinMaxScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 최솟값을 0, 최댓값을 1로 맞추는 도구예요.\nscaler = MinMaxScaler()\n# 훈련 자료로 기준을 재고 바로 바꿔요.\nX_train_s = scaler.fit_transform(X_train)\n# 훈련 자료에서 잰 최솟값(data_min_)과 최댓값(data_max_)이에요.\nprint(scaler.data_min_)\nprint(scaler.data_max_)\n# 테스트 자료는 훈련 기준으로 바꾸기만 해요.\nX_test_s = scaler.transform(X_test)\nprint(X_test_s.round(2))\n# 열마다 가장 작은 값과 가장 큰 값이에요.\nlow = X_test_s.min(axis=0)\nhigh = X_test_s.max(axis=0)\nprint(low.round(2))\nprint(high.round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "`low = X_test_s.min(axis=0)`처럼 두 줄 모두 X_test_s로 바꿔요."
+      ],
+      "goal_html": "<p><code>MinMaxScaler</code>는 열마다 최솟값을 0, 최댓값을 1로 맞춰요.<br>이 최솟값과 최댓값도 훈련 자료로 재요.<br>그래서 훈련 범위 밖의 테스트 값은 0보다 작거나 1보다 커요. 틀린 게 아니에요.</p><p>먼저 실행해서 low와 high를 보세요. 훈련 자료는 딱 0과 1이죠?<br>low와 high 줄의 <code>X_train_s</code>를 <code>X_test_s</code>로 바꾸세요. 두 줄이에요.<br>다시 실행해서 0보다 작거나 1보다 큰 값을 찾아보세요. 훈련 범위 밖의 테스트 값이에요.</p>"
+    },
+    {
+      "id": "wrap-columns",
+      "title": "배열을 표로 다시 감싸요",
+      "goal": "스케일러의 결과는 넘파이 배열(ndarray)이에요. 넘파이(numpy)는 숫자 계산 라이브러리예요.\n배열에는 열 이름과 행 이름이 없어요. `pd.DataFrame(배열, columns=열 이름)`으로 감싸요.\n그러면 열 이름이 돌아와요. 열 이름은 원래 표의 `columns`에서 가져와요.\n\n`type(값)`은 값의 자료형을 알려 줘요. 먼저 실행해서 자료형과 X_test, 열 이름을 보세요.\n열 이름이 0, 1, 2뿐이죠? test_df 줄의 `X_test_s` 뒤에 `, columns=X_test.columns`를 넣으세요.\n다시 실행해서 열 이름을 비교해요. 행 이름은 X_test의 행 번호가 아니라 0부터 새로 붙어요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 표준화 도구로 훈련 기준을 재고 바꿔요.\nscaler = StandardScaler()\nX_train_s = scaler.fit_transform(X_train)\n# 테스트 자료는 바꾸기만 해요.\nX_test_s = scaler.transform(X_test)\n# 결과의 자료형이에요. 표(DataFrame)가 아니에요.\nprint(type(X_test_s))\n# 바꾸기 전 테스트 자료예요. 맨 왼쪽이 원래 행 번호예요.\nprint(X_test)\n# 바꾼 테스트 자료를 표로 감싸요.\ntest_df = pd.DataFrame(X_test_s)\nprint(test_df.round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 표준화 도구로 훈련 기준을 재고 바꿔요.\nscaler = StandardScaler()\nX_train_s = scaler.fit_transform(X_train)\n# 테스트 자료는 바꾸기만 해요.\nX_test_s = scaler.transform(X_test)\n# 결과의 자료형이에요. 표(DataFrame)가 아니에요.\nprint(type(X_test_s))\n# 바꾸기 전 테스트 자료예요. 맨 왼쪽이 원래 행 번호예요.\nprint(X_test)\n# 바꾼 테스트 자료를 표로 감싸요.\ntest_df = pd.DataFrame(X_test_s, columns=X_test.columns)\nprint(test_df.round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": true,
+      "hints": [
+        "`test_df = pd.DataFrame(X_test_s, columns=X_test.columns)`로 바꿔요."
+      ],
+      "goal_html": "<p>스케일러의 결과는 넘파이 배열(ndarray)이에요. 넘파이(numpy)는 숫자 계산 라이브러리예요.<br>배열에는 열 이름과 행 이름이 없어요. <code>pd.DataFrame(배열, columns=열 이름)</code>으로 감싸요.<br>그러면 열 이름이 돌아와요. 열 이름은 원래 표의 <code>columns</code>에서 가져와요.</p><p><code>type(값)</code>은 값의 자료형을 알려 줘요. 먼저 실행해서 자료형과 X_test, 열 이름을 보세요.<br>열 이름이 0, 1, 2뿐이죠? test_df 줄의 <code>X_test_s</code> 뒤에 <code>, columns=X_test.columns</code>를 넣으세요.<br>다시 실행해서 열 이름을 비교해요. 행 이름은 X_test의 행 번호가 아니라 0부터 새로 붙어요.</p>"
+    },
+    {
+      "id": "scale-numbers-only",
+      "title": "도전 · 원핫 열은 두고 숫자 열만",
+      "goal": "원핫 열은 이미 0과 1이라 그대로 두고, 숫자 열만 크기를 맞춰요.\n`X_train[num_cols] = 배열`은 그 열만 바꿔요. 행 번호와 다른 열은 그대로예요.\n오른쪽 배열도 숫자 열 3개여야 해요. 테스트 자료는 훈련 기준으로 바꾸기만 해요.\n\n준비 코드는 원핫 열까지 바꿨고, 테스트 기준도 잘못 쟀어요.\n숫자 열만 훈련 기준으로 바꾸세요. 원핫 열은 0과 1 그대로예요.\nX_train과 X_test는 열 이름과 행 번호가 그대로인 표로 남겨요.\n고칠 곳은 직접 찾아보세요. 바꾼 줄 위 주석도 맞게 고쳐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 매장 유형(type)을 원핫 인코딩해요. 0과 1로 된 열이 생겨요.\nX = pd.get_dummies(df, columns=['type'], dtype=int)\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 크기를 맞출 숫자 열 이름이에요.\nnum_cols = ['seats', 'rent', 'visitors']\n# 표준화 도구를 만들어요.\nscaler = StandardScaler()\n# 지금은 표 전체를 바꿔 새 표로 감싸요. 행 번호가 0부터 새로 붙어요.\nX_train = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns)\nX_test = pd.DataFrame(scaler.fit_transform(X_test), columns=X_test.columns)\n# 두 표의 (행 수, 열 수)예요.\nprint(X_train.shape, X_test.shape)\n# 소수 둘째 자리까지 봐요. 원핫 열의 값도 보세요.\nprint(X_train.round(2))\nprint(X_test.round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 매장 유형(type)을 원핫 인코딩해요. 0과 1로 된 열이 생겨요.\nX = pd.get_dummies(df, columns=['type'], dtype=int)\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 크기를 맞출 숫자 열 이름이에요.\nnum_cols = ['seats', 'rent', 'visitors']\n# 표준화 도구를 만들어요.\nscaler = StandardScaler()\n# 숫자 열만 바꿔 같은 자리에 다시 담아요.\nX_train[num_cols] = scaler.fit_transform(X_train[num_cols])\nX_test[num_cols] = scaler.transform(X_test[num_cols])\n# 두 표의 (행 수, 열 수)예요.\nprint(X_train.shape, X_test.shape)\n# 소수 둘째 자리까지 봐요. 원핫 열의 값도 보세요.\nprint(X_train.round(2))\nprint(X_test.round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": false,
+      "hints": [
+        "원핫 열까지 바꾼 것과 테스트로 다시 fit한 것, 두 가지를 고쳐요. 스케일러에 표 전체를 넣으면 열 수가 안 맞아 ValueError가 나요.",
+        "`X_train[num_cols] = scaler.fit_transform(X_train[num_cols])` 모양이에요. 테스트 줄은 `transform`이에요."
+      ],
+      "goal_html": "<p>원핫 열은 이미 0과 1이라 그대로 두고, 숫자 열만 크기를 맞춰요.<br><code>X_train[num_cols] = 배열</code>은 그 열만 바꿔요. 행 번호와 다른 열은 그대로예요.<br>오른쪽 배열도 숫자 열 3개여야 해요. 테스트 자료는 훈련 기준으로 바꾸기만 해요.</p><p>준비 코드는 원핫 열까지 바꿨고, 테스트 기준도 잘못 쟀어요.<br>숫자 열만 훈련 기준으로 바꾸세요. 원핫 열은 0과 1 그대로예요.<br>X_train과 X_test는 열 이름과 행 번호가 그대로인 표로 남겨요.<br>고칠 곳은 직접 찾아보세요. 바꾼 줄 위 주석도 맞게 고쳐요.</p>"
+    },
+    {
+      "id": "new-store",
+      "title": "도전 · 새 매장 하나를 바꿔요",
+      "goal": "모델을 쓸 때 들어오는 새 자료도 테스트 자료처럼 다뤄요.\n훈련 기준으로 `transform`만 해요. 한 행으로 fit하면 기준이 그 행 자신이 돼요.\n`pd.DataFrame({'열': [값]})`은 한 행짜리 표를 만들어요. 열 이름과 순서는 fit 때와 같아야 해요.\n\n`center_`는 RobustScaler가 훈련 자료로 잰 열마다의 중앙값이에요.\n먼저 실행해서 결과를 보세요. 새 매장 값을 바꿔도 늘 0이 나와요.\n준비 코드에는 실수가 두 가지 있어요. 고칠 곳은 직접 찾아보세요.\n고친 뒤에는 새 매장의 세 값을 center_와 열마다 견줘요. 중앙값보다 작은 열은 결과가 음수죠?",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import RobustScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 이상치에 덜 흔들리는 도구로 훈련 기준을 재요.\nscaler = RobustScaler()\nscaler.fit(X_train)\n# 훈련 자료로 잰 열마다의 중앙값이에요.\nprint(scaler.center_)\n# 새로 열 매장 하나의 값이에요.\nseats = 32\nrent = 2900\nvisitors = 240\n# 새 매장을 한 행짜리 표로 만들어요.\nnew_store = pd.DataFrame({'rent': [rent], 'seats': [seats], 'visitors': [visitors]})\n# 새 매장 값을 바꿔요.\nnew_s = RobustScaler().fit_transform(new_store)\nprint(new_s.round(2))\n",
+      "solution": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import RobustScaler\n\n# 직접 만든 매장 자료예요. 실제 매장 자료가 아니에요.\ndf = pd.read_csv('data/stores.csv')\n# 입력 X는 좌석 수, 월세(천 원), 하루 방문자 수예요.\nX = df[['seats', 'rent', 'visitors']]\n# 훈련 75%, 테스트 25%로 나눠요. X만 넣으면 두 몫이 나와요.\nX_train, X_test = train_test_split(X, test_size=0.25, random_state=42)\n# 이상치에 덜 흔들리는 도구로 훈련 기준을 재요.\nscaler = RobustScaler()\nscaler.fit(X_train)\n# 훈련 자료로 잰 열마다의 중앙값이에요.\nprint(scaler.center_)\n# 새로 열 매장 하나의 값이에요.\nseats = 32\nrent = 2900\nvisitors = 240\n# 새 매장을 한 행짜리 표로 만들어요.\nnew_store = pd.DataFrame({'seats': [seats], 'rent': [rent], 'visitors': [visitors]})\n# 새 매장 값을 바꿔요.\nnew_s = scaler.transform(new_store)\nprint(new_s.round(2))\n",
+      "files": {
+        "data/stores.csv": "type,seats,rent,visitors\nstreet,14,1200,120\nmall,48,4200,260\nstation,30,3100,320\nstreet,18,1500,110\nmall,56,4800,2400\nstation,36,3500,290\nstreet,20,1300,95\nmall,42,3900,230\nstation,28,2700,350\nstreet,26,2000,170\nmall,60,5300,310\nstation,34,3300,300\n"
+      },
+      "required": false,
+      "hints": [
+        "새로 fit한 것과 표의 열 순서, 두 가지를 고쳐요.",
+        "`new_s = scaler.transform(new_store)`로 바꿔요. 열 순서는 seats, rent, visitors예요."
+      ],
+      "goal_html": "<p>모델을 쓸 때 들어오는 새 자료도 테스트 자료처럼 다뤄요.<br>훈련 기준으로 <code>transform</code>만 해요. 한 행으로 fit하면 기준이 그 행 자신이 돼요.<br><code>pd.DataFrame({&#x27;열&#x27;: [값]})</code>은 한 행짜리 표를 만들어요. 열 이름과 순서는 fit 때와 같아야 해요.</p><p><code>center_</code>는 RobustScaler가 훈련 자료로 잰 열마다의 중앙값이에요.<br>먼저 실행해서 결과를 보세요. 새 매장 값을 바꿔도 늘 0이 나와요.<br>준비 코드에는 실수가 두 가지 있어요. 고칠 곳은 직접 찾아보세요.<br>고친 뒤에는 새 매장의 세 값을 center_와 열마다 견줘요. 중앙값보다 작은 열은 결과가 음수죠?</p>"
+    }
+  ]
+}

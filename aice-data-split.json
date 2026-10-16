@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "id": "aice-data-split",
+  "revision": "v1.0.0",
+  "title": "훈련·검증·테스트를 구분하기",
+  "description": "자료를 훈련·검증·테스트 몫으로 나눠요. 몫끼리 겹침과 비율을 직접 확인해요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html",
+    "https://scikit-learn.org/stable/modules/cross_validation.html"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "first-split",
+      "title": "훈련 자료와 테스트 자료로 나눠요",
+      "goal": "scikit-learn(코드에선 sklearn)은 머신러닝 도구 모음이에요. `from 모듈 import 이름`은 그 이름만 불러와요.\n`train_test_split`은 행을 섞어 훈련 자료와 테스트 자료로 나눠요. 나뉜 한쪽을 몫이라고 해요.\n학습에 쓴 자료로 채점하면 외운 건지 몰라요. 그래서 테스트 자료는 남겨 둬요. 훈련 자료는 문제집, 테스트 자료는 모의고사인 셈이죠.\n\n자, 먼저 실행해서 전체와 두 몫의 크기(행 수, 열 수)를 보세요.\n지금은 절반을 테스트로 떼요. 공부할 문제집이 너무 얇죠?\n`test_size=0.5`의 0.5를 0.2로 바꾸세요.\n다시 실행해서 행 수를 비교해요. 나눠떨어지지 않으면 테스트 행 수를 올림해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 전체 표의 크기예요. (행 수, 열 수)로 나와요.\nprint(df.shape)\n# 행을 섞어 두 몫으로 나눠요. test_size는 테스트 몫의 비율이에요.\n# 돌려준 두 몫을 차례로 train, test에 받아요.\ntrain, test = train_test_split(df, test_size=0.5)\n# 두 몫의 크기를 견줘요.\nprint(train.shape)\nprint(test.shape)\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 전체 표의 크기예요. (행 수, 열 수)로 나와요.\nprint(df.shape)\n# 행을 섞어 두 몫으로 나눠요. test_size는 테스트 몫의 비율이에요.\n# 돌려준 두 몫을 차례로 train, test에 받아요.\ntrain, test = train_test_split(df, test_size=0.2)\n# 두 몫의 크기를 견줘요.\nprint(train.shape)\nprint(test.shape)\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`train_test_split(df, test_size=0.2)`로 바꿔요."
+      ],
+      "goal_html": "<p>scikit-learn(코드에선 sklearn)은 머신러닝 도구 모음이에요. <code>from 모듈 import 이름</code>은 그 이름만 불러와요.<br><code>train_test_split</code>은 행을 섞어 훈련 자료와 테스트 자료로 나눠요. 나뉜 한쪽을 몫이라고 해요.<br>학습에 쓴 자료로 채점하면 외운 건지 몰라요. 그래서 테스트 자료는 남겨 둬요. 훈련 자료는 문제집, 테스트 자료는 모의고사인 셈이죠.</p><p>자, 먼저 실행해서 전체와 두 몫의 크기(행 수, 열 수)를 보세요.<br>지금은 절반을 테스트로 떼요. 공부할 문제집이 너무 얇죠?<br><code>test_size=0.5</code>의 0.5를 0.2로 바꾸세요.<br>다시 실행해서 행 수를 비교해요. 나눠떨어지지 않으면 테스트 행 수를 올림해요.</p>"
+    },
+    {
+      "id": "return-order",
+      "title": "몫 네 개는 정해진 순서로 받아요",
+      "goal": "입력 X와 정답 y를 함께 넣으면 몫 네 개를 돌려줘요.\n순서는 `X_train, X_test, y_train, y_test`예요. 넣은 것마다 훈련, 테스트 순이죠.\n값은 받는 이름이 아니라 자리 순서대로 담겨요. 순서가 틀려도 오류가 안 나요.\n\n먼저 실행해서 크기 네 개를 보세요. 입력은 (행 수, 열 수)로 나와요.\n정답은 열이 하나라서 (행 수,)로 나오고요.\nX_test에 열 수가 없죠? 정답이 담긴 거예요.\n받는 이름을 `X_train, X_test, y_train, y_test` 순서로 고치고 다시 실행하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 몫 네 개를 받아요. 받는 순서를 잘 보세요.\nX_train, y_train, X_test, y_test = train_test_split(X, y, test_size=0.2)\n# 입력의 크기예요. (행 수, 열 수)로 나와야 해요.\nprint(X_train.shape)\nprint(X_test.shape)\n# 정답의 크기예요. 열이 하나라서 (행 수,)로 나와야 해요.\nprint(y_train.shape)\nprint(y_test.shape)\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 몫 네 개를 받아요. 받는 순서를 잘 보세요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n# 입력의 크기예요. (행 수, 열 수)로 나와야 해요.\nprint(X_train.shape)\nprint(X_test.shape)\n# 정답의 크기예요. 열이 하나라서 (행 수,)로 나와야 해요.\nprint(y_train.shape)\nprint(y_test.shape)\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)`예요."
+      ],
+      "goal_html": "<p>입력 X와 정답 y를 함께 넣으면 몫 네 개를 돌려줘요.<br>순서는 <code>X_train, X_test, y_train, y_test</code>예요. 넣은 것마다 훈련, 테스트 순이죠.<br>값은 받는 이름이 아니라 자리 순서대로 담겨요. 순서가 틀려도 오류가 안 나요.</p><p>먼저 실행해서 크기 네 개를 보세요. 입력은 (행 수, 열 수)로 나와요.<br>정답은 열이 하나라서 (행 수,)로 나오고요.<br>X_test에 열 수가 없죠? 정답이 담긴 거예요.<br>받는 이름을 <code>X_train, X_test, y_train, y_test</code> 순서로 고치고 다시 실행하세요.</p>"
+    },
+    {
+      "id": "random-state",
+      "title": "섞는 방법을 번호로 고정해요",
+      "goal": "train_test_split은 실행할 때마다 행을 새로 섞어요. 뽑히는 행이 매번 달라요.\n`random_state=42`처럼 번호를 주면 섞는 방법이 고정돼요. 늘 같은 행이 뽑히죠.\n번호가 다르면 뽑히는 행도 달라요. 시험에선 문제에 적힌 번호를 그대로 써요.\n\n먼저 실행해서 두 줄의 행 번호를 비교하세요. 한 번 더 실행해서도 봐요.\n`train_test_split` 두 줄 모두 `test_size=0.2` 뒤에 `, random_state=42`를 넣으세요.\n여러 번 실행해서 행 번호가 늘 같은지 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 같은 코드로 두 번 나눠요.\nfirst_train, first_test = train_test_split(df, test_size=0.2)\nsecond_train, second_test = train_test_split(df, test_size=0.2)\n# 테스트 몫에 뽑힌 행 번호(인덱스)예요.\nprint(first_test.index)\nprint(second_test.index)\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 같은 코드로 두 번 나눠요.\nfirst_train, first_test = train_test_split(df, test_size=0.2, random_state=42)\nsecond_train, second_test = train_test_split(df, test_size=0.2, random_state=42)\n# 테스트 몫에 뽑힌 행 번호(인덱스)예요.\nprint(first_test.index)\nprint(second_test.index)\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "두 줄 모두 `train_test_split(df, test_size=0.2, random_state=42)` 모양이에요."
+      ],
+      "goal_html": "<p>train_test_split은 실행할 때마다 행을 새로 섞어요. 뽑히는 행이 매번 달라요.<br><code>random_state=42</code>처럼 번호를 주면 섞는 방법이 고정돼요. 늘 같은 행이 뽑히죠.<br>번호가 다르면 뽑히는 행도 달라요. 시험에선 문제에 적힌 번호를 그대로 써요.</p><p>먼저 실행해서 두 줄의 행 번호를 비교하세요. 한 번 더 실행해서도 봐요.<br><code>train_test_split</code> 두 줄 모두 <code>test_size=0.2</code> 뒤에 <code>, random_state=42</code>를 넣으세요.<br>여러 번 실행해서 행 번호가 늘 같은지 봐요.</p>"
+    },
+    {
+      "id": "test-count",
+      "title": "테스트 몫을 행 수로 정해요",
+      "goal": "`test_size`는 테스트 몫, `train_size`는 훈련 몫의 크기예요.\n하나만 주면 남은 행이 다른 몫이 돼요.\n0.2처럼 1보다 작은 수는 비율, 5처럼 1 이상의 정수는 행 수예요.\n\n이번 문제는 테스트 자료를 5행으로 정했어요.\n먼저 실행해서 두 몫의 행 수를 보세요. 훈련 쪽이 5행이죠?\n`train_size=5`를 `test_size=5`로 바꾸세요.\n다시 실행해서 테스트 쪽이 5행인지 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 이번에 정한 테스트 몫은 5행이에요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, train_size=5, random_state=42)\n# 두 몫의 행 수를 확인해요.\nprint(len(X_train))\nprint(len(X_test))\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 이번에 정한 테스트 몫은 5행이에요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=5, random_state=42)\n# 두 몫의 행 수를 확인해요.\nprint(len(X_train))\nprint(len(X_test))\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`train_test_split(X, y, test_size=5, random_state=42)`로 바꿔요."
+      ],
+      "goal_html": "<p><code>test_size</code>는 테스트 몫, <code>train_size</code>는 훈련 몫의 크기예요.<br>하나만 주면 남은 행이 다른 몫이 돼요.<br>0.2처럼 1보다 작은 수는 비율, 5처럼 1 이상의 정수는 행 수예요.</p><p>이번 문제는 테스트 자료를 5행으로 정했어요.<br>먼저 실행해서 두 몫의 행 수를 보세요. 훈련 쪽이 5행이죠?<br><code>train_size=5</code>를 <code>test_size=5</code>로 바꾸세요.<br>다시 실행해서 테스트 쪽이 5행인지 봐요.</p>"
+    },
+    {
+      "id": "stratify",
+      "title": "떠난 고객 비율을 두 몫에 고루 나눠요",
+      "goal": "떠난 고객(1)처럼 드문 값은 섞기만 하면 한쪽 몫에 몰릴 수 있어요.\n`stratify=y`를 넣으면 y의 값 비율대로 두 몫에 나눠 담아요. 층화 추출이라고 해요.\n비율은 `value_counts(normalize=True)`로 견줘요.\n\n먼저 실행해서 전체, 훈련, 테스트의 1 비율을 견줘 보세요.\n`random_state=42` 뒤에 `, stratify=y`를 넣으세요.\n다시 실행해서 세 비율이 비슷해졌는지 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 전체 자료의 0과 1 비율이에요. 1이 떠난 고객이에요.\nprint(y.value_counts(normalize=True))\n# 섞어서 나눠요. 1의 비율은 따로 챙기지 않았어요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# 훈련 몫과 테스트 몫의 비율을 견줘요.\nprint(y_train.value_counts(normalize=True))\nprint(y_test.value_counts(normalize=True))\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 전체 자료의 0과 1 비율이에요. 1이 떠난 고객이에요.\nprint(y.value_counts(normalize=True))\n# 섞어서 나눠요. 1의 비율은 따로 챙기지 않았어요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)\n# 훈련 몫과 테스트 몫의 비율을 견줘요.\nprint(y_train.value_counts(normalize=True))\nprint(y_test.value_counts(normalize=True))\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)`예요."
+      ],
+      "goal_html": "<p>떠난 고객(1)처럼 드문 값은 섞기만 하면 한쪽 몫에 몰릴 수 있어요.<br><code>stratify=y</code>를 넣으면 y의 값 비율대로 두 몫에 나눠 담아요. 층화 추출이라고 해요.<br>비율은 <code>value_counts(normalize=True)</code>로 견줘요.</p><p>먼저 실행해서 전체, 훈련, 테스트의 1 비율을 견줘 보세요.<br><code>random_state=42</code> 뒤에 <code>, stratify=y</code>를 넣으세요.<br>다시 실행해서 세 비율이 비슷해졌는지 봐요.</p>"
+    },
+    {
+      "id": "overlap-check",
+      "title": "문제집과 모의고사가 겹치나요?",
+      "goal": "train_test_split은 원래 행 번호(인덱스)를 그대로 가져가요. `X_test.index`로 꺼내요.\n`set(값들)`은 값 모음(집합)이에요. `&`는 양쪽에 다 있는 값만 남겨요.\n겹친 게 없으면 `set()`으로 보여요. 학습 자료와 테스트 자료는 겹치면 안 돼요.\n\n먼저 실행해서 겹친 행 번호와 그 수를 보세요.\n훈련 자료는 문제집, 테스트 자료는 모의고사예요. 지금은 모의고사 문제를 문제집에 넣은 셈이죠. 외운 건지 이해한 건지 몰라요.\nstudy 줄의 X를 X_train으로 바꾸세요.\n다시 실행해서 `set()`과 0이 나오는지 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 훈련 80%, 테스트 20%로 나눠요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# 모델이 공부할 문제집이에요.\nstudy = X\n# 문제집과 테스트 몫에 함께 있는 행 번호예요.\ncommon = set(study.index) & set(X_test.index)\nprint(common)\n# 겹친 행의 수예요.\nprint(len(common))\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 훈련 80%, 테스트 20%로 나눠요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# 모델이 공부할 문제집이에요.\nstudy = X_train\n# 문제집과 테스트 몫에 함께 있는 행 번호예요.\ncommon = set(study.index) & set(X_test.index)\nprint(common)\n# 겹친 행의 수예요.\nprint(len(common))\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`study = X_train`으로 바꿔요."
+      ],
+      "goal_html": "<p>train_test_split은 원래 행 번호(인덱스)를 그대로 가져가요. <code>X_test.index</code>로 꺼내요.<br><code>set(값들)</code>은 값 모음(집합)이에요. <code>&amp;</code>는 양쪽에 다 있는 값만 남겨요.<br>겹친 게 없으면 <code>set()</code>으로 보여요. 학습 자료와 테스트 자료는 겹치면 안 돼요.</p><p>먼저 실행해서 겹친 행 번호와 그 수를 보세요.<br>훈련 자료는 문제집, 테스트 자료는 모의고사예요. 지금은 모의고사 문제를 문제집에 넣은 셈이죠. 외운 건지 이해한 건지 몰라요.<br>study 줄의 X를 X_train으로 바꾸세요.<br>다시 실행해서 <code>set()</code>과 0이 나오는지 봐요.</p>"
+    },
+    {
+      "id": "validation-split",
+      "title": "검증 자료는 남은 몫에서 떼요",
+      "goal": "검증 자료는 모델을 고르고 고칠 때 보는 몫이에요. 테스트 자료는 마지막에 한 번만 써요.\n그래서 테스트를 먼저 떼고, 남은 몫을 다시 나눠 검증 자료를 만들어요.\n남은 80%의 25%는 전체의 20%예요. 훈련, 검증, 테스트가 60:20:20이 되죠. 나눠떨어지지 않으면 떼는 쪽을 올림해서 조금 어긋나요.\n\n먼저 실행해서 세 몫과 전체의 행 수, 겹친 행 번호를 보세요.\n세 몫을 더하면 전체보다 많죠? 검증 몫을 떼는 줄이 전체 X, y를 다시 나눴어요.\n그 줄의 `X, y`를 `X_rest, y_rest`로 바꾸세요. 첫 나누기 줄은 그대로 둬요.\n다시 실행해서 행 수의 합과 겹침을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 테스트 몫 20%를 먼저 떼요. 남은 몫은 X_rest, y_rest예요.\nX_rest, X_test, y_rest, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# 남은 몫에서 검증 몫 25%를 떼요.\nX_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.25, random_state=42)\n# 훈련, 검증, 테스트, 전체의 행 수예요.\nprint(len(X_train), len(X_val), len(X_test), len(X))\n# 검증 몫과 테스트 몫에 함께 있는 행 번호예요.\nprint(set(X_val.index) & set(X_test.index))\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 테스트 몫 20%를 먼저 떼요. 남은 몫은 X_rest, y_rest예요.\nX_rest, X_test, y_rest, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# 남은 몫에서 검증 몫 25%를 떼요.\nX_train, X_val, y_train, y_val = train_test_split(X_rest, y_rest, test_size=0.25, random_state=42)\n# 훈련, 검증, 테스트, 전체의 행 수예요.\nprint(len(X_train), len(X_val), len(X_test), len(X))\n# 검증 몫과 테스트 몫에 함께 있는 행 번호예요.\nprint(set(X_val.index) & set(X_test.index))\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`train_test_split(X_rest, y_rest, test_size=0.25, random_state=42)`예요."
+      ],
+      "goal_html": "<p>검증 자료는 모델을 고르고 고칠 때 보는 몫이에요. 테스트 자료는 마지막에 한 번만 써요.<br>그래서 테스트를 먼저 떼고, 남은 몫을 다시 나눠 검증 자료를 만들어요.<br>남은 80%의 25%는 전체의 20%예요. 훈련, 검증, 테스트가 60:20:20이 되죠. 나눠떨어지지 않으면 떼는 쪽을 올림해서 조금 어긋나요.</p><p>먼저 실행해서 세 몫과 전체의 행 수, 겹친 행 번호를 보세요.<br>세 몫을 더하면 전체보다 많죠? 검증 몫을 떼는 줄이 전체 X, y를 다시 나눴어요.<br>그 줄의 <code>X, y</code>를 <code>X_rest, y_rest</code>로 바꾸세요. 첫 나누기 줄은 그대로 둬요.<br>다시 실행해서 행 수의 합과 겹침을 비교해요.</p>"
+    },
+    {
+      "id": "time-order",
+      "title": "날짜가 있으면 섞지 않고 나눠요",
+      "goal": "날짜가 있는 자료를 섞어 나누면 테스트보다 늦은 날로 배우게 돼요. 미래를 미리 보고 과거를 맞히는 셈이죠.\n`shuffle=False`를 넣으면 섞지 않고 앞쪽을 훈련, 뒤쪽을 테스트로 떼요.\n섞지 않으니 random_state는 필요 없어요.\n\n먼저 실행해서 두 몫의 첫 날짜와 마지막 날짜를 보세요.\n'2025-12-31'처럼 적은 날짜는 글자 순서가 곧 날짜 순서예요. 그래서 `min()`이 첫 날짜, `max()`가 마지막 날짜예요.\n훈련 몫에 테스트보다 늦은 날이 있죠? `random_state=42`를 `shuffle=False`로 바꾸세요.\n다시 실행해서 훈련 마지막 날이 테스트 첫날보다 앞인지 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 하루 매출 기록이에요. 날짜순으로 저장돼 있어요.\ndf = pd.read_csv('data/daily.csv')\n# 입력 X와 정답 y(매출)를 나눠요.\nX = df.drop(columns=['sales'])\ny = df['sales']\n# 뒤쪽 20%를 테스트 몫으로 떼려고 해요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# 두 몫의 첫 날짜와 마지막 날짜예요.\nprint(X_train['date'].min(), X_train['date'].max())\nprint(X_test['date'].min(), X_test['date'].max())\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 하루 매출 기록이에요. 날짜순으로 저장돼 있어요.\ndf = pd.read_csv('data/daily.csv')\n# 입력 X와 정답 y(매출)를 나눠요.\nX = df.drop(columns=['sales'])\ny = df['sales']\n# 뒤쪽 20%를 테스트 몫으로 떼려고 해요.\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)\n# 두 몫의 첫 날짜와 마지막 날짜예요.\nprint(X_train['date'].min(), X_train['date'].max())\nprint(X_test['date'].min(), X_test['date'].max())\n",
+      "files": {
+        "data/daily.csv": "date,temp,rain,sales\n2026-04-01,14,0,329000\n2026-04-02,17,2,352000\n2026-04-03,17,0,373000\n2026-04-04,14,0,366000\n2026-04-05,15,0,380000\n2026-04-06,15,0,361000\n2026-04-07,18,22,346000\n2026-04-08,17,0,379000\n2026-04-09,19,0,395000\n2026-04-10,14,27,353000\n2026-04-11,21,0,410000\n2026-04-12,18,0,423000\n2026-04-13,20,22,373000\n2026-04-14,19,0,429000\n2026-04-15,19,0,454000\n2026-04-16,21,2,443000\n2026-04-17,22,0,456000\n2026-04-18,21,6,440000\n2026-04-19,21,0,480000\n2026-04-20,23,29,415000\n"
+      },
+      "required": true,
+      "hints": [
+        "`train_test_split(X, y, test_size=0.2, shuffle=False)`로 바꿔요."
+      ],
+      "goal_html": "<p>날짜가 있는 자료를 섞어 나누면 테스트보다 늦은 날로 배우게 돼요. 미래를 미리 보고 과거를 맞히는 셈이죠.<br><code>shuffle=False</code>를 넣으면 섞지 않고 앞쪽을 훈련, 뒤쪽을 테스트로 떼요.<br>섞지 않으니 random_state는 필요 없어요.</p><p>먼저 실행해서 두 몫의 첫 날짜와 마지막 날짜를 보세요.<br>&#x27;2025-12-31&#x27;처럼 적은 날짜는 글자 순서가 곧 날짜 순서예요. 그래서 <code>min()</code>이 첫 날짜, <code>max()</code>가 마지막 날짜예요.<br>훈련 몫에 테스트보다 늦은 날이 있죠? <code>random_state=42</code>를 <code>shuffle=False</code>로 바꾸세요.<br>다시 실행해서 훈련 마지막 날이 테스트 첫날보다 앞인지 봐요.</p>"
+    },
+    {
+      "id": "three-way-stratified",
+      "title": "도전 · 세 몫 모두 비율을 지켜요",
+      "goal": "세 몫으로 나눌 때는 두 번의 나누기 모두 같은 규칙을 지켜요.\nstratify에는 그 줄에서 나누는 정답을 넣어요. 행 수가 같아야 하거든요. 다르면 `inconsistent numbers of samples` 오류가 나요.\n0과 1만 있는 열의 평균은 1의 비율과 같아요.\n\n검증 몫도 1의 비율을 지키고, 몇 번을 실행해도 같게 나눠야 해요.\n섞는 번호는 42예요. 고칠 곳은 직접 찾아보세요.\n여러 번 실행해서 검증 몫의 행 번호와 세 비율을 보세요.\n행은 쪼갤 수 없어서 세 비율이 딱 같진 않아요. 비슷하면 돼요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 테스트 몫 20%를 먼저 떼요. 1의 비율을 지켜요.\nX_rest, X_test, y_rest, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)\n# 남은 몫에서 검증 몫 25%를 떼요.\nX_train, X_val, y_train, y_val = train_test_split(X_rest, y_rest, test_size=0.25)\n# 검증 몫에 뽑힌 행 번호예요.\nprint(X_val.index)\n# 훈련, 검증, 테스트의 행 수예요.\nprint(len(y_train), len(y_val), len(y_test))\n# 세 몫의 1 비율이에요. 0과 1의 평균이 곧 1의 비율이에요.\nprint(y_train.mean(), y_val.mean(), y_test.mean())\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 구독 고객 자료예요. churn이 1이면 떠난 고객이에요.\ndf = pd.read_csv('data/members.csv')\n# 입력 X와 정답 y를 나눠요.\nX = df.drop(columns=['churn'])\ny = df['churn']\n# 테스트 몫 20%를 먼저 떼요. 1의 비율을 지켜요.\nX_rest, X_test, y_rest, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)\n# 남은 몫에서 검증 몫 25%를 떼요.\nX_train, X_val, y_train, y_val = train_test_split(X_rest, y_rest, test_size=0.25, random_state=42, stratify=y_rest)\n# 검증 몫에 뽑힌 행 번호예요.\nprint(X_val.index)\n# 훈련, 검증, 테스트의 행 수예요.\nprint(len(y_train), len(y_val), len(y_test))\n# 세 몫의 1 비율이에요. 0과 1의 평균이 곧 1의 비율이에요.\nprint(y_train.mean(), y_val.mean(), y_test.mean())\n",
+      "files": {
+        "data/members.csv": "months,visits,spend,churn\n19,3,31000,0\n25,3,39000,0\n6,4,13000,1\n15,14,31000,0\n24,10,42000,0\n20,20,16000,0\n4,4,11000,1\n16,3,37000,0\n15,19,33000,0\n3,2,23000,1\n5,7,31000,0\n12,5,28000,0\n12,5,40000,0\n7,2,12000,1\n33,4,41000,0\n30,3,20000,0\n19,8,49000,0\n26,4,51000,0\n6,2,20000,1\n19,5,36000,0\n17,18,46000,0\n7,1,18000,1\n19,6,37000,0\n31,17,43000,0\n17,4,15000,0\n4,1,23000,1\n32,19,15000,0\n22,14,19000,0\n23,7,34000,0\n35,8,37000,0\n6,1,15000,1\n29,12,29000,0\n11,4,45000,0\n16,11,29000,0\n31,12,16000,0\n3,4,15000,1\n"
+      },
+      "required": false,
+      "hints": [
+        "두 번째 나누기 줄에 빠진 것이 두 가지예요. 첫 줄과 견줘 보세요. stratify에는 그 줄이 나누는 정답을 넣어요.",
+        "`test_size=0.25` 뒤에 `, random_state=42, stratify=y_rest`를 넣어요."
+      ],
+      "goal_html": "<p>세 몫으로 나눌 때는 두 번의 나누기 모두 같은 규칙을 지켜요.<br>stratify에는 그 줄에서 나누는 정답을 넣어요. 행 수가 같아야 하거든요. 다르면 <code>inconsistent numbers of samples</code> 오류가 나요.<br>0과 1만 있는 열의 평균은 1의 비율과 같아요.</p><p>검증 몫도 1의 비율을 지키고, 몇 번을 실행해도 같게 나눠야 해요.<br>섞는 번호는 42예요. 고칠 곳은 직접 찾아보세요.<br>여러 번 실행해서 검증 몫의 행 번호와 세 비율을 보세요.<br>행은 쪼갤 수 없어서 세 비율이 딱 같진 않아요. 비슷하면 돼요.</p>"
+    },
+    {
+      "id": "time-three-way",
+      "title": "도전 · 뒤섞인 기록을 세 몫으로",
+      "goal": "기록 파일이 늘 날짜순이지는 않아요. `shuffle=False`는 놓인 순서대로 잘라요.\n그래서 X, y를 나누기 전에 df를 `sort_values('date')`로 날짜순 정렬해요. `sort_values`는 정렬한 새 표를 돌려줘요. df 자체는 그대로라서 다시 담아야 하죠.\n검증 몫도 시간 순서를 지켜요. 훈련, 검증, 테스트 순으로 날짜가 이어져야 해요.\n\n이번 기록은 날짜가 뒤섞여 저장돼 있어요. 날이 갈수록 매출이 느는 자료예요.\n세 몫이 날짜순으로 이어지게 고치세요. 줄 하나를 더하고, 줄 하나를 고쳐요.\n날짜 범위와 평균 매출을 고치기 전과 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 하루 매출 기록이에요. 날짜가 뒤섞여 저장돼 있어요.\ndf = pd.read_csv('data/daily.csv')\n# 입력 X와 정답 y(매출)를 나눠요.\nX = df.drop(columns=['sales'])\ny = df['sales']\n# 뒤쪽 20%를 테스트 몫으로 떼요.\nX_rest, X_test, y_rest, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)\n# 남은 몫의 뒤쪽 25%를 검증 몫으로 떼요.\nX_train, X_val, y_train, y_val = train_test_split(X_rest, y_rest, test_size=0.25, random_state=42)\n# 세 몫의 첫 날짜, 마지막 날짜, 평균 매출이에요.\nprint(X_train['date'].min(), X_train['date'].max(), round(y_train.mean()))\nprint(X_val['date'].min(), X_val['date'].max(), round(y_val.mean()))\nprint(X_test['date'].min(), X_test['date'].max(), round(y_test.mean()))\n",
+      "solution": "import pandas as pd\n# scikit-learn에서 나누는 함수만 불러와요.\nfrom sklearn.model_selection import train_test_split\n\n# 직접 만든 하루 매출 기록이에요. 날짜가 뒤섞여 저장돼 있어요.\ndf = pd.read_csv('data/daily.csv')\n# 날짜순으로 정렬해 다시 담아요.\ndf = df.sort_values('date')\n# 입력 X와 정답 y(매출)를 나눠요.\nX = df.drop(columns=['sales'])\ny = df['sales']\n# 뒤쪽 20%를 테스트 몫으로 떼요.\nX_rest, X_test, y_rest, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)\n# 남은 몫의 뒤쪽 25%를 검증 몫으로 떼요.\nX_train, X_val, y_train, y_val = train_test_split(X_rest, y_rest, test_size=0.25, shuffle=False)\n# 세 몫의 첫 날짜, 마지막 날짜, 평균 매출이에요.\nprint(X_train['date'].min(), X_train['date'].max(), round(y_train.mean()))\nprint(X_val['date'].min(), X_val['date'].max(), round(y_val.mean()))\nprint(X_test['date'].min(), X_test['date'].max(), round(y_test.mean()))\n",
+      "files": {
+        "data/daily.csv": "date,temp,rain,sales\n2026-04-04,14,0,366000\n2026-04-06,15,0,361000\n2026-04-11,21,0,410000\n2026-04-07,18,22,346000\n2026-04-15,19,0,454000\n2026-04-20,23,29,415000\n2026-04-16,21,2,443000\n2026-04-10,14,27,353000\n2026-04-19,21,0,480000\n2026-04-05,15,0,380000\n2026-04-12,18,0,423000\n2026-04-01,14,0,329000\n2026-04-09,19,0,395000\n2026-04-03,17,0,373000\n2026-04-08,17,0,379000\n2026-04-02,17,2,352000\n2026-04-13,20,22,373000\n2026-04-14,19,0,429000\n2026-04-18,21,6,440000\n2026-04-17,22,0,456000\n"
+      },
+      "required": false,
+      "hints": [
+        "`df.sort_values('date')`만 쓰면 df는 그대로예요. 앞에 `df = `를 붙여요. 검증 몫을 떼는 줄도 섞지 않아야 해요.",
+        "read_csv 줄 아래에 `df = df.sort_values('date')`를 넣어요. 두 번째 나누기의 `random_state=42`는 `shuffle=False`로 바꿔요."
+      ],
+      "goal_html": "<p>기록 파일이 늘 날짜순이지는 않아요. <code>shuffle=False</code>는 놓인 순서대로 잘라요.<br>그래서 X, y를 나누기 전에 df를 <code>sort_values(&#x27;date&#x27;)</code>로 날짜순 정렬해요. <code>sort_values</code>는 정렬한 새 표를 돌려줘요. df 자체는 그대로라서 다시 담아야 하죠.<br>검증 몫도 시간 순서를 지켜요. 훈련, 검증, 테스트 순으로 날짜가 이어져야 해요.</p><p>이번 기록은 날짜가 뒤섞여 저장돼 있어요. 날이 갈수록 매출이 느는 자료예요.<br>세 몫이 날짜순으로 이어지게 고치세요. 줄 하나를 더하고, 줄 하나를 고쳐요.<br>날짜 범위와 평균 매출을 고치기 전과 비교해요.</p>"
+    }
+  ]
+}

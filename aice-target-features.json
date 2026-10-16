@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "id": "aice-target-features",
+  "revision": "v1.0.0",
+  "title": "입력 X와 정답 y 정하기",
+  "description": "모델이 맞힐 정답 y와 단서가 될 입력 X를 나눠요. 예측할 때 모르는 열은 X에서 빼요. 필수 문제 8개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop.html",
+    "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "target-kind",
+      "title": "회귀일까요, 분류일까요?",
+      "goal": "타깃(target)은 모델이 맞힐 열이에요. 금액처럼 크기를 재는 숫자면 회귀(regression)예요.\n산다·안 산다처럼 종류 중 하나면 분류(classification)예요. 종류를 0·1로 적어도 분류예요.\n`nunique()`는 열에 서로 다른 값이 몇 종류인지 세요.\n\n자, 질문은 회원이 다음 달에 살지 말지예요.\n먼저 실행해서 amount의 값 종류 수와 값별 행 수를 보세요.\ntarget을 `'bought'`로 바꾸고 다시 실행하세요.\n두 결과를 비교해요. 0과 1 두 종류뿐이면 분류 타깃이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/next_month.csv')\n# amount는 다음 달 구매 금액(원)이에요. 안 샀으면 0이에요.\n# bought는 다음 달에 샀으면 1, 안 샀으면 0이에요.\n\n# 질문: 회원이 다음 달에 살까요, 안 살까요?\n# 맞힐 열(타깃)의 이름이에요.\ntarget = 'amount'\n# 타깃에 서로 다른 값이 몇 개인지 세요.\nkinds = df[target].nunique()\nprint(kinds)\n# 값마다 몇 행인지 봐요.\nprint(df[target].value_counts())\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/next_month.csv')\n# amount는 다음 달 구매 금액(원)이에요. 안 샀으면 0이에요.\n# bought는 다음 달에 샀으면 1, 안 샀으면 0이에요.\n\n# 질문: 회원이 다음 달에 살까요, 안 살까요?\n# 맞힐 열(타깃)의 이름이에요.\ntarget = 'bought'\n# 타깃에 서로 다른 값이 몇 개인지 세요.\nkinds = df[target].nunique()\nprint(kinds)\n# 값마다 몇 행인지 봐요.\nprint(df[target].value_counts())\n",
+      "files": {
+        "data/next_month.csv": "member_id,age,visits,minutes,grade,amount,bought\n601,31,5,34.5,silver,41000,1\n602,26,1,6.0,bronze,0,0\n603,47,7,51.0,gold,66000,1\n604,38,0,0.0,silver,0,0\n605,29,3,22.5,bronze,18000,1\n606,55,2,11.5,gold,0,0\n607,34,6,40.0,silver,52000,1\n608,23,4,27.0,bronze,23000,1\n609,42,1,8.5,silver,0,0\n610,36,8,57.5,gold,73000,1\n"
+      },
+      "required": true,
+      "hints": [
+        "`target = 'bought'`로 바꿔요. 열 이름은 따옴표로 감싸요."
+      ],
+      "goal_html": "<p>타깃(target)은 모델이 맞힐 열이에요. 금액처럼 크기를 재는 숫자면 회귀(regression)예요.<br>산다·안 산다처럼 종류 중 하나면 분류(classification)예요. 종류를 0·1로 적어도 분류예요.<br><code>nunique()</code>는 열에 서로 다른 값이 몇 종류인지 세요.</p><p>자, 질문은 회원이 다음 달에 살지 말지예요.<br>먼저 실행해서 amount의 값 종류 수와 값별 행 수를 보세요.<br>target을 <code>&#x27;bought&#x27;</code>로 바꾸고 다시 실행하세요.<br>두 결과를 비교해요. 0과 1 두 종류뿐이면 분류 타깃이에요.</p>"
+    },
+    {
+      "id": "pick-y",
+      "title": "정답 y는 열 하나로 꺼내요",
+      "goal": "정답 y는 타깃 열 하나예요. 행마다 정답이 하나씩 있죠.\n`df[target]`처럼 대괄호 한 겹이면 Series가 나와요.\n`df[[target]]`처럼 두 겹이면 열이 하나뿐인 표(DataFrame)예요.\n\n이번엔 다음 달 구매 금액을 맞히는 회귀 문제예요.\n먼저 실행해서 y의 크기(shape)와 앞의 세 행을 보세요. 크기에 숫자가 둘이죠?\ny 줄의 대괄호를 한 겹으로 바꾸고 다시 실행하세요.\n크기에 행 수만 남았는지 봐요. 맨 아래 Name은 꺼낸 열 이름이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 맞힐 열(타깃)의 이름이에요.\ntarget = 'amount'\n# 정답 y로 타깃 열을 꺼내요.\ny = df[[target]]\n# y의 크기(shape)예요. (행 수, 열 수) 순서예요.\n# Series면 열 수 없이 (행 수,)처럼 숫자 하나만 나와요.\nprint(y.shape)\n# 앞의 세 행을 봐요.\nprint(y.head(3))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 맞힐 열(타깃)의 이름이에요.\ntarget = 'amount'\n# 정답 y로 타깃 열을 꺼내요.\ny = df[target]\n# y의 크기(shape)예요. (행 수, 열 수) 순서예요.\n# Series면 열 수 없이 (행 수,)처럼 숫자 하나만 나와요.\nprint(y.shape)\n# 앞의 세 행을 봐요.\nprint(y.head(3))\n",
+      "files": {
+        "data/members.csv": "member_id,age,visits,minutes,grade,amount\n101,34,6,42.5,gold,58000\n102,27,2,12.0,bronze,15000\n103,45,0,0.0,silver,9000\n104,31,4,30.5,silver,36000\n105,52,8,55.0,gold,71000\n106,23,1,6.5,bronze,8000\n107,38,0,0.0,bronze,12000\n108,41,5,38.0,silver,44000\n109,29,3,21.5,gold,30000\n110,36,7,47.0,gold,62000\n"
+      },
+      "required": true,
+      "hints": [
+        "`y = df[target]`로 바꿔요. target에는 따옴표를 붙이지 않아요."
+      ],
+      "goal_html": "<p>정답 y는 타깃 열 하나예요. 행마다 정답이 하나씩 있죠.<br><code>df[target]</code>처럼 대괄호 한 겹이면 Series가 나와요.<br><code>df[[target]]</code>처럼 두 겹이면 열이 하나뿐인 표(DataFrame)예요.</p><p>이번엔 다음 달 구매 금액을 맞히는 회귀 문제예요.<br>먼저 실행해서 y의 크기(shape)와 앞의 세 행을 보세요. 크기에 숫자가 둘이죠?<br>y 줄의 대괄호를 한 겹으로 바꾸고 다시 실행하세요.<br>크기에 행 수만 남았는지 봐요. 맨 아래 Name은 꺼낸 열 이름이에요.</p>"
+    },
+    {
+      "id": "drop-target",
+      "title": "입력 X에서 정답 열을 빼요",
+      "goal": "입력 X는 모델이 보고 맞힐 단서 열들이에요.\n정답 열이 X에 남으면 시험지에 답을 적어 둔 셈이에요.\n`df.drop(columns=['열'])`은 그 열을 뺀 새 표를 돌려줘요. df는 그대로예요.\n\n먼저 실행해서 X의 열 이름과 두 표의 크기를 보세요.\nX 줄을 `X = df.drop(columns=['amount'])`로 바꾸세요.\n다시 실행해서 열 이름과 열 수를 비교해요.\nmember_id 열은 뒤에서 따로 다뤄요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 입력 X예요. 지금은 표 전체를 그대로 써요.\nX = df\n# X의 열 이름을 봐요. 정답 열이 남았나요?\n# Index([...])는 pandas가 이름을 담는 목록이에요. 안의 이름만 보면 돼요.\nprint(X.columns)\n# 원래 표와 X의 크기를 비교해요.\nprint(df.shape, X.shape)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 입력 X예요. 지금은 표 전체를 그대로 써요.\nX = df.drop(columns=['amount'])\n# X의 열 이름을 봐요. 정답 열이 남았나요?\n# Index([...])는 pandas가 이름을 담는 목록이에요. 안의 이름만 보면 돼요.\nprint(X.columns)\n# 원래 표와 X의 크기를 비교해요.\nprint(df.shape, X.shape)\n",
+      "files": {
+        "data/members.csv": "member_id,age,visits,minutes,grade,amount\n101,34,6,42.5,gold,58000\n102,27,2,12.0,bronze,15000\n103,45,0,0.0,silver,9000\n104,31,4,30.5,silver,36000\n105,52,8,55.0,gold,71000\n106,23,1,6.5,bronze,8000\n107,38,0,0.0,bronze,12000\n108,41,5,38.0,silver,44000\n109,29,3,21.5,gold,30000\n110,36,7,47.0,gold,62000\n"
+      },
+      "required": true,
+      "hints": [
+        "`X = df.drop(columns=['amount'])`로 바꿔요."
+      ],
+      "goal_html": "<p>입력 X는 모델이 보고 맞힐 단서 열들이에요.<br>정답 열이 X에 남으면 시험지에 답을 적어 둔 셈이에요.<br><code>df.drop(columns=[&#x27;열&#x27;])</code>은 그 열을 뺀 새 표를 돌려줘요. df는 그대로예요.</p><p>먼저 실행해서 X의 열 이름과 두 표의 크기를 보세요.<br>X 줄을 <code>X = df.drop(columns=[&#x27;amount&#x27;])</code>로 바꾸세요.<br>다시 실행해서 열 이름과 열 수를 비교해요.<br>member_id 열은 뒤에서 따로 다뤄요.</p>"
+    },
+    {
+      "id": "drop-axis",
+      "title": "drop에게 열이라고 알려 줘요",
+      "goal": "표에는 두 방향(축, axis)이 있어요. axis=0은 행, axis=1은 열이에요.\ndrop은 따로 말하지 않으면 표 왼쪽의 행 이름(인덱스)에서 찾아요.\n그래서 열을 뺄 땐 `axis=1`이나 `columns=`를 넣어요.\n\n먼저 실행해서 오류의 마지막 줄을 읽으세요.\n`not found in axis`는 그 축에서 이름을 못 찾았다는 뜻이에요.\ndrop 괄호 안 `'amount'` 뒤에 `, axis=1`을 넣으세요.\n다시 실행해서 X의 열 이름을 확인해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 정답 열을 빼서 입력 X를 만들어요.\nX = df.drop('amount')\n# X의 열 이름을 확인해요. 열 이름도 Index([...]) 목록에 담겨 나와요.\nprint(X.columns)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 정답 열을 빼서 입력 X를 만들어요.\nX = df.drop('amount', axis=1)\n# X의 열 이름을 확인해요. 열 이름도 Index([...]) 목록에 담겨 나와요.\nprint(X.columns)\n",
+      "files": {
+        "data/members.csv": "member_id,age,visits,minutes,grade,amount\n101,34,6,42.5,gold,58000\n102,27,2,12.0,bronze,15000\n103,45,0,0.0,silver,9000\n104,31,4,30.5,silver,36000\n105,52,8,55.0,gold,71000\n106,23,1,6.5,bronze,8000\n107,38,0,0.0,bronze,12000\n108,41,5,38.0,silver,44000\n109,29,3,21.5,gold,30000\n110,36,7,47.0,gold,62000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.drop('amount', axis=1)`로 바꿔요. `columns=['amount']`도 돼요."
+      ],
+      "goal_html": "<p>표에는 두 방향(축, axis)이 있어요. axis=0은 행, axis=1은 열이에요.<br>drop은 따로 말하지 않으면 표 왼쪽의 행 이름(인덱스)에서 찾아요.<br>그래서 열을 뺄 땐 <code>axis=1</code>이나 <code>columns=</code>를 넣어요.</p><p>먼저 실행해서 오류의 마지막 줄을 읽으세요.<br><code>not found in axis</code>는 그 축에서 이름을 못 찾았다는 뜻이에요.<br>drop 괄호 안 <code>&#x27;amount&#x27;</code> 뒤에 <code>, axis=1</code>을 넣으세요.<br>다시 실행해서 X의 열 이름을 확인해요.</p>"
+    },
+    {
+      "id": "drop-id",
+      "title": "id와 정답을 함께 빼요",
+      "goal": "id는 회원마다 붙인 번호표예요. 숫자로 적혀도 크기에 뜻이 없어요.\n맞힐 값과 상관없는 열이라 입력 X에서 빼요.\n`columns=` 목록에 이름을 여럿 넣으면 한 번에 빠져요.\n\n먼저 실행해서 X에 남은 열과 앞의 세 행을 보세요.\ndrop 목록의 `'amount'` 앞에 `'member_id', `를 넣으세요.\n다시 실행해서 열 이름과 앞의 세 행을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 빼고 싶은 열 이름을 목록에 넣어요.\nX = df.drop(columns=['amount'])\n# X의 열 이름과 앞의 세 행을 확인해요.\nprint(X.columns)\nprint(X.head(3))\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 빼고 싶은 열 이름을 목록에 넣어요.\nX = df.drop(columns=['member_id', 'amount'])\n# X의 열 이름과 앞의 세 행을 확인해요.\nprint(X.columns)\nprint(X.head(3))\n",
+      "files": {
+        "data/members.csv": "member_id,age,visits,minutes,grade,amount\n101,34,6,42.5,gold,58000\n102,27,2,12.0,bronze,15000\n103,45,0,0.0,silver,9000\n104,31,4,30.5,silver,36000\n105,52,8,55.0,gold,71000\n106,23,1,6.5,bronze,8000\n107,38,0,0.0,bronze,12000\n108,41,5,38.0,silver,44000\n109,29,3,21.5,gold,30000\n110,36,7,47.0,gold,62000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.drop(columns=['member_id', 'amount'])`로 바꿔요."
+      ],
+      "goal_html": "<p>id는 회원마다 붙인 번호표예요. 숫자로 적혀도 크기에 뜻이 없어요.<br>맞힐 값과 상관없는 열이라 입력 X에서 빼요.<br><code>columns=</code> 목록에 이름을 여럿 넣으면 한 번에 빠져요.</p><p>먼저 실행해서 X에 남은 열과 앞의 세 행을 보세요.<br>drop 목록의 <code>&#x27;amount&#x27;</code> 앞에 <code>&#x27;member_id&#x27;, </code>를 넣으세요.<br>다시 실행해서 열 이름과 앞의 세 행을 비교해요.</p>"
+    },
+    {
+      "id": "numeric-inputs",
+      "title": "숫자 입력 열만 골라요",
+      "goal": "모델은 숫자만 계산해요. 글자 열을 숫자로 바꾸는 법은 뒤에서 배워요.\n`select_dtypes(include='number')`는 숫자 자료형 열만 남겨요.\n정수(int64) 열과 소수(float64) 열이 모두 남아요.\n\n먼저 실행해서 X의 열마다 자료형을 보세요. grade는 글자(str)예요.\nX 줄 끝에 `.select_dtypes(include='number')`를 붙이세요.\n다시 실행해서 남은 열과 열 수를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# id와 타깃을 빼서 입력 X를 만들어요.\nX = df.drop(columns=['member_id', 'amount'])\n# X의 열마다 자료형을 봐요. 맨 아래 dtype 줄은 이 목록 자체의 자료형이에요.\nprint(X.dtypes)\n# 남은 열 수를 확인해요. shape[1]은 크기의 두 번째 숫자, 열 수예요.\nprint(X.shape[1])\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# id와 타깃을 빼서 입력 X를 만들어요.\nX = df.drop(columns=['member_id', 'amount']).select_dtypes(include='number')\n# X의 열마다 자료형을 봐요. 맨 아래 dtype 줄은 이 목록 자체의 자료형이에요.\nprint(X.dtypes)\n# 남은 열 수를 확인해요. shape[1]은 크기의 두 번째 숫자, 열 수예요.\nprint(X.shape[1])\n",
+      "files": {
+        "data/members.csv": "member_id,age,visits,minutes,grade,amount\n101,34,6,42.5,gold,58000\n102,27,2,12.0,bronze,15000\n103,45,0,0.0,silver,9000\n104,31,4,30.5,silver,36000\n105,52,8,55.0,gold,71000\n106,23,1,6.5,bronze,8000\n107,38,0,0.0,bronze,12000\n108,41,5,38.0,silver,44000\n109,29,3,21.5,gold,30000\n110,36,7,47.0,gold,62000\n"
+      },
+      "required": true,
+      "hints": [
+        "X 줄 끝에 `.select_dtypes(include='number')`를 붙여요."
+      ],
+      "goal_html": "<p>모델은 숫자만 계산해요. 글자 열을 숫자로 바꾸는 법은 뒤에서 배워요.<br><code>select_dtypes(include=&#x27;number&#x27;)</code>는 숫자 자료형 열만 남겨요.<br>정수(int64) 열과 소수(float64) 열이 모두 남아요.</p><p>먼저 실행해서 X의 열마다 자료형을 보세요. grade는 글자(str)예요.<br>X 줄 끝에 <code>.select_dtypes(include=&#x27;number&#x27;)</code>를 붙이세요.<br>다시 실행해서 남은 열과 열 수를 비교해요.</p>"
+    },
+    {
+      "id": "leak-column",
+      "title": "결과로 생기는 열은 빼요",
+      "goal": "예측할 때는 모르는 정보가 X에 섞이는 걸 누수(leakage)라고 해요.\n포인트는 구매가 끝나야 쌓여요. 금액을 맞히는 데 넣으면 답을 엿보는 셈이죠.\n타깃과의 상관계수가 1에 아주 가까운 열은 누수를 의심해요.\n\n먼저 실행해서 열마다 amount와의 상관계수를 보세요.\namount 자신은 1이에요. 그다음으로 1에 가까운 열을 찾아보세요.\n그 열 이름을 drop 목록 끝에 더하세요.\n다시 실행해서 X의 열 이름을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members_points.csv')\n# amount는 다음 달 구매 금액(원)이에요.\n# points는 다음 달 구매로 쌓인 포인트예요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 숫자 열끼리 상관계수 표를 만들어요.\ntable = df[['age', 'visits', 'minutes', 'points', 'amount']].corr()\n# amount 열만 꺼내 소수 둘째 자리까지 봐요.\nprint(table['amount'].round(2))\n# id와 타깃을 빼서 입력 X를 만들어요.\nX = df.drop(columns=['member_id', 'amount'])\nprint(X.columns)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members_points.csv')\n# amount는 다음 달 구매 금액(원)이에요.\n# points는 다음 달 구매로 쌓인 포인트예요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# 숫자 열끼리 상관계수 표를 만들어요.\ntable = df[['age', 'visits', 'minutes', 'points', 'amount']].corr()\n# amount 열만 꺼내 소수 둘째 자리까지 봐요.\nprint(table['amount'].round(2))\n# id와 타깃을 빼서 입력 X를 만들어요.\nX = df.drop(columns=['member_id', 'amount', 'points'])\nprint(X.columns)\n",
+      "files": {
+        "data/members_points.csv": "member_id,age,visits,minutes,grade,points,amount\n501,33,4,25.5,silver,420,42000\n502,46,2,40.0,gold,850,75000\n503,28,6,18.5,bronze,180,18000\n504,39,1,9.0,silver,610,61000\n505,52,5,33.0,gold,380,28000\n506,24,3,52.5,bronze,330,33000\n507,41,7,22.0,silver,240,24000\n508,35,2,14.5,bronze,560,56000\n509,30,8,47.0,gold,990,89000\n510,44,0,0.0,silver,50,5000\n"
+      },
+      "required": true,
+      "hints": [
+        "`df.drop(columns=['member_id', 'amount', 'points'])`로 바꿔요."
+      ],
+      "goal_html": "<p>예측할 때는 모르는 정보가 X에 섞이는 걸 누수(leakage)라고 해요.<br>포인트는 구매가 끝나야 쌓여요. 금액을 맞히는 데 넣으면 답을 엿보는 셈이죠.<br>타깃과의 상관계수가 1에 아주 가까운 열은 누수를 의심해요.</p><p>먼저 실행해서 열마다 amount와의 상관계수를 보세요.<br>amount 자신은 1이에요. 그다음으로 1에 가까운 열을 찾아보세요.<br>그 열 이름을 drop 목록 끝에 더하세요.<br>다시 실행해서 X의 열 이름을 비교해요.</p>"
+    },
+    {
+      "id": "same-rows",
+      "title": "X와 y는 같은 행끼리 짝이에요",
+      "goal": "X의 한 행은 회원 한 명의 단서, y의 같은 행은 그 회원의 정답이에요.\n그래서 행을 고르면 X와 y에 같은 조건을 함께 써요.\n행 수가 다르면 짝이 어긋난 거예요. `shape[0]`으로 비교해요.\n\n지난달 방문이 0인 회원은 빼려고 해요.\n먼저 실행해서 두 행 수와 y 왼쪽의 번호(인덱스)를 보세요.\n`X = X[keep]` 아래에 `y = y[keep]`를 넣으세요.\n다시 실행해서 두 행 수와 남은 번호를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 지난달 방문이 1번 이상인 행만 True예요.\nkeep = df['visits'] > 0\n# 정답 y와 입력 X를 나눠요.\ny = df['amount']\nX = df.drop(columns=['member_id', 'amount'])\n# keep이 True인 행만 남겨요.\nX = X[keep]\n# 두 행 수를 비교해요. 같아야 짝이 맞아요.\nprint(X.shape[0], y.shape[0])\n# 남은 정답과 왼쪽 번호를 확인해요.\nprint(y)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# visits는 지난달 방문 수, minutes는 지난달 머문 시간(분)이에요.\n# amount는 다음 달 구매 금액(원)이에요.\n\n# 지난달 방문이 1번 이상인 행만 True예요.\nkeep = df['visits'] > 0\n# 정답 y와 입력 X를 나눠요.\ny = df['amount']\nX = df.drop(columns=['member_id', 'amount'])\n# keep이 True인 행만 남겨요.\nX = X[keep]\ny = y[keep]\n# 두 행 수를 비교해요. 같아야 짝이 맞아요.\nprint(X.shape[0], y.shape[0])\n# 남은 정답과 왼쪽 번호를 확인해요.\nprint(y)\n",
+      "files": {
+        "data/members.csv": "member_id,age,visits,minutes,grade,amount\n101,34,6,42.5,gold,58000\n102,27,2,12.0,bronze,15000\n103,45,0,0.0,silver,9000\n104,31,4,30.5,silver,36000\n105,52,8,55.0,gold,71000\n106,23,1,6.5,bronze,8000\n107,38,0,0.0,bronze,12000\n108,41,5,38.0,silver,44000\n109,29,3,21.5,gold,30000\n110,36,7,47.0,gold,62000\n"
+      },
+      "required": true,
+      "hints": [
+        "`X = X[keep]` 바로 아래에 `y = y[keep]`를 넣어요."
+      ],
+      "goal_html": "<p>X의 한 행은 회원 한 명의 단서, y의 같은 행은 그 회원의 정답이에요.<br>그래서 행을 고르면 X와 y에 같은 조건을 함께 써요.<br>행 수가 다르면 짝이 어긋난 거예요. <code>shape[0]</code>으로 비교해요.</p><p>지난달 방문이 0인 회원은 빼려고 해요.<br>먼저 실행해서 두 행 수와 y 왼쪽의 번호(인덱스)를 보세요.<br><code>X = X[keep]</code> 아래에 <code>y = y[keep]</code>를 넣으세요.<br>다시 실행해서 두 행 수와 남은 번호를 비교해요.</p>"
+    },
+    {
+      "id": "buy-inputs",
+      "title": "도전 · 구매 여부를 맞힐 입력 X",
+      "goal": "여러 열 빼기, 누수 빼기, 숫자 열만 고르기를 함께 써요.\nid와 타깃도 숫자라서 숫자 열만 고르면 X에 남아요.\n\n질문은 회원이 다음 달에 살지 말지예요. y는 이미 맞아요.\nX에는 지난달까지 알 수 있는 숫자 열만 남기세요.\n준비 코드는 숫자 열을 다 골랐어요. 섞인 열을 찾아 고치세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/next_month.csv')\n# amount는 다음 달 구매 금액(원)이에요. 안 샀으면 0이에요.\n# bought는 다음 달에 샀으면 1, 안 샀으면 0이에요.\n\n# 질문: 회원이 다음 달에 살까요, 안 살까요?\n# 정답 y는 구매 여부예요.\ny = df['bought']\n# 숫자 열을 모두 골라 입력 X로 써요.\nX = df.select_dtypes(include='number')\n# X의 열 이름과 두 행 수를 확인해요.\nprint(X.columns)\nprint(X.shape[0], y.shape[0])\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/next_month.csv')\n# amount는 다음 달 구매 금액(원)이에요. 안 샀으면 0이에요.\n# bought는 다음 달에 샀으면 1, 안 샀으면 0이에요.\n\n# 질문: 회원이 다음 달에 살까요, 안 살까요?\n# 정답 y는 구매 여부예요.\ny = df['bought']\n# 숫자 열을 모두 골라 입력 X로 써요.\nX = df.drop(columns=['member_id', 'amount', 'bought']).select_dtypes(include='number')\n# X의 열 이름과 두 행 수를 확인해요.\nprint(X.columns)\nprint(X.shape[0], y.shape[0])\n",
+      "files": {
+        "data/next_month.csv": "member_id,age,visits,minutes,grade,amount,bought\n601,31,5,34.5,silver,41000,1\n602,26,1,6.0,bronze,0,0\n603,47,7,51.0,gold,66000,1\n604,38,0,0.0,silver,0,0\n605,29,3,22.5,bronze,18000,1\n606,55,2,11.5,gold,0,0\n607,34,6,40.0,silver,52000,1\n608,23,4,27.0,bronze,23000,1\n609,42,1,8.5,silver,0,0\n610,36,8,57.5,gold,73000,1\n"
+      },
+      "required": false,
+      "hints": [
+        "id, 타깃, 다음 달에야 아는 금액까지 세 열을 빼요.",
+        "`df.drop(columns=['member_id', 'amount', 'bought'])` 뒤에 select_dtypes를 붙여요."
+      ],
+      "goal_html": "<p>여러 열 빼기, 누수 빼기, 숫자 열만 고르기를 함께 써요.<br>id와 타깃도 숫자라서 숫자 열만 고르면 X에 남아요.</p><p>질문은 회원이 다음 달에 살지 말지예요. y는 이미 맞아요.<br>X에는 지난달까지 알 수 있는 숫자 열만 남기세요.<br>준비 코드는 숫자 열을 다 골랐어요. 섞인 열을 찾아 고치세요.</p>"
+    },
+    {
+      "id": "blank-rows",
+      "title": "도전 · 빈칸 행을 지우고 X와 y 나누기",
+      "goal": "`dropna()`는 빈칸이 있는 행을 지워요. X와 y는 같은 행끼리 짝이에요.\n정답이 빈 행은 맞힐 답이 없어서 학습에 못 써요.\n\n금액을 맞히는 X와 y를 만들어요. 나이나 금액이 빈 회원은 빼요.\n지금은 X에서만 빈칸 행을 지워 두 행 수가 달라요.\n고칠 곳은 직접 찾아보세요. 행 수와 X·y의 왼쪽 번호를 함께 확인해요.\n행 수가 같아도 번호가 다르면 다른 회원끼리 짝지은 거예요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members_blank.csv')\n# amount는 다음 달 구매 금액(원)이에요.\n# age와 amount에 빈칸이 섞여 있어요.\n\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# id와 타깃을 빼서 입력 X를 만들어요.\nX = df.drop(columns=['member_id', 'amount'])\n# X에서 빈칸이 있는 행을 지워요.\nX = X.dropna()\n# 두 행 수를 비교해요. 수가 같아도 짝이 맞는지는 번호로 봐요.\nprint(X.shape[0], y.shape[0])\n# X에 남은 행과 왼쪽 번호예요.\nprint(X)\n# y에 남은 정답과 왼쪽 번호예요. X와 번호가 하나하나 같아야 짝이 맞아요.\n# NaN은 빈칸이에요. 빈칸이 섞였던 열은 소수(float64)로 읽혀요.\nprint(y)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 고객 자료가 아니에요.\ndf = pd.read_csv('data/members_blank.csv')\n# amount는 다음 달 구매 금액(원)이에요.\n# age와 amount에 빈칸이 섞여 있어요.\n\n# 빈칸이 있는 행을 df에서 먼저 지워요.\ndf = df.dropna()\n# 타깃은 amount예요. 정답 y로 꺼내요.\ny = df['amount']\n# id와 타깃을 빼서 입력 X를 만들어요.\nX = df.drop(columns=['member_id', 'amount'])\n# 두 행 수를 비교해요. 수가 같아도 짝이 맞는지는 번호로 봐요.\nprint(X.shape[0], y.shape[0])\n# X에 남은 행과 왼쪽 번호예요.\nprint(X)\n# y에 남은 정답과 왼쪽 번호예요. X와 번호가 하나하나 같아야 짝이 맞아요.\n# NaN은 빈칸이에요. 빈칸이 섞였던 열은 소수(float64)로 읽혀요.\nprint(y)\n",
+      "files": {
+        "data/members_blank.csv": "member_id,age,visits,minutes,grade,amount\n121,32,5,37.0,silver,46000\n122,26,2,11.5,bronze,14000\n123,48,6,44.5,gold,63000\n124,,3,20.0,silver,27000\n125,37,1,6.5,bronze,9000\n126,55,7,52.0,gold,78000\n127,29,4,26.5,bronze,31000\n128,41,2,13.0,silver,\n129,34,8,58.5,gold,85000\n130,23,3,18.0,bronze,22000\n"
+      },
+      "required": false,
+      "hints": [
+        "dropna를 df에 먼저 쓰고 나서 X와 y를 나눠요.",
+        "`df = df.dropna()`를 '타깃은 amount' 주석보다 위에 넣어요. X의 dropna 줄과 그 주석은 지워요."
+      ],
+      "goal_html": "<p><code>dropna()</code>는 빈칸이 있는 행을 지워요. X와 y는 같은 행끼리 짝이에요.<br>정답이 빈 행은 맞힐 답이 없어서 학습에 못 써요.</p><p>금액을 맞히는 X와 y를 만들어요. 나이나 금액이 빈 회원은 빼요.<br>지금은 X에서만 빈칸 행을 지워 두 행 수가 달라요.<br>고칠 곳은 직접 찾아보세요. 행 수와 X·y의 왼쪽 번호를 함께 확인해요.<br>행 수가 같아도 번호가 다르면 다른 회원끼리 짝지은 거예요.</p>"
+    }
+  ]
+}

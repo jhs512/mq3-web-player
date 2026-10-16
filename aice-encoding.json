@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "id": "aice-encoding",
+  "revision": "v1.0.0",
+  "title": "범주를 모델 입력으로 바꾸기",
+  "description": "글자로 된 범주를 모델이 계산하는 숫자 열로 바꿔요. 훈련과 테스트의 열 구성도 똑같이 맞춰요. 필수 문제 7개와 선택 도전 2개예요.",
+  "sources": [
+    "https://aice.study/info/aice/asso",
+    "https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html",
+    "https://scikit-learn.org/stable/modules/preprocessing.html#encoding-categorical-features"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "onehot-first",
+      "title": "글자 열을 0과 1 열로 나눠요",
+      "goal": "channel의 app, web 같은 종류를 범주(category)라고 해요. 모델은 이런 글자를 계산하지 못해요.\n원핫 인코딩(one-hot)은 범주마다 열을 하나씩 만들어요. 그 행의 범주 열만 1, 나머지는 0이에요.\n`pd.get_dummies(표, columns=[열])`가 그 일을 해요.\n\n자, 먼저 실행해서 원핫 전후의 열 수를 비교하세요.\nchannel 대신 channel_app 같은 열이 생겼죠? 값은 True(1)/False(0)로 보여요.\npandas 버전마다 0과 1로 보이기도 해요. 그래서 형식을 정해 줘요.\n`columns=['channel']` 뒤에 `, dtype=int`를 넣고 다시 실행해 값을 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 정답 renew를 빼고 입력 표 X를 만들어요.\nX = df.drop(columns=['renew'])\n# 원핫 전의 크기와 열 이름이에요.\nprint(X.shape)\nprint(X.columns)\n# channel 열만 원핫해서 다시 담아요. region과 grade는 다음 문제에서 다뤄요.\n# dtype=int를 주면 값이 0과 1로 나와요.\nX = pd.get_dummies(X, columns=['channel'])\n# 원핫 뒤의 크기와 표예요. 열이 늘었는지 봐요.\nprint(X.shape)\nprint(X)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 정답 renew를 빼고 입력 표 X를 만들어요.\nX = df.drop(columns=['renew'])\n# 원핫 전의 크기와 열 이름이에요.\nprint(X.shape)\nprint(X.columns)\n# channel 열만 원핫해서 다시 담아요. region과 grade는 다음 문제에서 다뤄요.\n# dtype=int를 주면 값이 0과 1로 나와요.\nX = pd.get_dummies(X, columns=['channel'], dtype=int)\n# 원핫 뒤의 크기와 표예요. 열이 늘었는지 봐요.\nprint(X.shape)\nprint(X)\n",
+      "files": {
+        "data/members.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nwest,app,high,18,yes\nsouth,app,mid,9,no\neast,web,mid,14,no\nnorth,store,low,2,no\n"
+      },
+      "required": true,
+      "hints": [
+        "`pd.get_dummies(X, columns=['channel'], dtype=int)`로 바꿔요."
+      ],
+      "goal_html": "<p>channel의 app, web 같은 종류를 범주(category)라고 해요. 모델은 이런 글자를 계산하지 못해요.<br>원핫 인코딩(one-hot)은 범주마다 열을 하나씩 만들어요. 그 행의 범주 열만 1, 나머지는 0이에요.<br><code>pd.get_dummies(표, columns=[열])</code>가 그 일을 해요.</p><p>자, 먼저 실행해서 원핫 전후의 열 수를 비교하세요.<br>channel 대신 channel_app 같은 열이 생겼죠? 값은 True(1)/False(0)로 보여요.<br>pandas 버전마다 0과 1로 보이기도 해요. 그래서 형식을 정해 줘요.<br><code>columns=[&#x27;channel&#x27;]</code> 뒤에 <code>, dtype=int</code>를 넣고 다시 실행해 값을 봐요.</p>"
+    },
+    {
+      "id": "onehot-columns",
+      "title": "원핫할 열만 골라요",
+      "goal": "`columns=`를 비우면 글자 열을 모두 원핫해요.\n순서가 있는 grade도 0/1 열 세 개로 쪼개져요. 세 열은 서로 대등해서 low < mid < high 순서가 사라져요.\n그래서 원핫할 열만 `columns=`에 적어요.\n\n먼저 실행해서 grade_로 시작하는 열을 찾아보세요. low, mid, high 순서로 놓였나요?\n`dtype=int` 앞에 `columns=['region', 'channel'], `를 넣으세요.\n다시 실행해서 열 목록에 grade가 그대로 남았는지 봐요.\ngrade는 뒤 문제에서 순서대로 번호를 줘요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 정답 renew를 빼고 입력 표 X를 만들어요.\nX = df.drop(columns=['renew'])\n# columns=에 적은 열만 원핫해요. 비우면 글자 열을 모두 해요.\nX = pd.get_dummies(X, dtype=int)\n# 원핫 뒤의 열 이름과 크기예요.\nprint(X.columns)\nprint(X.shape)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 정답 renew를 빼고 입력 표 X를 만들어요.\nX = df.drop(columns=['renew'])\n# columns=에 적은 열만 원핫해요. 비우면 글자 열을 모두 해요.\nX = pd.get_dummies(X, columns=['region', 'channel'], dtype=int)\n# 원핫 뒤의 열 이름과 크기예요.\nprint(X.columns)\nprint(X.shape)\n",
+      "files": {
+        "data/members.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nwest,app,high,18,yes\nsouth,app,mid,9,no\neast,web,mid,14,no\nnorth,store,low,2,no\n"
+      },
+      "required": true,
+      "hints": [
+        "`pd.get_dummies(X, columns=['region', 'channel'], dtype=int)`로 바꿔요."
+      ],
+      "goal_html": "<p><code>columns=</code>를 비우면 글자 열을 모두 원핫해요.<br>순서가 있는 grade도 0/1 열 세 개로 쪼개져요. 세 열은 서로 대등해서 low &lt; mid &lt; high 순서가 사라져요.<br>그래서 원핫할 열만 <code>columns=</code>에 적어요.</p><p>먼저 실행해서 grade_로 시작하는 열을 찾아보세요. low, mid, high 순서로 놓였나요?<br><code>dtype=int</code> 앞에 <code>columns=[&#x27;region&#x27;, &#x27;channel&#x27;], </code>를 넣으세요.<br>다시 실행해서 열 목록에 grade가 그대로 남았는지 봐요.<br>grade는 뒤 문제에서 순서대로 번호를 줘요.</p>"
+    },
+    {
+      "id": "label-target",
+      "title": "글자 정답을 0과 1로 바꿔요",
+      "goal": "라벨 인코딩(label encoding)은 종류마다 번호를 하나씩 줘요.\n`LabelEncoder`의 `fit_transform`은 종류를 배우고(fit) 번호로 바꿔요(transform).\n번호는 abc 순서로 붙고, 배운 순서는 `classes_`에 있어요.\n\n먼저 실행해서 y와 오류를 보세요. 글자로는 평균을 못 내요.\n`y = df['renew']`를 `y = le.fit_transform(df['renew'])`로 바꾸세요.\n다시 실행하면 y가 행 번호 없이 값만 늘어선 배열(array)로 나와요. 0과 1을 `classes_` 순서와 견줘 보세요.\nLabelEncoder는 이렇게 정답 y에 쓰는 도구예요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.preprocessing import LabelEncoder\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 라벨 인코더(LabelEncoder)를 하나 만들어 le에 담아요.\nle = LabelEncoder()\n# renew 열(yes/no)로 정답 y를 만들어요.\ny = df['renew']\nprint(y)\n# y의 평균이에요. 0과 1이면 1의 비율이 돼요.\nprint(y.mean())\n# 인코더가 배운 종류예요. 이 순서대로 0, 1 번호예요.\nprint(le.classes_)\n",
+      "solution": "import pandas as pd\nfrom sklearn.preprocessing import LabelEncoder\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 라벨 인코더(LabelEncoder)를 하나 만들어 le에 담아요.\nle = LabelEncoder()\n# renew 열(yes/no)로 정답 y를 만들어요.\ny = le.fit_transform(df['renew'])\nprint(y)\n# y의 평균이에요. 0과 1이면 1의 비율이 돼요.\nprint(y.mean())\n# 인코더가 배운 종류예요. 이 순서대로 0, 1 번호예요.\nprint(le.classes_)\n",
+      "files": {
+        "data/members.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nwest,app,high,18,yes\nsouth,app,mid,9,no\neast,web,mid,14,no\nnorth,store,low,2,no\n"
+      },
+      "required": true,
+      "hints": [
+        "`y = le.fit_transform(df['renew'])`로 바꿔요."
+      ],
+      "goal_html": "<p>라벨 인코딩(label encoding)은 종류마다 번호를 하나씩 줘요.<br><code>LabelEncoder</code>의 <code>fit_transform</code>은 종류를 배우고(fit) 번호로 바꿔요(transform).<br>번호는 abc 순서로 붙고, 배운 순서는 <code>classes_</code>에 있어요.</p><p>먼저 실행해서 y와 오류를 보세요. 글자로는 평균을 못 내요.<br><code>y = df[&#x27;renew&#x27;]</code>를 <code>y = le.fit_transform(df[&#x27;renew&#x27;])</code>로 바꾸세요.<br>다시 실행하면 y가 행 번호 없이 값만 늘어선 배열(array)로 나와요. 0과 1을 <code>classes_</code> 순서와 견줘 보세요.<br>LabelEncoder는 이렇게 정답 y에 쓰는 도구예요.</p>"
+    },
+    {
+      "id": "ordinal-map",
+      "title": "순서가 있는 등급은 직접 번호를 줘요",
+      "goal": "순서가 있는 범주는 번호도 그 순서를 따라야 해요.\n앞에서 배운 딕셔너리에 '값: 번호' 짝을 적어요.\n`map(딕셔너리)`는 열의 값을 딕셔너리의 번호로 바꿔요.\n\n먼저 실행해서 grade와 abc_code를 나란히 보세요. 순서가 맞나요?\ngrade_code 줄의 `df['abc_code']`를 아래 코드로 바꾸세요.\n`df['grade'].map({'low': 0, 'mid': 1, 'high': 2})`\n다시 실행해서 grade_code가 등급 순서대로 커지는지 봐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.preprocessing import LabelEncoder\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 등급은 low < mid < high 순서가 있어요.\nle = LabelEncoder()\n# 라벨 인코더는 abc 순서로 번호를 줘요.\ndf['abc_code'] = le.fit_transform(df['grade'])\nprint(le.classes_)\n# 모델에 넣을 등급 번호예요.\ndf['grade_code'] = df['abc_code']\n# 등급과 두 번호를 나란히 봐요.\nprint(df[['grade', 'abc_code', 'grade_code']])\n",
+      "solution": "import pandas as pd\nfrom sklearn.preprocessing import LabelEncoder\n\n# 직접 만든 회원 자료예요. 실제 회원 자료가 아니에요.\ndf = pd.read_csv('data/members.csv')\n# 등급은 low < mid < high 순서가 있어요.\nle = LabelEncoder()\n# 라벨 인코더는 abc 순서로 번호를 줘요.\ndf['abc_code'] = le.fit_transform(df['grade'])\nprint(le.classes_)\n# 모델에 넣을 등급 번호예요.\ndf['grade_code'] = df['grade'].map({'low': 0, 'mid': 1, 'high': 2})\n# 등급과 두 번호를 나란히 봐요.\nprint(df[['grade', 'abc_code', 'grade_code']])\n",
+      "files": {
+        "data/members.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nwest,app,high,18,yes\nsouth,app,mid,9,no\neast,web,mid,14,no\nnorth,store,low,2,no\n"
+      },
+      "required": true,
+      "hints": [
+        "`df['grade_code'] = df['grade'].map({'low': 0, 'mid': 1, 'high': 2})`로 바꿔요."
+      ],
+      "goal_html": "<p>순서가 있는 범주는 번호도 그 순서를 따라야 해요.<br>앞에서 배운 딕셔너리에 &#x27;값: 번호&#x27; 짝을 적어요.<br><code>map(딕셔너리)</code>는 열의 값을 딕셔너리의 번호로 바꿔요.</p><p>먼저 실행해서 grade와 abc_code를 나란히 보세요. 순서가 맞나요?<br>grade_code 줄의 <code>df[&#x27;abc_code&#x27;]</code>를 아래 코드로 바꾸세요.<br><code>df[&#x27;grade&#x27;].map({&#x27;low&#x27;: 0, &#x27;mid&#x27;: 1, &#x27;high&#x27;: 2})</code><br>다시 실행해서 grade_code가 등급 순서대로 커지는지 봐요.</p>"
+    },
+    {
+      "id": "align-columns",
+      "title": "테스트 열을 훈련 열에 맞춰요",
+      "goal": "훈련과 테스트에 나온 범주가 다르면, 따로 원핫한 열 구성도 달라져요.\n`reindex(columns=훈련 열, fill_value=0)`은 열을 훈련과 똑같이 맞춰요.\n없던 열은 0으로 채우고, 훈련에 없는 열은 버려요.\n\n먼저 실행해서 두 열 이름 목록을 견줘 보세요.\n맞추는 주석 아래에 다음 줄을 넣으세요.\n`X_test = X_test.reindex(columns=X_train.columns, fill_value=0)`\n다시 실행해서 테스트에 없던 열과 테스트에만 있던 열을 봐요. 테스트에만 있던 범주의 행은 channel 칸이 모두 0이 돼요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 입력은 visits와 channel이에요. 두 자료를 따로 원핫해요.\nX_train = pd.get_dummies(train[['visits', 'channel']], columns=['channel'], dtype=int)\nX_test = pd.get_dummies(test[['visits', 'channel']], columns=['channel'], dtype=int)\n# 두 표의 열 이름을 견줘 봐요.\nprint(X_train.columns)\nprint(X_test.columns)\n# 이 아래에서 테스트 열을 훈련 열에 맞춰요.\n# 테스트 표와 열 이름을 다시 확인해요.\nprint(X_test)\nprint(X_test.columns)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 입력은 visits와 channel이에요. 두 자료를 따로 원핫해요.\nX_train = pd.get_dummies(train[['visits', 'channel']], columns=['channel'], dtype=int)\nX_test = pd.get_dummies(test[['visits', 'channel']], columns=['channel'], dtype=int)\n# 두 표의 열 이름을 견줘 봐요.\nprint(X_train.columns)\nprint(X_test.columns)\n# 이 아래에서 테스트 열을 훈련 열에 맞춰요.\nX_test = X_test.reindex(columns=X_train.columns, fill_value=0)\n# 테스트 표와 열 이름을 다시 확인해요.\nprint(X_test)\nprint(X_test.columns)\n",
+      "files": {
+        "data/train.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nsouth,app,high,18,yes\neast,app,mid,9,no\nnorth,store,mid,14,yes\nsouth,web,low,2,no\n",
+        "data/test.csv": "region,channel,grade,visits,renew\nnorth,app,high,16,yes\nwest,kiosk,low,4,no\nnorth,web,mid,10,no\nwest,app,low,7,yes\n"
+      },
+      "required": true,
+      "hints": [
+        "주석 아래에 `X_test = X_test.reindex(columns=X_train.columns, fill_value=0)`을 넣어요."
+      ],
+      "goal_html": "<p>훈련과 테스트에 나온 범주가 다르면, 따로 원핫한 열 구성도 달라져요.<br><code>reindex(columns=훈련 열, fill_value=0)</code>은 열을 훈련과 똑같이 맞춰요.<br>없던 열은 0으로 채우고, 훈련에 없는 열은 버려요.</p><p>먼저 실행해서 두 열 이름 목록을 견줘 보세요.<br>맞추는 주석 아래에 다음 줄을 넣으세요.<br><code>X_test = X_test.reindex(columns=X_train.columns, fill_value=0)</code><br>다시 실행해서 테스트에 없던 열과 테스트에만 있던 열을 봐요. 테스트에만 있던 범주의 행은 channel 칸이 모두 0이 돼요.</p>"
+    },
+    {
+      "id": "unknown-category",
+      "title": "처음 보는 범주가 나왔어요",
+      "goal": "`OneHotEncoder`도 원핫을 해요. fit으로 범주를 배우고 transform으로 바꿔요.\n배우지 않은 범주가 테스트에 오면 지금 설정으로는 오류가 나요.\n`handle_unknown='ignore'`를 주면 그 행은 원핫 칸이 모두 0이 돼요.\n\n먼저 실행해서 오류의 마지막 줄을 읽어 보세요.\n`OneHotEncoder(` 괄호 안 맨 앞에 `handle_unknown='ignore', `를 넣으세요.\n다시 실행해서 처음 보는 channel 행의 값을 보세요.\n배운 열 이름과 견주면 어느 칸이 어느 범주인지 보여요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.preprocessing import OneHotEncoder\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 원핫 인코더예요. 기본 결과는 0을 빼고 줄여 담은 희소(sparse) 형태예요.\n# sparse_output=False면 0까지 모두 담은 배열로 줘요.\nenc = OneHotEncoder(sparse_output=False)\n# 훈련 자료의 channel 종류를 배워요. 대괄호 두 겹은 표 모양이에요.\nenc.fit(train[['channel']])\n# 배운 열 이름이에요.\nprint(enc.get_feature_names_out())\n# 테스트 자료의 channel이에요. 행 순서를 봐 둬요.\nprint(test[['channel']])\n# 테스트 자료는 배운 대로 바꾸기만 해요.\nX_test = enc.transform(test[['channel']])\n# 1.과 0.은 소수점이 붙은 1과 0이에요.\nprint(X_test)\n",
+      "solution": "import pandas as pd\nfrom sklearn.preprocessing import OneHotEncoder\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 원핫 인코더예요. 기본 결과는 0을 빼고 줄여 담은 희소(sparse) 형태예요.\n# sparse_output=False면 0까지 모두 담은 배열로 줘요.\nenc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)\n# 훈련 자료의 channel 종류를 배워요. 대괄호 두 겹은 표 모양이에요.\nenc.fit(train[['channel']])\n# 배운 열 이름이에요.\nprint(enc.get_feature_names_out())\n# 테스트 자료의 channel이에요. 행 순서를 봐 둬요.\nprint(test[['channel']])\n# 테스트 자료는 배운 대로 바꾸기만 해요.\nX_test = enc.transform(test[['channel']])\n# 1.과 0.은 소수점이 붙은 1과 0이에요.\nprint(X_test)\n",
+      "files": {
+        "data/train.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nsouth,app,high,18,yes\neast,app,mid,9,no\nnorth,store,mid,14,yes\nsouth,web,low,2,no\n",
+        "data/test.csv": "region,channel,grade,visits,renew\nnorth,app,high,16,yes\nwest,kiosk,low,4,no\nnorth,web,mid,10,no\nwest,app,low,7,yes\n"
+      },
+      "required": true,
+      "hints": [
+        "`OneHotEncoder(handle_unknown='ignore', sparse_output=False)`로 바꿔요."
+      ],
+      "goal_html": "<p><code>OneHotEncoder</code>도 원핫을 해요. fit으로 범주를 배우고 transform으로 바꿔요.<br>배우지 않은 범주가 테스트에 오면 지금 설정으로는 오류가 나요.<br><code>handle_unknown=&#x27;ignore&#x27;</code>를 주면 그 행은 원핫 칸이 모두 0이 돼요.</p><p>먼저 실행해서 오류의 마지막 줄을 읽어 보세요.<br><code>OneHotEncoder(</code> 괄호 안 맨 앞에 <code>handle_unknown=&#x27;ignore&#x27;, </code>를 넣으세요.<br>다시 실행해서 처음 보는 channel 행의 값을 보세요.<br>배운 열 이름과 견주면 어느 칸이 어느 범주인지 보여요.</p>"
+    },
+    {
+      "id": "fit-train-only",
+      "title": "인코더는 훈련 자료로만 배워요",
+      "goal": "fit은 범주를 배우는 단계예요. 다시 fit하면 앞에서 배운 것을 잊어요.\n테스트로 다시 배우면 열의 수나 뜻이 훈련과 달라져요.\n그래서 fit은 훈련 자료로만 하고, 테스트는 transform만 해요.\n\n먼저 실행해서 두 번 나온 열 이름과 크기를 견줘 보세요.\nX_test 줄의 `fit_transform`을 `transform`으로 바꾸세요.\n다시 실행해서 열 이름과 열 수가 훈련과 같은지 봐요.\n처음 보는 지역 행은 모든 칸이 0이에요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.preprocessing import OneHotEncoder\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 처음 보는 범주는 0으로 두는 원핫 인코더예요.\nenc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)\n# 훈련 자료의 region을 배우고 바로 바꿔요.\nX_train = enc.fit_transform(train[['region']])\nprint(enc.get_feature_names_out())\nprint(X_train.shape)\n# 테스트 자료의 region을 바꿔요.\nX_test = enc.fit_transform(test[['region']])\n# 인코더가 마지막으로 배운 열 이름과 테스트 결과예요.\nprint(enc.get_feature_names_out())\nprint(X_test.shape)\nprint(X_test)\n",
+      "solution": "import pandas as pd\nfrom sklearn.preprocessing import OneHotEncoder\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 처음 보는 범주는 0으로 두는 원핫 인코더예요.\nenc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)\n# 훈련 자료의 region을 배우고 바로 바꿔요.\nX_train = enc.fit_transform(train[['region']])\nprint(enc.get_feature_names_out())\nprint(X_train.shape)\n# 테스트 자료의 region을 바꿔요.\nX_test = enc.transform(test[['region']])\n# 인코더가 마지막으로 배운 열 이름과 테스트 결과예요.\nprint(enc.get_feature_names_out())\nprint(X_test.shape)\nprint(X_test)\n",
+      "files": {
+        "data/train.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nsouth,app,high,18,yes\neast,app,mid,9,no\nnorth,store,mid,14,yes\nsouth,web,low,2,no\n",
+        "data/test.csv": "region,channel,grade,visits,renew\nnorth,app,high,16,yes\nwest,kiosk,low,4,no\nnorth,web,mid,10,no\nwest,app,low,7,yes\n"
+      },
+      "required": true,
+      "hints": [
+        "`X_test = enc.transform(test[['region']])`로 바꿔요."
+      ],
+      "goal_html": "<p>fit은 범주를 배우는 단계예요. 다시 fit하면 앞에서 배운 것을 잊어요.<br>테스트로 다시 배우면 열의 수나 뜻이 훈련과 달라져요.<br>그래서 fit은 훈련 자료로만 하고, 테스트는 transform만 해요.</p><p>먼저 실행해서 두 번 나온 열 이름과 크기를 견줘 보세요.<br>X_test 줄의 <code>fit_transform</code>을 <code>transform</code>으로 바꾸세요.<br>다시 실행해서 열 이름과 열 수가 훈련과 같은지 봐요.<br>처음 보는 지역 행은 모든 칸이 0이에요.</p>"
+    },
+    {
+      "id": "grade-and-channel",
+      "title": "도전 · 등급 번호와 원핫을 함께",
+      "goal": "등급은 딕셔너리로 순서 번호를 주고, channel은 원핫해요.\n테스트 자료도 훈련 자료와 똑같은 처리를 거쳐야 해요.\n마지막에는 테스트 열을 훈련 열에 맞춰요.\n\n테스트 표 X_test가 훈련 표와 같은 열을 갖게 하세요. grade도 훈련처럼 번호여야 해요.\n준비 코드는 테스트 쪽 처리 두 가지를 빠뜨렸어요.\n고칠 곳은 직접 찾아보세요. 열 이름과 grade 값을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 등급 순서대로 번호를 주는 딕셔너리예요.\norder = {'low': 0, 'mid': 1, 'high': 2}\n# 훈련 등급을 딕셔너리의 번호로 바꿔요.\ntrain['grade'] = train['grade'].map(order)\n# 입력 열만 골라 channel을 원핫해요.\ncols = ['grade', 'visits', 'channel']\nX_train = pd.get_dummies(train[cols], columns=['channel'], dtype=int)\nX_test = pd.get_dummies(test[cols], columns=['channel'], dtype=int)\n# 두 표의 열 이름과 테스트 표를 확인해요.\nprint(X_train.columns)\nprint(X_test.columns)\nprint(X_test)\n",
+      "solution": "import pandas as pd\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 등급 순서대로 번호를 주는 딕셔너리예요.\norder = {'low': 0, 'mid': 1, 'high': 2}\n# 훈련 등급을 딕셔너리의 번호로 바꿔요.\ntrain['grade'] = train['grade'].map(order)\n# 테스트 등급도 같은 딕셔너리로 바꿔요.\ntest['grade'] = test['grade'].map(order)\n# 입력 열만 골라 channel을 원핫해요.\ncols = ['grade', 'visits', 'channel']\nX_train = pd.get_dummies(train[cols], columns=['channel'], dtype=int)\nX_test = pd.get_dummies(test[cols], columns=['channel'], dtype=int)\n# 테스트 열을 훈련 열에 맞춰요.\nX_test = X_test.reindex(columns=X_train.columns, fill_value=0)\n# 두 표의 열 이름과 테스트 표를 확인해요.\nprint(X_train.columns)\nprint(X_test.columns)\nprint(X_test)\n",
+      "files": {
+        "data/train.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nsouth,app,high,18,yes\neast,app,mid,9,no\nnorth,store,mid,14,yes\nsouth,web,low,2,no\n",
+        "data/test.csv": "region,channel,grade,visits,renew\nnorth,app,high,16,yes\nwest,kiosk,low,4,no\nnorth,web,mid,10,no\nwest,app,low,7,yes\n"
+      },
+      "required": false,
+      "hints": [
+        "테스트 등급도 같은 딕셔너리로 바꾸고, 열은 훈련 열에 맞춰요.",
+        "훈련 등급 줄 아래에 `test['grade'] = test['grade'].map(order)`를 넣어요. X_test 줄 아래에는 `X_test = X_test.reindex(columns=X_train.columns, fill_value=0)`을 넣어요."
+      ],
+      "goal_html": "<p>등급은 딕셔너리로 순서 번호를 주고, channel은 원핫해요.<br>테스트 자료도 훈련 자료와 똑같은 처리를 거쳐야 해요.<br>마지막에는 테스트 열을 훈련 열에 맞춰요.</p><p>테스트 표 X_test가 훈련 표와 같은 열을 갖게 하세요. grade도 훈련처럼 번호여야 해요.<br>준비 코드는 테스트 쪽 처리 두 가지를 빠뜨렸어요.<br>고칠 곳은 직접 찾아보세요. 열 이름과 grade 값을 비교해요.</p>"
+    },
+    {
+      "id": "two-columns-encoder",
+      "title": "도전 · 두 열을 한 번에 원핫해요",
+      "goal": "`OneHotEncoder`는 여러 열을 한 번에 원핫할 수 있어요.\n테스트에 처음 보는 범주가 있어도 오류 없이 모두 0이 되게 해요.\n배우기는 훈련 자료로만 해요. 그래야 두 배열의 열이 같아요.\n\n테스트 배열 X_test가 훈련 배열과 같은 열을 갖게 하세요.\n준비 코드는 두 군데가 틀렸어요. 고칠 곳은 직접 찾아보세요.\n두 배열의 크기와 마지막으로 배운 열 이름을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "import pandas as pd\nfrom sklearn.preprocessing import OneHotEncoder\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 결과를 0까지 모두 담은 배열로 받는 원핫 인코더예요.\nenc = OneHotEncoder(sparse_output=False)\n# 훈련 자료로 두 열을 한 번에 배우고 바꿔요.\nX_train = enc.fit_transform(train[['region', 'channel']])\n# 테스트 자료의 두 열도 바꿔요.\nX_test = enc.fit_transform(test[['region', 'channel']])\n# 인코더가 마지막으로 배운 열 이름이에요.\nprint(enc.get_feature_names_out())\n# 두 배열의 크기를 견줘요.\nprint(X_train.shape)\nprint(X_test.shape)\n",
+      "solution": "import pandas as pd\nfrom sklearn.preprocessing import OneHotEncoder\n\n# 직접 만든 회원 자료를 훈련용과 테스트용으로 따로 받았어요.\ntrain = pd.read_csv('data/train.csv')\ntest = pd.read_csv('data/test.csv')\n# 결과를 0까지 모두 담은 배열로 받는 원핫 인코더예요.\nenc = OneHotEncoder(handle_unknown='ignore', sparse_output=False)\n# 훈련 자료로 두 열을 한 번에 배우고 바꿔요.\nX_train = enc.fit_transform(train[['region', 'channel']])\n# 테스트 자료의 두 열도 바꿔요.\nX_test = enc.transform(test[['region', 'channel']])\n# 인코더가 마지막으로 배운 열 이름이에요.\nprint(enc.get_feature_names_out())\n# 두 배열의 크기를 견줘요.\nprint(X_train.shape)\nprint(X_test.shape)\n",
+      "files": {
+        "data/train.csv": "region,channel,grade,visits,renew\nnorth,app,mid,12,yes\nsouth,web,low,3,no\neast,store,high,25,yes\nnorth,web,low,5,no\nsouth,app,high,18,yes\neast,app,mid,9,no\nnorth,store,mid,14,yes\nsouth,web,low,2,no\n",
+        "data/test.csv": "region,channel,grade,visits,renew\nnorth,app,high,16,yes\nwest,kiosk,low,4,no\nnorth,web,mid,10,no\nwest,app,low,7,yes\n"
+      },
+      "required": false,
+      "hints": [
+        "인코더 설정 하나와 테스트를 바꾸는 줄 하나를 고쳐요.",
+        "`handle_unknown='ignore'`를 넣고, X_test 줄은 `enc.transform`으로 바꿔요."
+      ],
+      "goal_html": "<p><code>OneHotEncoder</code>는 여러 열을 한 번에 원핫할 수 있어요.<br>테스트에 처음 보는 범주가 있어도 오류 없이 모두 0이 되게 해요.<br>배우기는 훈련 자료로만 해요. 그래야 두 배열의 열이 같아요.</p><p>테스트 배열 X_test가 훈련 배열과 같은 열을 갖게 하세요.<br>준비 코드는 두 군데가 틀렸어요. 고칠 곳은 직접 찾아보세요.<br>두 배열의 크기와 마지막으로 배운 열 이름을 비교해요.</p>"
+    }
+  ]
+}

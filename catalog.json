@@ -43,5 +43,25 @@
     "id": "aice-data-quality",
     "title": "빈칸·중복·이상치 진단하기",
     "path": "aice-data-quality.json"
+  },
+  {
+    "id": "aice-target-features",
+    "title": "입력 X와 정답 y 정하기",
+    "path": "aice-target-features.json"
+  },
+  {
+    "id": "aice-data-split",
+    "title": "훈련·검증·테스트를 구분하기",
+    "path": "aice-data-split.json"
+  },
+  {
+    "id": "aice-encoding",
+    "title": "범주를 모델 입력으로 바꾸기",
+    "path": "aice-encoding.json"
+  },
+  {
+    "id": "aice-scaling",
+    "title": "훈련 자료로만 변환 기준 익히기",
+    "path": "aice-scaling.json"
   }
 ]
