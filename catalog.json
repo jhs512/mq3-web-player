@@ -63,5 +63,20 @@
     "id": "aice-scaling",
     "title": "훈련 자료로만 변환 기준 익히기",
     "path": "aice-scaling.json"
+  },
+  {
+    "id": "aice-regression",
+    "title": "숫자를 예측하는 기준과 모델",
+    "path": "aice-regression.json"
+  },
+  {
+    "id": "aice-classification",
+    "title": "종류를 예측하고 오류 읽기",
+    "path": "aice-classification.json"
+  },
+  {
+    "id": "aice-model-improvement",
+    "title": "공정하게 모델을 비교하고 개선하기",
+    "path": "aice-model-improvement.json"
   }
 ]
