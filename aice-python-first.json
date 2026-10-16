@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "id": "aice-python-first",
+  "revision": "v1.0.0",
+  "title": "분석을 시작하는 Python 첫 실행",
+  "description": "Python을 처음 봐도 괜찮아요. 글자·계산·이름을 작은 실험으로 익혀요.",
+  "sources": [
+    "https://aice.study/info/aice/asso"
+  ],
+  "sections": [],
+  "review_enabled": false,
+  "tasks": [
+    {
+      "id": "first-print",
+      "title": "코드를 그대로 실행해 봐요",
+      "goal": "Python 코드는 컴퓨터에게 할 일을 알려 줘요.\nprint는 괄호 안의 값을 화면에 보여 줘요.\n따옴표 안에 있는 것은 글자예요.\n\n먼저 코드 실행을 누르세요.\n출력된 글자를 확인하세요.\n따옴표 안을 분석 시작으로 바꾸세요.\n다시 실행해서 두 결과를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# print의 괄호 안을 화면에서 확인해요.\nprint(\"자료 준비\")\n",
+      "solution": "# print의 괄호 안을 화면에서 확인해요.\nprint(\"분석 시작\")\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "print(\"분석 시작\")처럼 적어요."
+      ],
+      "goal_html": "<p>Python 코드는 컴퓨터에게 할 일을 알려 줘요.<br>print는 괄호 안의 값을 화면에 보여 줘요.<br>따옴표 안에 있는 것은 글자예요.</p><p>먼저 코드 실행을 누르세요.<br>출력된 글자를 확인하세요.<br>따옴표 안을 분석 시작으로 바꾸세요.<br>다시 실행해서 두 결과를 비교해요.</p>"
+    },
+    {
+      "id": "text-and-number",
+      "title": "글자로 쓴 계산과 실제 계산",
+      "goal": "앞 문제의 따옴표는 글자를 감쌌어요.\n숫자 계산은 따옴표 밖에 적어요.\n\n먼저 글자로 된 식을 출력해 보세요.\n식 양쪽의 따옴표만 지우세요.\n계산한 결과와 비교하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 따옴표가 있으면 계산식도 글자예요.\nprint(\"6 + 4\")\n",
+      "solution": "# 따옴표가 있으면 계산식도 글자예요.\nprint(6 + 4)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "print(6 + 4)로 바꿔요."
+      ],
+      "goal_html": "<p>앞 문제의 따옴표는 글자를 감쌌어요.<br>숫자 계산은 따옴표 밖에 적어요.</p><p>먼저 글자로 된 식을 출력해 보세요.<br>식 양쪽의 따옴표만 지우세요.<br>계산한 결과와 비교하세요.</p>"
+    },
+    {
+      "id": "group-calculation",
+      "title": "괄호로 계산 순서를 바꿔요",
+      "goal": "곱하기는 더하기보다 먼저 계산해요.\n괄호 안의 계산을 먼저 할 수 있어요.\n\n준비 코드를 먼저 실행하세요.\n2 + 3만 괄호로 묶어 보세요.\n숫자를 바꾸지 않고 결과를 바꿔요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 곱하기와 더하기의 순서를 비교해요.\nprint(2 + 3 * 4)\n",
+      "solution": "# 곱하기와 더하기의 순서를 비교해요.\nprint((2 + 3) * 4)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "print((2 + 3) * 4)로 묶어요."
+      ],
+      "goal_html": "<p>곱하기는 더하기보다 먼저 계산해요.<br>괄호 안의 계산을 먼저 할 수 있어요.</p><p>준비 코드를 먼저 실행하세요.<br>2 + 3만 괄호로 묶어 보세요.<br>숫자를 바꾸지 않고 결과를 바꿔요.</p>"
+    },
+    {
+      "id": "value-name",
+      "title": "값에 붙인 이름을 써 봐요",
+      "goal": "price = 6은 숫자 6을 price에 저장해요.\n이렇게 값을 저장하는 이름을 변수라고 해요.\n따옴표 없는 price는 저장한 값을 꺼내요.\n\n먼저 준비 코드를 실행하세요.\nprint 안의 price 양쪽 따옴표를 지우세요.\n이름과 그 이름에 저장한 값을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 오른쪽 값을 왼쪽 이름에 저장해요.\nprice = 6\n# 따옴표가 있으면 이름 자체를 출력해요.\nprint(\"price\")\n",
+      "solution": "# 오른쪽 값을 왼쪽 이름에 저장해요.\nprice = 6\n# 따옴표가 있으면 이름 자체를 출력해요.\nprint(price)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "print(price)로 값을 꺼내요."
+      ],
+      "goal_html": "<p>price = 6은 숫자 6을 price에 저장해요.<br>이렇게 값을 저장하는 이름을 변수라고 해요.<br>따옴표 없는 price는 저장한 값을 꺼내요.</p><p>먼저 준비 코드를 실행하세요.<br>print 안의 price 양쪽 따옴표를 지우세요.<br>이름과 그 이름에 저장한 값을 비교해요.</p>"
+    },
+    {
+      "id": "update-value",
+      "title": "한 이름의 값을 바꿀 수 있어요",
+      "goal": "코드는 위에서 아래로 실행해요.\namount + 2를 계산한 뒤 다시 저장해요.\n=는 그 시점의 값을 저장하는 기호예요.\n\n지금은 숫자 6을 직접 출력하고 있어요.\n마지막 줄에서 amount의 값을 출력하세요.\n처음 값과 바뀐 값을 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 처음 값을 저장해요.\namount = 6\n# 현재 값에 2를 더하고 다시 저장해요.\namount = amount + 2\n# 저장된 값을 꺼낼 자리를 찾아요.\nprint(6)\n",
+      "solution": "# 처음 값을 저장해요.\namount = 6\n# 현재 값에 2를 더하고 다시 저장해요.\namount = amount + 2\n# 저장된 값을 꺼낼 자리를 찾아요.\nprint(amount)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "마지막 줄은 print(amount)예요."
+      ],
+      "goal_html": "<p>코드는 위에서 아래로 실행해요.<br>amount + 2를 계산한 뒤 다시 저장해요.<br>=는 그 시점의 값을 저장하는 기호예요.</p><p>지금은 숫자 6을 직접 출력하고 있어요.<br>마지막 줄에서 amount의 값을 출력하세요.<br>처음 값과 바뀐 값을 비교해요.</p>"
+    },
+    {
+      "id": "read-order",
+      "title": "바꾸기 전과 후를 모두 보세요",
+      "goal": "출력은 그 줄이 실행될 때의 값을 보여 줘요.\n뒤에서 값을 바꿔도 앞의 출력은 바뀌지 않아요.\n\n준비 코드의 출력을 먼저 보세요.\n마지막 주석 아래에 print(amount)를 넣으세요.\n두 출력의 순서를 비교해요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 첫 값을 출력해요.\namount = 6\nprint(amount)\n# 새로운 값을 저장해요.\namount = 9\n# 마지막 값도 확인해요.\n",
+      "solution": "# 첫 값을 출력해요.\namount = 6\nprint(amount)\n# 새로운 값을 저장해요.\namount = 9\n# 마지막 값도 확인해요.\nprint(amount)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "맨 아래에 print(amount)를 한 줄 넣어요."
+      ],
+      "goal_html": "<p>출력은 그 줄이 실행될 때의 값을 보여 줘요.<br>뒤에서 값을 바꿔도 앞의 출력은 바뀌지 않아요.</p><p>준비 코드의 출력을 먼저 보세요.<br>마지막 주석 아래에 print(amount)를 넣으세요.<br>두 출력의 순서를 비교해요.</p>"
+    },
+    {
+      "id": "calculate-names",
+      "title": "이름에 담긴 값끼리 계산해요",
+      "goal": "계산식에는 숫자 대신 변수 이름을 넣을 수 있어요.\n가격과 개수를 곱하면 전체 금액을 구해요.\n\n더하기 기호 하나를 바꾸세요.\n가격에 개수를 곱해 전체 금액을 출력하세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 준비된 가격과 개수예요.\nprice = 6\ncount = 3\n# 두 이름의 값으로 전체 금액을 계산해요.\ntotal = price + count\nprint(total)\n",
+      "solution": "# 준비된 가격과 개수예요.\nprice = 6\ncount = 3\n# 두 이름의 값으로 전체 금액을 계산해요.\ntotal = price * count\nprint(total)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "곱하기 기호는 *예요."
+      ],
+      "goal_html": "<p>계산식에는 숫자 대신 변수 이름을 넣을 수 있어요.<br>가격과 개수를 곱하면 전체 금액을 구해요.</p><p>더하기 기호 하나를 바꾸세요.<br>가격에 개수를 곱해 전체 금액을 출력하세요.</p>"
+    },
+    {
+      "id": "new-name",
+      "title": "보여 줄 값을 이름으로 골라요",
+      "goal": "이름에는 글자도 숫자도 담을 수 있어요.\nprint에서 어떤 이름을 쓰는지 살펴봐요.\n\n지금은 분석 제목을 출력하고 있어요.\n방문 횟수가 나오게 이름 하나만 바꾸세요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 글자와 숫자에 각각 이름을 붙여요.\nlabel = \"방문 분석\"\nvisits = 3\n# 필요한 이름을 골라 화면에 보여 줘요.\nprint(label)\n",
+      "solution": "# 글자와 숫자에 각각 이름을 붙여요.\nlabel = \"방문 분석\"\nvisits = 3\n# 필요한 이름을 골라 화면에 보여 줘요.\nprint(visits)\n",
+      "files": {},
+      "required": true,
+      "hints": [
+        "print 안에 visits를 넣어요."
+      ],
+      "goal_html": "<p>이름에는 글자도 숫자도 담을 수 있어요.<br>print에서 어떤 이름을 쓰는지 살펴봐요.</p><p>지금은 분석 제목을 출력하고 있어요.<br>방문 횟수가 나오게 이름 하나만 바꾸세요.</p>"
+    },
+    {
+      "id": "discount-challenge",
+      "title": "할인을 반영한 금액을 구해요",
+      "goal": "배운 계산과 변수만 조합해 봐요.\n\n전체 금액에서 discount를 한 번 빼세요.\n준비된 숫자는 그대로 두세요.\n최종 금액을 계산하는 줄을 찾아 고쳐요.",
+      "language": "python",
+      "entry_file": "main.py",
+      "starter_code": "# 가격·개수·할인액을 준비했어요.\nprice = 6\ncount = 3\ndiscount = 2\n# 계산한 최종 금액을 저장해요.\ntotal = price * count\nprint(total)\n",
+      "solution": "# 가격·개수·할인액을 준비했어요.\nprice = 6\ncount = 3\ndiscount = 2\n# 계산한 최종 금액을 저장해요.\ntotal = price * count - discount\nprint(total)\n",
+      "files": {},
+      "required": false,
+      "hints": [
+        "전체 금액을 구한 뒤 할인액을 빼요.",
+        "total에 저장하는 식을 고쳐요."
+      ],
+      "goal_html": "<p>배운 계산과 변수만 조합해 봐요.</p><p>전체 금액에서 discount를 한 번 빼세요.<br>준비된 숫자는 그대로 두세요.<br>최종 금액을 계산하는 줄을 찾아 고쳐요.</p>"
+    }
+  ]
+}

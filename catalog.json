@@ -1,0 +1,17 @@
+[
+  {
+    "id": "aice-python-first",
+    "title": "분석을 시작하는 Python 첫 실행",
+    "path": "aice-python-first.json"
+  },
+  {
+    "id": "aice-python-values",
+    "title": "분석 코드의 값·목록·자리",
+    "path": "aice-python-values.json"
+  },
+  {
+    "id": "aice-data-first",
+    "title": "처음 만나는 코드와 데이터 표",
+    "path": "lesson.json"
+  }
+]

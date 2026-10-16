@@ -1,11 +1,12 @@
 const $=s=>document.querySelector(s);
-const lesson=await fetch('./lesson.json').then(r=>{if(!r.ok)throw Error('수업을 불러오지 못했어요.');return r.json()});
+const catalog=await fetch('./catalog.json').then(r=>r.json());
+let lesson;
 const runner=await fetch('./rich_runner.py').then(r=>r.text());
 let index=0,worker=null,busy=false,timer=null,id=0,active=null,initialized=false;
 const editor=$('textarea');
 const key=t=>`mq3-web:${lesson.id}:${lesson.revision}:${t.id}`;
 const value=()=>window.molipCodeEditors?.getValue()??editor.value;
-function save(){if(!initialized)return;try{localStorage.setItem(key(lesson.tasks[index]),value())}catch{}}
+function save(){if(!initialized||!lesson)return;try{localStorage.setItem(key(lesson.tasks[index]),value())}catch{}}
 editor.addEventListener('input',save);
 function setCode(source){editor.value=source;editor.setAttribute('data-editor-value',source);editor.setAttribute('data-editor-reset',String(Date.now())+Math.random());window.molipCodeEditors?.sync()}
 function text(tag,value,cls){const node=document.createElement(tag);node.textContent=value;if(cls)node.className=cls;return node}
@@ -26,7 +27,7 @@ function show(i){
  let draft;try{draft=localStorage.getItem(key(task))}catch{}
  setCode(draft??task.starter_code);problem.scrollTop=0;initialized=true;
  $('#output').replaceChildren();status('코드 실행을 눌러 결과를 확인하세요.');
- history.replaceState(null,'',`#${i+1}`);
+ history.replaceState(null,'',`?lesson=${encodeURIComponent(lesson.id)}#${i+1}`);
 }
 function status(message,error=false){$('#status').textContent=message;$('#status').classList.toggle('error',error)}
 function controls(running){busy=running;$('#run').disabled=running;$('#stop').disabled=!running;$('#reset').disabled=running}
@@ -45,7 +46,7 @@ function render(result){
  status(result.success?'실행했어요. 바꾸기 전과 결과를 비교해 보세요.':'오류가 났어요. 메시지를 보고 다시 시도하세요.',!result.success);
 }
 function start(){
- if(busy)return;save();controls(true);$('#output').replaceChildren();status('실행을 준비하고 있어요…');
+ if(busy||$('#lessons').disabled)return;save();controls(true);$('#output').replaceChildren();status('실행을 준비하고 있어요…');
  if(!worker){
   worker=new Worker('./python-worker.js',{type:'module'});
   worker.onmessage=({data})=>{
@@ -63,7 +64,26 @@ function start(){
 $('#prev').onclick=()=>show(index-1);$('#next').onclick=()=>show(index+1);$('#tasks').onchange=e=>show(Number(e.target.value));
 $('#run').onclick=start;$('#stop').onclick=stop;$('#reset').onclick=()=>{setCode(lesson.tasks[index].starter_code);save()};
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();start()}});
-for(const [i,task] of lesson.tasks.entries()){const option=text('option',`${i+1}. ${task.required?'':'도전 · '}${task.title}`);option.value=String(i);$('#tasks').append(option)}
-// Initialize without overwriting a previously saved first-problem draft.
-const initial=Math.max(0,Math.min(lesson.tasks.length-1,Number(location.hash.slice(1)||1)-1));
-show(Number.isFinite(initial)?initial:0);
+async function loadLesson(id,position=0){
+ const reference=catalog.find(c=>c.id===id)??catalog[0];
+ const requested=reference.id;
+ if(busy)stop();save();
+ $('#lessons').disabled=true;
+ $('#run').disabled=true;
+ try{
+  const response=await fetch('./'+reference.path);
+  if(!response.ok)throw Error('수업을 불러오지 못했어요.');
+  const content=await response.json();
+  initialized=false;lesson=content;index=0;
+  $('#lesson-title').textContent=lesson.title;
+  $('#lessons').value=requested;$('#tasks').replaceChildren();
+  for(const [i,task] of lesson.tasks.entries()){
+   const option=text('option',`${i+1}. ${task.required?'':'도전 · '}${task.title}`);option.value=String(i);$('#tasks').append(option);
+  }
+  show(Math.max(0,Math.min(lesson.tasks.length-1,Number.isFinite(position)?position:0)));
+ }catch(error){status(String(error),true)}finally{$('#lessons').disabled=false;$('#run').disabled=false}
+}
+$('#lessons').onchange=e=>loadLesson(e.target.value);
+for(const entry of catalog){const option=text('option',entry.title);option.value=entry.id;$('#lessons').append(option)}
+const initialLesson=new URLSearchParams(location.search).get('lesson');
+await loadLesson(initialLesson,Number(location.hash.slice(1)||1)-1);
